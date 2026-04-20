@@ -1,0 +1,41 @@
+Shrike — License Notice
+=======================
+
+Shrike is source-available software offered under a dual license.
+
+1. Non-commercial use
+---------------------
+
+You may use, copy, modify, and redistribute Shrike for any
+non-commercial purpose under the terms of the PolyForm Noncommercial
+License 1.0.0. The full text is in LICENSE-NONCOMMERCIAL.
+
+"Non-commercial" includes personal use, hobby projects, research,
+teaching, and use by charitable, educational, public-research,
+public-safety, and government organizations, as defined in the
+PolyForm Noncommercial License 1.0.0.
+
+2. Commercial use
+-----------------
+
+Any use of Shrike that is primarily intended for or directed toward
+commercial advantage or monetary compensation requires a separate
+commercial license from the copyright holder. See LICENSE-COMMERCIAL
+for contact and terms.
+
+If you're making money with Shrike, you owe the copyright holder.
+
+3. Which license applies to me?
+-------------------------------
+
+- Running Shrike on your own home network, for your own use? → Non-commercial.
+- Using Shrike as part of a paid product or service you sell? → Commercial.
+- Unsure? → Contact the copyright holder before deploying to production.
+
+4. No warranty
+--------------
+
+Shrike is provided "as is", without warranty of any kind. See the
+full license texts for the complete disclaimer.
+
+Required Notice: Copyright (c) 2026 the Shrike copyright holder.

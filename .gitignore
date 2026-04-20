@@ -1,0 +1,52 @@
+# Runtime-generated ledger. Format spec is tracked; contents are not.
+ledger/*.ndjson
+ledger/*.ndjson.*
+
+# Rust
+target/
+**/*.rs.bk
+Cargo.lock.tmp
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+.venv/
+venv/
+env/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# C / build artifacts
+*.o
+*.obj
+*.a
+*.so
+*.dylib
+*.dll
+*.exe
+*.out
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Secrets — never commit
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials.json
+
+# OS / tool scratch
+*.log
+*.tmp

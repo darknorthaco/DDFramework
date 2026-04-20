@@ -1,0 +1,96 @@
+# Shrike — Sovereign Doctrine (machine-readable)
+# Prose source of truth: DOCTRINE.md
+# Amendment policy: ceremony-only. See DOCTRINE.md §VII.
+#
+# Every phantom binary embeds the SHA-256 of this file at compile time
+# and refuses to run if the on-disk hash differs (invariant I6).
+
+[meta]
+project = "Shrike"
+doctrine_version = "0.1.0"
+prose_source = "DOCTRINE.md"
+ratified = "2026-04-20"
+
+[palette]
+# Languages permitted inside Shrike. Rationale in LANGUAGES.md.
+core = ["c-iso-c11", "rust-stable"]
+meta = ["python-3-stdlib"]
+reserved = ["zig", "ada-spark"]
+excluded = ["carbon"]
+
+[layers]
+phantom  = "sovereign deterministic ritual core"
+hyperion = "spatial-collapse network fabric"
+ghost    = "read-only observer and predictor"
+
+# ---------------------------------------------------------------------------
+# Invariants — fatal if violated. See DOCTRINE.md §IV.
+# ---------------------------------------------------------------------------
+
+[invariants.I1]
+name = "append-only-ledger"
+description = "Ledger entries are never edited or deleted. Corrections are new entries."
+severity = "fatal"
+
+[invariants.I2]
+name = "content-addressed-artifacts"
+description = "Every artifact is referenced by its SHA-256 hash."
+severity = "fatal"
+
+[invariants.I3]
+name = "reversibility-declared"
+description = "Every ritual declares its inverse, or is explicitly marked irreversible and requires a confirmation ceremony."
+severity = "fatal"
+
+[invariants.I4]
+name = "deterministic-builds"
+description = "Builds are reproducible: pinned toolchain, vendored deps, SOURCE_DATE_EPOCH respected."
+severity = "fatal"
+
+[invariants.I5]
+name = "no-ambient-state"
+description = "All ritual inputs are explicit arguments. Env vars and config paths must be declared in the ritual manifest."
+severity = "fatal"
+
+[invariants.I6]
+name = "doctrine-as-code"
+description = "phantom refuses to run if the SHA-256 of doctrine.toml does not match the hash it was compiled against."
+severity = "fatal"
+
+[invariants.I7]
+name = "no-silent-mutation"
+description = "No action produces side effects without a corresponding ledger entry written BEFORE the side effect is visible to other processes."
+severity = "fatal"
+
+[invariants.I8]
+name = "ghost-is-read-only"
+description = "The GHOST layer may never write to the Phantom ledger or mutate ceremony definitions."
+severity = "fatal"
+
+# ---------------------------------------------------------------------------
+# Ritual registry — full contracts in RITUALS.md and ceremonies/*.toml
+# ---------------------------------------------------------------------------
+
+[rituals]
+manifest_dir = "ceremonies"
+registered   = ["verify", "deploy", "lan-scan"]
+
+# ---------------------------------------------------------------------------
+# Ledger — the single highest-leverage artifact in the system
+# ---------------------------------------------------------------------------
+
+[ledger]
+format                = "ndjson"
+path                  = "ledger/phantom.ndjson"
+hash_algorithm        = "sha-256"
+entry_schema_version  = 1
+
+# ---------------------------------------------------------------------------
+# Amendment policy (mirror of DOCTRINE.md §VII)
+# ---------------------------------------------------------------------------
+
+[amendment]
+policy            = "ceremony-only"
+required_ritual   = "amend-doctrine"
+requires_human    = true
+versioning_scheme = "semver"
