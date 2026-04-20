@@ -1,0 +1,29 @@
+# All text files in Shrike use LF line endings.
+#
+# Rationale: the ledger hash chain is computed over byte-exact content.
+# If git silently rewrites LF to CRLF on Windows checkout, hashes no
+# longer match and the chain breaks. This file pins line endings so
+# the project is portable across OS without doctrinal damage.
+#
+# 100-year note: line-ending drift is a classic, quiet source of
+# format rot. Pinning LF today prevents it for every future checkout.
+
+* text=auto eol=lf
+
+# Be explicit about the highest-leverage files so there is zero
+# ambiguity for future tools or operators.
+*.md             text eol=lf
+*.toml           text eol=lf
+*.jsonl          text eol=lf
+*.json           text eol=lf
+*.py             text eol=lf
+*.rs             text eol=lf
+*.c              text eol=lf
+*.h              text eol=lf
+Makefile         text eol=lf
+.gitignore       text eol=lf
+.editorconfig    text eol=lf
+
+# Binary artifacts stored under ledger/blobs/ should never be
+# text-normalized under any circumstance.
+ledger/blobs/**  binary

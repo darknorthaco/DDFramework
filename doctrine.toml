@@ -6,10 +6,12 @@
 # and refuses to run if the on-disk hash differs (invariant I6).
 
 [meta]
-project = "Shrike"
-doctrine_version = "0.1.0"
-prose_source = "DOCTRINE.md"
-ratified = "2026-04-20"
+project              = "Shrike"
+doctrine_version     = "0.2.0"
+prose_source         = "DOCTRINE.md"
+ratified             = "2026-04-20"
+constitutional_layer = "constellation.toml"
+constitution_version = "0.1.1"
 
 [palette]
 # Languages permitted inside Shrike. Rationale in LANGUAGES.md.
@@ -81,9 +83,11 @@ registered   = ["verify", "deploy", "lan-scan"]
 
 [ledger]
 format                = "ndjson"
-path                  = "ledger/phantom.ndjson"
+path                  = "ledger/events.jsonl"
+blob_dir              = "ledger/blobs"
 hash_algorithm        = "sha-256"
 entry_schema_version  = 1
+spec                  = "ledger/SPEC.md"
 
 # ---------------------------------------------------------------------------
 # Amendment policy (mirror of DOCTRINE.md §VII)

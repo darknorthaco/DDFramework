@@ -1,9 +1,17 @@
-# Shrike — Sovereign Doctrine
+# Shrike — Architectural Doctrine
 
-**Version:** 0.1.0
-**Status:** Ratified (initial ratification)
+**Version:** 0.2.0
+**Status:** Ratified
 **Machine-readable mirror:** [`doctrine.toml`](./doctrine.toml)
+**Constitutional layer:** [`CONSTELLATION.md`](./CONSTELLATION.md) (Constellation Doctrine v0.1.1)
 **Amendment policy:** ceremony-only (see bottom of this file)
+
+> This document is the **architectural** doctrine of Shrike — the
+> concrete invariants and layers that implement the principles of the
+> [Constellation Doctrine](./CONSTELLATION.md). When they conflict,
+> Constellation §11 priority applies; Shrike's invariants I1–I8 are
+> the mechanisms by which Constellation's mandates are enforced in
+> this fabric.
 
 ---
 
@@ -206,8 +214,12 @@ violation and must be reverted before the next ritual boundary.
 
 ## VIII. Reference
 
-- [`doctrine.toml`](./doctrine.toml) — machine-readable invariants
+- [`CONSTELLATION.md`](./CONSTELLATION.md) — **constitutional layer** (Constellation Doctrine)
+- [`constellation.toml`](./constellation.toml) — machine-readable constitution
+- [`doctrine.toml`](./doctrine.toml) — machine-readable architectural invariants
 - [`ARCHITECTURE.md`](./ARCHITECTURE.md) — layer design and Meadows analysis
 - [`RITUALS.md`](./RITUALS.md) — ceremony contracts
 - [`LANGUAGES.md`](./LANGUAGES.md) — 100-year language policy
 - [`AGENTS.md`](./AGENTS.md) — rules for AI and human agents
+- [`WAIVERS.md`](./WAIVERS.md) — active waiver registry
+- [`ledger/SPEC.md`](./ledger/SPEC.md) — ledger format specification

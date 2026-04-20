@@ -30,18 +30,24 @@ See [`ARCHITECTURE.md`](./ARCHITECTURE.md) for the full picture.
 
 Read these, in this order:
 
-1. [`DOCTRINE.md`](./DOCTRINE.md) — the sovereign doctrine, v0.1.0
-2. [`doctrine.toml`](./doctrine.toml) — the machine-readable mirror
-3. [`ARCHITECTURE.md`](./ARCHITECTURE.md) — three layers + Meadows analysis
-4. [`RITUALS.md`](./RITUALS.md) — ritual contracts (Verify, Deploy, LAN Scan)
-5. [`LANGUAGES.md`](./LANGUAGES.md) — 100-year language policy
-6. [`AGENTS.md`](./AGENTS.md) — rules for agents (human or AI)
+1. [`CONSTELLATION.md`](./CONSTELLATION.md) — **the constitution**, v0.1.1 (Constellation Doctrine)
+2. [`constellation.toml`](./constellation.toml) — machine-readable constitution
+3. [`DOCTRINE.md`](./DOCTRINE.md) — Shrike architectural doctrine, v0.2.0
+4. [`doctrine.toml`](./doctrine.toml) — machine-readable architectural invariants
+5. [`ARCHITECTURE.md`](./ARCHITECTURE.md) — three layers + Meadows analysis
+6. [`RITUALS.md`](./RITUALS.md) — ritual contracts (Verify, Deploy, LAN Scan)
+7. [`LANGUAGES.md`](./LANGUAGES.md) — 100-year language policy
+8. [`AGENTS.md`](./AGENTS.md) — rules for agents (human or AI)
+9. [`WAIVERS.md`](./WAIVERS.md) — active waiver registry
+10. [`ledger/SPEC.md`](./ledger/SPEC.md) — ledger format specification
 
 ## Status
 
-**v0.1.0 — Foundation stones.** Documents only. No executable code
-yet. The next phase scaffolds the three layer crates and implements
-the `verify` ritual end-to-end.
+**v0.2.0 — Constitution ratified.** Documents only. Ledger bootstrapped
+with the genesis entry recording ratification. No executable code yet.
+The next phase scaffolds the three layer crates (`phantom-core`,
+`hyperion-net`, `ghost-observer`) and implements the `verify` ritual
+end-to-end.
 
 ## License
 

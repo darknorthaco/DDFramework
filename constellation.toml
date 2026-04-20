@@ -1,0 +1,157 @@
+# Constellation Doctrine — machine-readable mirror
+# Prose source of truth: CONSTELLATION.md
+# Relationship: Constellation is the constitutional layer above the
+# Shrike architectural doctrine (see doctrine.toml). On conflict,
+# Constellation §11 priority applies.
+
+[meta]
+name         = "Constellation Doctrine"
+version      = "0.1.1"
+status       = "binding"
+description  = "Unified governance and design doctrine for long-horizon, regenerative, coherent systems."
+prose_source = "CONSTELLATION.md"
+shrike_doctrine_ref = "doctrine.toml"
+
+[priority]
+# Ordered list of doctrine precedence (highest → lowest).
+# Principles 1–3 cannot be overridden.
+order = [
+  "hundred_year_computing",
+  "regenerative_design",
+  "conceptual_integrity",
+  "systems_reality",
+  "simulation_before_deployment",
+  "context_governs_action",
+  "organizational_learning",
+  "disruption_strategy",
+  "doctrine_as_law",
+]
+
+[systems]
+require_system_map          = true
+require_feedback_loops      = true
+require_leverage_points     = true
+require_boundary_definition = true
+treat_hidden_delays_as_risks = true
+
+[cynefin]
+require_domain_declaration      = true
+require_domain_method_alignment = true
+log_domain_drift                = true
+allowed_domains = ["obvious", "complicated", "complex", "chaotic"]
+
+[integrity]
+require_small_primitives        = true
+require_single_purpose_subsystems = true
+reject_clarity_harm             = true
+interfaces_must_be_minimal      = true
+interfaces_must_be_explicit     = true
+interfaces_must_be_stable       = true
+
+[hundred_year_computing]
+plain_text_required             = true
+open_toolchains_required        = true
+rebuildability_required         = true
+prohibit_proprietary_foundations = true
+
+[regenerative_design]
+require_regeneration_statement = true
+prohibit_net_negative_designs  = true
+nested_scales_required         = true
+nested_scales = ["individual", "team", "organization", "ecosystem", "biosphere"]
+
+[organizational_learning]
+require_learning_loop        = true
+require_postmortems          = true
+require_mental_model_review  = true
+blame_free_culture_required  = true
+
+[simulation_before_deployment]
+required_for_core_loops        = true
+log_predictions                = true
+compare_predictions_to_outcomes = true
+include_delays                 = true
+include_nonlinearities         = true
+include_second_order_effects   = true
+
+[disruption_strategy]
+require_disruptive_track     = true
+protect_exploratory_teams    = true
+design_for_low_end_threats   = true
+design_for_new_market_threats = true
+self_disruption_preferred    = true
+
+[doctrine_as_law]
+machine_readable_required = true
+doctrine_as_code_required = true
+ledger_required           = true
+waiver_process_required   = true
+version_bump_required     = true
+proposal_required         = true
+rationale_required        = true
+review_required           = true
+
+[scoping]
+# Tier 1 — Full Constellation Loop
+tier1_full_loop_required = true
+tier1_examples = [
+  "architecture",
+  "protocols",
+  "ledger_format",
+  "security_boundaries",
+  "scaling_policies",
+]
+
+# Tier 2 — Abbreviated Loop
+tier2_abbreviated_loop_required = true
+tier2_required_steps = [
+  "system_map",
+  "domain_classification",
+  "integrity_check",
+  "regenerative_check",
+]
+
+# Tier 3 — Lightweight Check
+tier3_lightweight_check_required = true
+tier3_required_steps = [
+  "domain_classification",
+  "integrity_check",
+]
+
+[ledger]
+format                 = "ndjson"
+encoding               = "utf-8"
+one_event_per_line     = true
+hash_algorithm         = "sha256"
+location               = "ledger/events.jsonl"
+blob_location          = "ledger/blobs"
+append_only            = true
+mutation_requires_waiver = true
+
+[waiver]
+require_rationale                  = true
+require_domain_classification      = true
+require_system_map                 = true
+require_simulation_if_applicable   = true
+require_human_architect_approval   = true
+require_ledger_entry               = true
+require_expiry_date                = true
+waivers_expire_unless_renewed      = true
+
+[ledger_example]
+# Canonical example for reference. Real entries additionally include
+# `prev_entry_hash` and `entry_hash` per ledger/SPEC.md.
+example_json = """
+{
+  "timestamp": "2026-04-20T22:14:00Z",
+  "event": "constellation_doctrine_update",
+  "version": "0.1.1",
+  "change": "Adopted Constellation Doctrine v0.1.1",
+  "domain": "complicated",
+  "integrity_check": true,
+  "regenerative_check": true,
+  "simulation_required": false,
+  "disruption_considered": true,
+  "doctrine_hash": "sha256:TO_BE_FILLED_AFTER_COMMIT"
+}
+"""

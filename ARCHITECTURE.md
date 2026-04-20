@@ -2,7 +2,10 @@
 
 This document describes the three-layer design of the Shrike fabric and
 applies the Donella-Meadows systems-thinking lenses required by
-[`DOCTRINE.md`](./DOCTRINE.md) §III.
+[`DOCTRINE.md`](./DOCTRINE.md) §III. The architecture is an
+**instantiation** of the [Constellation Doctrine](./CONSTELLATION.md);
+when this document and Constellation conflict, Constellation §11
+priority applies.
 
 ## 1. Three Layers
 
@@ -167,6 +170,7 @@ Shrike/
 │   ├── 0002-deploy.toml
 │   └── 0003-lan-scan.toml
 └── ledger/
-    ├── SPEC.md                (Phase 2 — format spec)
-    └── phantom.ndjson         (runtime, .gitignored)
+    ├── SPEC.md                (format spec — NDJSON + hash chain)
+    ├── events.jsonl           (append-only, tracked in git)
+    └── blobs/                 (content-addressed artifact store)
 ```

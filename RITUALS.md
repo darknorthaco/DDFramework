@@ -51,7 +51,7 @@ smoke test for the whole fabric.
 
 - `stdout` — human-readable verification report
 - Ledger entry of `kind = "verify.result"` appended to
-  `ledger/phantom.ndjson`
+  `ledger/events.jsonl`
 
 ### Side Effects
 

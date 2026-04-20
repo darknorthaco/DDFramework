@@ -1,12 +1,14 @@
 # Shrike — Rules for Agents
 
 This file governs the behavior of any agent — human or AI — operating
-inside this repository. It is the operational counterpart to
-[`DOCTRINE.md`](./DOCTRINE.md).
+inside this repository. It is the operational counterpart to the
+doctrine stack: [`CONSTELLATION.md`](./CONSTELLATION.md) (constitution)
+and [`DOCTRINE.md`](./DOCTRINE.md) (architecture).
 
 If you are an AI coding assistant reading this because you were
 dropped into the Shrike workspace, **read this file first, read
-`DOCTRINE.md` second, and propose a plan before any edit.**
+`CONSTELLATION.md` second, read `DOCTRINE.md` third, and propose a
+plan before any edit.**
 
 ## 1. Absolute Rules
 
@@ -34,21 +36,57 @@ dropped into the Shrike workspace, **read this file first, read
 
 Every session with an AI agent follows this shape:
 
-1. **Acknowledge doctrine.** State that you have read `DOCTRINE.md`
-   and `doctrine.toml`. Name the current `doctrine_version`.
+1. **Acknowledge doctrine.** State that you have read
+   `CONSTELLATION.md`, `DOCTRINE.md`, `doctrine.toml`, and
+   `constellation.toml`. Name the current `constitution_version`
+   and architectural `doctrine_version`.
 2. **Restate the operator's goal** in your own words.
-3. **Inspect** only as much of the repo as is needed to build a
+3. **Classify the change tier** (see §3 below). Declare it.
+4. **Inspect** only as much of the repo as is needed to build a
    mental model.
-4. **Apply Meadows lenses** to the proposed change:
-   stocks / flows / feedback / leverage / attractors.
-5. **Identify risks** explicitly.
-6. **Propose a plan**, phased if large. Declare what files will
+5. **Run the Constellation Loop** at the required depth (full /
+   abbreviated / lightweight) per tier.
+6. **Identify risks** explicitly.
+7. **Propose a plan**, phased if large. Declare what files will
    change, what invariants are load-bearing, and what tests will
    cover it.
-7. **Wait for approval.**
-8. **Execute the approved plan** atomically.
-9. **Report** diffs, reasoning, invariant validation, and suggested
-   tests. Propose the next step.
+8. **Wait for approval.**
+9. **Execute the approved plan** atomically.
+10. **Write ledger entry** with the canonical-form hash.
+11. **Report** diffs, reasoning, invariant validation, ledger entry
+    hash, and suggested tests. Propose the next step.
+
+## 3. Change Tiers (Constellation §12)
+
+Every change must be classified. Every session must declare the tier
+before acting.
+
+### Tier 1 — Core System Changes (Full Constellation Loop)
+
+Architecture, protocols, ledger format, security boundaries, scaling
+policies, doctrine amendments, new ritual registrations.
+
+Required steps: all 9 of the Constellation Loop
+([`CONSTELLATION.md`](./CONSTELLATION.md) §10).
+
+### Tier 2 — Significant Feature Work (Abbreviated Loop)
+
+Adding a non-foundational feature, refactoring an existing ritual,
+introducing a new dependency.
+
+Required steps: system map, domain classification, integrity check,
+regenerative check.
+
+### Tier 3 — Minor Changes (Lightweight Check)
+
+Typo fixes, doc polish, comment improvements, non-behavioral
+reformatting.
+
+Required steps: domain classification, integrity check.
+
+**Invariant.** No change is exempt from doctrine — only the scope
+varies. Skipping a required step at any tier requires a formal
+waiver per [`WAIVERS.md`](./WAIVERS.md).
 
 ## 3. Commit Discipline
 

@@ -1,6 +1,9 @@
-# Runtime-generated ledger. Format spec is tracked; contents are not.
-ledger/*.ndjson
-ledger/*.ndjson.*
+# Ledger is TRACKED (Constellation §13, Shrike I1 — append-only history
+# must be auditable via git). Do not add ledger/*.jsonl to this file.
+# Temporary editor backups in the ledger dir, however, are ignored:
+ledger/*.jsonl.swp
+ledger/*.jsonl.bak
+ledger/*.jsonl.tmp
 
 # Rust
 target/
