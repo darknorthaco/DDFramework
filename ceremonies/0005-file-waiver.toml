@@ -1,0 +1,43 @@
+# Ritual manifest — file-waiver
+# Contract: records a waiver filing per CONSTELLATION §14 and WAIVERS.md.
+
+id     = "0005"
+name   = "file-waiver"
+status = "implemented"  # Phase 3
+
+purpose = "Record a waiver filing. Hashes the waiver manifest and writes a waiver.filed entry to the ledger. The operator is responsible for updating WAIVERS.md; this ritual is the mandatory ceremony-logging step."
+
+[inputs]
+id      = { flag = "--id",      required = true, doc = "Waiver id (W-YYYYMMDD-NN) matching the WAIVERS.md entry." }
+waiver  = { flag = "--waiver",  required = true, doc = "Path to the waiver manifest file." }
+approve = { flag = "--approve", required = true, doc = "Human-architect approval gate." }
+
+[outputs]
+ledger_event_kind = "waiver.filed"
+
+[side_effects]
+reads   = ["<waiver file>", "doctrine.toml", "constellation.toml", "ledger/events.jsonl"]
+writes  = ["ledger/events.jsonl"]
+network = false
+
+[invariants_upheld]
+I1 = "append-only — waiver recorded in the chain"
+I2 = "content-addressed — waiver manifest referenced by SHA-256"
+I5 = "no ambient state — id and path are explicit"
+I7 = "no silent mutation — approval gate precedes ledger write"
+
+inverse = "waiver.expired or waiver.withdrawn (future ritual)"
+irreversibility_confirmation = "not required — filings are recorded facts; expiry/withdrawal are new events"
+
+[ledger_entry_schema]
+additional_fields = [
+    "waiver_id",
+    "waiver_path",
+    "waiver_hash",
+    "human_approved",
+]
+
+[failure_modes]
+missing_approve       = "refuse; operator must supply --approve"
+waiver_file_missing   = "exit 3; cannot hash a file that doesn't exist"
+ledger_append_failure = "exit 3"

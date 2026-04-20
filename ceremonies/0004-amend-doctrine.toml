@@ -1,0 +1,45 @@
+# Ritual manifest — amend-doctrine
+# Contract: records a doctrine amendment ceremony.
+
+id     = "0004"
+name   = "amend-doctrine"
+status = "implemented"  # Phase 3
+
+purpose = "Record that DOCTRINE.md and/or doctrine.toml have been amended. This ritual does NOT modify files; the operator edits doctrine by hand. The ritual is the mandatory ceremony-logging step (Constellation §9, Shrike VII)."
+
+[inputs]
+version    = { flag = "--version",    required = true,  doc = "New doctrine SemVer." }
+rationale  = { flag = "--rationale",  required = true,  doc = "Written rationale for the amendment." }
+domain     = { flag = "--domain",     required = false, default = "complicated", doc = "Cynefin domain classification." }
+approve    = { flag = "--approve",    required = true,  doc = "Human-architect approval gate." }
+
+[outputs]
+ledger_event_kind = "doctrine.amended"
+
+[side_effects]
+reads   = ["doctrine.toml", "constellation.toml", "ledger/events.jsonl"]
+writes  = ["ledger/events.jsonl"]
+network = false
+
+[invariants_upheld]
+I1 = "append-only — amendment recorded in the chain"
+I2 = "content-addressed — both old and new doctrine hashes included"
+I5 = "no ambient state — all inputs are explicit flags"
+I6 = "doctrine-as-code — new hash recorded so future verify calls can be cross-referenced"
+I7 = "no silent mutation — if the operator edited doctrine without running this ritual, the next `phantom verify` will still pass (hashes match) BUT there will be no corresponding doctrine.amended entry in the ledger; this is detectable by GHOST"
+
+inverse = "none (irreversible)"
+irreversibility_confirmation = "implicit — --approve flag"
+
+[ledger_entry_schema]
+additional_fields = [
+    "previous_doctrine_hash",
+    "rationale",
+    "human_approved",
+]
+
+[failure_modes]
+missing_approve          = "refuse to record; operator must supply --approve"
+invalid_domain           = "refuse; show allowed set"
+no_doctrine_change       = "refuse — cannot record an amendment when hash is unchanged"
+ledger_append_failure    = "exit 3 without writing; operator inspects disk"

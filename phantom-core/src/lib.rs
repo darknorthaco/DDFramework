@@ -16,7 +16,7 @@ pub mod timestamp;
 
 /// Version of the Shrike architectural doctrine this binary was
 /// built against (see doctrine.toml `[meta].doctrine_version`).
-pub const DOCTRINE_VERSION: &str = "0.3.0";
+pub const DOCTRINE_VERSION: &str = "0.4.0";
 
 /// Version of the Constellation (constitutional) doctrine this
 /// binary was built against (see constellation.toml `[meta].version`).

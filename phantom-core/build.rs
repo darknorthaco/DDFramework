@@ -18,7 +18,11 @@ include!("src/sha256.rs");
 fn read_and_hash(path: &Path) -> String {
     let bytes = fs::read(path)
         .unwrap_or_else(|e| panic!("phantom-core build: cannot read {}: {}", path.display(), e));
-    sha256_hex(&bytes)
+    // Normalize line endings before hashing so the embedded hash is
+    // platform-independent (CRLF on Windows and LF on Unix produce
+    // the same digest).
+    let normalized = strip_cr(&bytes);
+    sha256_hex(&normalized)
 }
 
 fn main() {

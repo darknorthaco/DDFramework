@@ -10,6 +10,11 @@ description  = "Shrike Phantom — sovereign, ceremony-first ritual core."
 [[bin]]
 name = "phantom"
 path = "src/main.rs"
+# Disable cargo's synthetic test runner for this bin. main.rs contains
+# no `#[test]` functions; the integration suite lives in tests/*.rs.
+# This also sidesteps Windows Application Control policies that may
+# block execution of freshly-built test-runner binaries.
+test = false
 
 [lib]
 name = "phantom_core"

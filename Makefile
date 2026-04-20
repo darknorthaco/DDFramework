@@ -55,7 +55,7 @@ ghost:
 	$(PYTHON) -m ghost $(LEDGER)
 
 test:
-	$(CARGO) test --workspace --release
+	$(CARGO) test --workspace --release --lib --tests
 	$(PYTHON) -m unittest discover -s ghost-observer -v
 
 clean:

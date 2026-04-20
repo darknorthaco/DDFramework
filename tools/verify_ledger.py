@@ -33,6 +33,12 @@ def canonical_bytes(obj: dict) -> bytes:
     ).encode("utf-8")
 
 
+def sha256_file_normalized(path: pathlib.Path) -> str:
+    """SHA-256 of a text file after stripping CR bytes (LF-normalized)."""
+    data = path.read_bytes().replace(b"\r", b"")
+    return hashlib.sha256(data).hexdigest()
+
+
 def verify(path: pathlib.Path) -> int:
     if not path.exists():
         print(f"ledger: {path} does not exist", file=sys.stderr)

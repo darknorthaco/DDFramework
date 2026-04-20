@@ -36,6 +36,12 @@ def canonical_bytes(obj: dict) -> bytes:
     ).encode("utf-8")
 
 
+def sha256_file_normalized(path: pathlib.Path) -> str:
+    """SHA-256 of a text file after stripping CR bytes (LF-normalized)."""
+    data = path.read_bytes().replace(b"\r", b"")
+    return hashlib.sha256(data).hexdigest()
+
+
 def read_head(path: pathlib.Path) -> str:
     """Return the entry_hash of the last ledger line, or ZERO_HASH."""
     if not path.exists() or path.stat().st_size == 0:

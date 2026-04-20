@@ -43,19 +43,23 @@ Read these, in this order:
 
 ## Status
 
-**v0.3.0 — Skeleton live; invariant I6 physically enforced.**
-Three-layer skeleton in place: `phantom-core` (Rust, zero deps),
-`hyperion-net` (Rust + C stubs), `ghost-observer` (Python, stdlib
-only). The `phantom verify` ritual executes end-to-end: embedded
-doctrine hashes vs. on-disk hashes, append to ledger (chained from
-genesis), exit non-zero on mismatch.
+**v0.4.0 — Sound doctrine, sound body.** Doctrine can now evolve
+through a first-class ritual (`phantom amend-doctrine`), waivers can
+be filed through another (`phantom file-waiver`), and `doctrine_hash`
+values are line-ending-normalized so Windows and Unix checkouts
+produce identical digests. Five rituals registered; three executors
+implemented (`verify`, `amend-doctrine`, `file-waiver`).
 
 ```sh
-make build          # build phantom-core + hyperion-net (release)
-make verify         # run phantom verify (writes a verify.result entry)
-make verify-ledger  # audit the hash chain (stdlib Python)
-make ghost          # read ledger via ghost-observer
-make test           # cargo tests + python unittest
+make build                                    # release build
+make verify                                   # phantom verify ritual
+make verify-ledger                            # audit chain (stdlib Python)
+make ghost                                    # read-only observer
+make test                                     # cargo + python unit tests
+
+# Ceremonies (all require --approve per Constellation §14)
+phantom amend-doctrine --version <v> --rationale "<why>" --approve
+phantom file-waiver    --id <W-id>  --waiver <path>        --approve
 ```
 
 ## License

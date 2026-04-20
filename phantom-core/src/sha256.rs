@@ -131,3 +131,22 @@ pub fn sha256_hex(data: &[u8]) -> String {
     }
     s
 }
+
+/// Strip every 0x0D byte from `data`. Used to normalize CRLF -> LF
+/// before hashing text files, so cross-platform checkouts produce
+/// identical `doctrine_hash` values.
+pub fn strip_cr(data: &[u8]) -> Vec<u8> {
+    data.iter().copied().filter(|b| *b != 0x0d).collect()
+}
+
+/// SHA-256 of the file at `path` after stripping CR bytes. Returns
+/// the lowercase hex digest (without the "sha256:" prefix).
+///
+/// This is the CANONICAL file-hash function used for doctrine.toml
+/// and constellation.toml. It is NOT a general-purpose file hash:
+/// binary files should use `sha256_hex` over raw bytes.
+pub fn sha256_hex_file_normalized(path: &std::path::Path) -> std::io::Result<String> {
+    let bytes = std::fs::read(path)?;
+    let normalized = strip_cr(&bytes);
+    Ok(sha256_hex(&normalized))
+}
