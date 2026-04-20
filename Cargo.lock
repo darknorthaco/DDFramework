@@ -4,8 +4,8 @@ version = 4
 
 [[package]]
 name = "hyperion-net"
-version = "0.4.0"
+version = "0.5.0"
 
 [[package]]
 name = "phantom-core"
-version = "0.4.0"
+version = "0.5.0"

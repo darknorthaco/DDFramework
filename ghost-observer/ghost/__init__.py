@@ -3,7 +3,7 @@
 Stdlib-only runtime dependencies. See LANGUAGES.md §3.3.
 """
 
-__version__ = "0.4.0"
+__version__ = "0.5.0"
 __all__ = ["__version__", "reader"]
 
 from . import reader  # noqa: E402  (re-export after __version__)

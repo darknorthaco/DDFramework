@@ -43,19 +43,22 @@ Read these, in this order:
 
 ## Status
 
-**v0.4.0 — Sound doctrine, sound body.** Doctrine can now evolve
-through a first-class ritual (`phantom amend-doctrine`), waivers can
-be filed through another (`phantom file-waiver`), and `doctrine_hash`
-values are line-ending-normalized so Windows and Unix checkouts
-produce identical digests. Five rituals registered; three executors
-implemented (`verify`, `amend-doctrine`, `file-waiver`).
+**v0.5.0 — Sound doctrine, sound body, sound mind.** GHOST now
+advises: seven rules (R001-R007) scan the ledger, doctrine files, and
+waivers on demand; findings are appended to an independent
+hash-chained advisory stream at `advisories/stream.jsonl`. GHOST is
+structurally read-only on the main ledger (a unit test enforces Shrike
+I8 by walking the source tree). Six rituals registered; four executors
+implemented (`verify`, `amend-doctrine`, `file-waiver`, `ghost-advise`).
 
 ```sh
 make build                                    # release build
 make verify                                   # phantom verify ritual
-make verify-ledger                            # audit chain (stdlib Python)
-make ghost                                    # read-only observer
-make test                                     # cargo + python unit tests
+make verify-ledger                            # audit main-ledger chain
+make ghost                                    # ledger summary (read-only)
+make ghost-advise                             # run GHOST advisor (R001-R007)
+make ghost-verify                             # audit advisory-stream chain
+make test                                     # full test gate
 
 # Ceremonies (all require --approve per Constellation §14)
 phantom amend-doctrine --version <v> --rationale "<why>" --approve

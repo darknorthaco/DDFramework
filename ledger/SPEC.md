@@ -75,18 +75,41 @@ may use any RFC 8785 implementation.
 
 ## 7. Event Kinds (growing registry)
 
+### 7.1 Active kinds
+
 | `event` | Purpose | Origin |
 |---|---|---|
-| `doctrine_amendment` | Ratifies or updates a doctrine document | Amendment ceremony |
+| `doctrine_amendment` | Genesis-style amendment ceremony entry | Bootstrap (Phase 1) |
+| `doctrine.amended` | Ritual-produced amendment entry | Ritual `0004-amend-doctrine` |
 | `verify.result` | Records the outcome of `phantom verify` | Ritual `0001-verify` |
 | `deploy.applied` | Records a deployment mutation | Ritual `0002-deploy` |
 | `lan.scan.result` | Records a LAN discovery scan | Ritual `0003-lan-scan` |
-| `waiver.filed` | Records a new waiver | Waiver protocol |
+| `waiver.filed` | Records a new waiver | Ritual `0005-file-waiver` |
 | `waiver.expired` | Records automatic expiration | Ledger keeper |
 | `postmortem` | Records a blame-free retrospective | Constellation §6 |
+| `ledger_correction` | Replaces (never edits) a prior incorrect entry | Correction ceremony |
+
+### 7.2 Bootstrap-era kinds (retired, preserved for historical validity)
+
+These kinds appear in early ledger entries from Phases 2 and 3. They
+are recognized by validators so R005 does not fire on historical data,
+but they are **not used by any current ritual** and should not be
+produced by new code.
+
+| `event` | Era | Replacement |
+|---|---|---|
+| `phase2.committed` | Phase 2 bootstrap | `doctrine.amended` (via ritual `0004`) |
+| `phase3.committed` | Phase 3 bootstrap | `doctrine.amended` (via ritual `0004`) |
+
+### 7.3 Non-ledger writers
+
+GHOST's advisory stream has its own event registry in
+[`advisories/SPEC.md`](../advisories/SPEC.md) §6. GHOST never writes
+to the main ledger (Shrike I8).
 
 New event kinds are added as rituals are registered. A new kind is
-itself a Tier-1 change: it must be added in a doctrine amendment.
+itself a Tier-1 change: it must be added in a doctrine amendment and
+simultaneously registered in `ghost-observer/ghost/rules/r005_unknown_event_kind.py`.
 
 ## 8. Reading the Ledger
 

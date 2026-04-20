@@ -7,7 +7,7 @@
 
 [meta]
 project              = "Shrike"
-doctrine_version     = "0.4.0"
+doctrine_version     = "0.5.0"
 prose_source         = "DOCTRINE.md"
 ratified             = "2026-04-20"
 constitutional_layer = "constellation.toml"
@@ -75,7 +75,7 @@ severity = "fatal"
 
 [rituals]
 manifest_dir = "ceremonies"
-registered   = ["verify", "deploy", "lan-scan", "amend-doctrine", "file-waiver"]
+registered   = ["verify", "deploy", "lan-scan", "amend-doctrine", "file-waiver", "ghost-advise"]
 
 # ---------------------------------------------------------------------------
 # Ledger — the single highest-leverage artifact in the system

@@ -24,14 +24,16 @@ export SOURCE_DATE_EPOCH
 .PHONY: help build verify verify-ledger test clean doctrine ghost
 
 help:
-	@echo "Shrike — Makefile targets"
+	@echo "Shrike - Makefile targets"
 	@echo ""
 	@echo "  make build          Build phantom-core and hyperion-net (release)"
 	@echo "  make verify         Run phantom verify (requires build first)"
 	@echo "  make verify-ledger  Audit ledger/events.jsonl hash chain (pure Python)"
 	@echo "  make test           Run all tests (cargo + python)"
 	@echo "  make doctrine       Print embedded doctrine hashes from phantom"
-	@echo "  make ghost          Run ghost-observer reader"
+	@echo "  make ghost          Run ghost-observer ledger summary (read-only)"
+	@echo "  make ghost-advise   Run GHOST advisor (read-only on ledger; writes advisories)"
+	@echo "  make ghost-verify   Verify advisory stream hash chain"
 	@echo "  make clean          Remove target/ and python caches"
 	@echo ""
 	@echo "  SOURCE_DATE_EPOCH = $(SOURCE_DATE_EPOCH)"
@@ -53,6 +55,12 @@ verify-ledger:
 
 ghost:
 	$(PYTHON) -m ghost $(LEDGER)
+
+ghost-advise:
+	$(PYTHON) -m ghost advise
+
+ghost-verify:
+	$(PYTHON) -m ghost verify-advisories
 
 test:
 	$(CARGO) test --workspace --release --lib --tests

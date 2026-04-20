@@ -180,8 +180,12 @@ Shrike/
 │   ├── 0003-lan-scan.toml       (status: declared)
 │   ├── 0004-amend-doctrine.toml (status: implemented)
 │   └── 0005-file-waiver.toml    (status: implemented)
-└── ledger/
-    ├── SPEC.md                (format spec — NDJSON + hash chain)
-    ├── events.jsonl           (append-only, tracked in git)
-    └── blobs/                 (content-addressed artifact store)
+├── ledger/
+│   ├── SPEC.md                (format spec — NDJSON + hash chain)
+│   ├── events.jsonl           (append-only, tracked in git)
+│   └── blobs/                 (content-addressed artifact store)
+└── advisories/                (GHOST-only write surface, Shrike I8)
+    ├── SPEC.md                (advisory chain format)
+    ├── stream.jsonl           (hash-chained advisory log)
+    └── blobs/                 (future evidence blobs)
 ```

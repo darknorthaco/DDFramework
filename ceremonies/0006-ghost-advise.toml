@@ -1,0 +1,59 @@
+# Ritual manifest — ghost-advise
+# Contract: run GHOST's rule registry against the main ledger and
+# record emitted advisories to the advisory stream.
+
+id     = "0006"
+name   = "ghost-advise"
+status = "implemented"  # Phase 4
+
+purpose = "Observe the fabric and emit advisories. Read-only on the main ledger (Shrike I8). Writes only to advisories/stream.jsonl."
+
+[inputs]
+# No required inputs beyond defaults. All paths resolve relative to cwd.
+ledger        = { flag = "--ledger",        required = false, default = "ledger/events.jsonl" }
+doctrine      = { flag = "--doctrine",      required = false, default = "doctrine.toml" }
+constellation = { flag = "--constellation", required = false, default = "constellation.toml" }
+waivers       = { flag = "--waivers",       required = false, default = "WAIVERS.md" }
+advisories    = { flag = "--advisories",    required = false, default = "advisories/stream.jsonl" }
+
+[outputs]
+# GHOST has its OWN event kind registry. It NEVER writes to the main
+# ledger. This is a hard architectural invariant.
+stream            = "advisories/stream.jsonl"
+advisory_rule_ids = [
+    "R000_bootstrap",
+    "R001_doctrine_drift",
+    "R002_constellation_drift",
+    "R003_binary_stale",
+    "R004_waiver_expiring",
+    "R005_unknown_event_kind",
+    "R006_timestamp_regression",
+    "R007_ledger_staleness",
+]
+
+[side_effects]
+reads  = [
+    "ledger/events.jsonl",
+    "doctrine.toml",
+    "constellation.toml",
+    "WAIVERS.md",
+]
+writes = ["advisories/stream.jsonl"]  # appends only; never the main ledger
+network = false
+
+[invariants_upheld]
+I1 = "append-only — advisory stream is append-only, hash-chained"
+I2 = "content-addressed — advisories reference ledger_tail_hash"
+I8 = "GHOST is read-only on the main ledger (enforced by tests/test_readonly_on_main_ledger.py)"
+
+inverse = "self (observations are facts; they do not need inverses)"
+
+[failure_modes]
+main_ledger_corrupt       = "refuse to advise on a broken chain"
+advisory_stream_corrupt   = "refuse to append; operator must restore from git"
+rule_raised               = "log the failing rule_id to stderr; continue with other rules"
+
+[ledger_entry_schema]
+# Not applicable — this ritual does not write to the main ledger.
+# See advisories/SPEC.md for the advisory entry schema.
+writes_to_main_ledger = false
