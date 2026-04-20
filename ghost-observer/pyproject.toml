@@ -1,0 +1,30 @@
+[build-system]
+requires      = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name            = "ghost-observer"
+version         = "0.3.0"
+description     = "Shrike GHOST — read-only observer for the Phantom ledger."
+readme          = "README.md"
+requires-python = ">=3.11"
+license         = "LicenseRef-Shrike-Dual"
+authors         = [{ name = "Shrike copyright holder" }]
+keywords        = ["shrike", "phantom", "ghost", "constellation", "ledger"]
+classifiers     = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Intended Audience :: System Administrators",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Topic :: System :: Monitoring",
+]
+# Doctrine: stdlib-only runtime dependencies. See LANGUAGES.md §3.3.
+dependencies    = []
+
+[project.scripts]
+ghost = "ghost.__main__:main"
+
+[tool.setuptools]
+packages = ["ghost"]
+package-dir = { "" = "." }

@@ -71,9 +71,12 @@ Risk: Rust is younger than C and not ISO-standardized. Mitigations:
   machines produce byte-identical binaries given a pinned
   `SOURCE_DATE_EPOCH`.
 
-Approved dependencies (to be filled in Phase 2):
+Approved dependencies:
 
-- *(none yet — added with justification when introduced)*
+- *(none — v0.3.0 ships with zero third-party Rust crates.
+  SHA-256, canonical JSON, RFC 3339 timestamps, and the ledger
+  reader/writer are all hand-rolled under ~500 LOC in
+  `phantom-core/src/`.)*
 
 ### 3.3 Python 3 (stdlib-heavy)
 
@@ -93,7 +96,8 @@ Discipline:
 
 Approved third-party dependencies:
 
-- *(none yet)*
+- *(none — `ghost-observer` v0.3.0 is stdlib-only. Test framework is
+  `unittest` from stdlib, not pytest.)*
 
 ### 3.4 Zig (reserved)
 

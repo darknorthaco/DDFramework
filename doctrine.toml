@@ -7,7 +7,7 @@
 
 [meta]
 project              = "Shrike"
-doctrine_version     = "0.2.0"
+doctrine_version     = "0.3.0"
 prose_source         = "DOCTRINE.md"
 ratified             = "2026-04-20"
 constitutional_layer = "constellation.toml"

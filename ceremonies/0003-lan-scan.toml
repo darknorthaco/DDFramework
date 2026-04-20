@@ -1,0 +1,33 @@
+# Ritual manifest — lan-scan
+# Contract: see RITUALS.md §3.
+
+id     = "0003"
+name   = "lan-scan"
+status = "declared"  # executor not yet implemented (Phase 3+)
+
+purpose = "Enumerate reachable Hyperion nodes on an explicit CIDR. Read-only discovery."
+
+[inputs]
+cidr       = { flag = "--cidr",       required = true, doc = "Explicit CIDR to scan (no auto-discovery)." }
+port       = { flag = "--port",       required = true, doc = "Hyperion listening port." }
+timeout_ms = { flag = "--timeout-ms", required = true, doc = "Per-host timeout in milliseconds." }
+
+[outputs]
+stdout            = "table of responding nodes with version and doctrine-hash"
+ledger_event_kind = "lan.scan.result"
+
+[side_effects]
+reads   = []
+writes  = ["ledger/events.jsonl"]
+network = true  # outbound probes only, no writes to remote hosts
+
+[invariants_upheld]
+I5 = "no ambient state — CIDR is explicit; no inference of 'my subnet'"
+I7 = "scan summary written to ledger"
+
+inverse = "self (read-only)"
+
+[failure_modes]
+invalid_cidr             = "halt immediately"
+raw_socket_no_permission = "report; suggest capability-setting procedure"
+responder_doctrine_drift = "include in result with warning; GHOST will advise"

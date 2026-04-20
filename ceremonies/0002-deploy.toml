@@ -1,0 +1,37 @@
+# Ritual manifest — deploy
+# Contract: see RITUALS.md §2.
+
+id     = "0002"
+name   = "deploy"
+status = "declared"  # executor not yet implemented (Phase 3+)
+
+purpose = "Install a Phantom-built artifact onto a Hyperion node. Canonical mutating ritual. Every deploy is explicit, logged, reversible."
+
+[inputs]
+artifact = { flag = "--artifact", required = true, doc = "SHA-256 content-address of the artifact blob." }
+target   = { flag = "--target",   required = true, doc = "Hyperion node identifier." }
+manifest = { flag = "--manifest", required = true, doc = "Path to deployment manifest declaring env, mounts, services." }
+
+[outputs]
+ledger_event_kind = "deploy.applied"
+
+[side_effects]
+reads  = ["ledger/blobs/<sha256>", "<manifest>"]
+writes = ["<target>:<install-path>", "ledger/events.jsonl"]
+network = true
+
+[invariants_upheld]
+I1 = "append-only — prior state captured in ledger pre-image field"
+I2 = "content-addressed — artifact referenced by SHA-256"
+I3 = "reversibility — inverse is `rollback`"
+I5 = "no ambient state — manifest declares all environment"
+I7 = "ledger write precedes filesystem mutation"
+
+inverse = "rollback"
+irreversibility_confirmation = "not required (inverse exists)"
+
+[failure_modes]
+artifact_not_in_blob_store = "halt before any mutation"
+manifest_undeclared_env    = "halt with listing of unresolved vars"
+target_unreachable         = "log status=failed; no mutation occurred"
+partial_write              = "log status=partial; rollback required"

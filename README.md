@@ -43,11 +43,20 @@ Read these, in this order:
 
 ## Status
 
-**v0.2.0 — Constitution ratified.** Documents only. Ledger bootstrapped
-with the genesis entry recording ratification. No executable code yet.
-The next phase scaffolds the three layer crates (`phantom-core`,
-`hyperion-net`, `ghost-observer`) and implements the `verify` ritual
-end-to-end.
+**v0.3.0 — Skeleton live; invariant I6 physically enforced.**
+Three-layer skeleton in place: `phantom-core` (Rust, zero deps),
+`hyperion-net` (Rust + C stubs), `ghost-observer` (Python, stdlib
+only). The `phantom verify` ritual executes end-to-end: embedded
+doctrine hashes vs. on-disk hashes, append to ledger (chained from
+genesis), exit non-zero on mismatch.
+
+```sh
+make build          # build phantom-core + hyperion-net (release)
+make verify         # run phantom verify (writes a verify.result entry)
+make verify-ledger  # audit the hash chain (stdlib Python)
+make ghost          # read ledger via ghost-observer
+make test           # cargo tests + python unittest
+```
 
 ## License
 

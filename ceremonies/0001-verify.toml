@@ -1,0 +1,42 @@
+# Ritual manifest — verify
+# Contract: see RITUALS.md §1.
+
+id     = "0001"
+name   = "verify"
+status = "implemented"  # Phase 2
+
+purpose = "Confirm repository state matches doctrinal expectations. Read-only; appends one ledger entry."
+
+[inputs]
+# All ritual inputs are explicit arguments (Shrike I5).
+root        = { flag = "--root", default = ".", required = false, doc = "Repo root; where doctrine.toml lives." }
+
+[outputs]
+stdout            = "human-readable verification report"
+ledger_event_kind = "verify.result"
+# No files mutated outside the ledger.
+
+[side_effects]
+reads  = ["doctrine.toml", "constellation.toml", "ledger/events.jsonl"]
+writes = ["ledger/events.jsonl"]  # append-only (Shrike I1)
+network = false
+
+[invariants_upheld]
+I2 = "content-addressed — doctrine and constellation referenced by SHA-256"
+I4 = "deterministic build — binary embeds doctrine hash at compile time"
+I5 = "no ambient state — --root is explicit"
+I6 = "doctrine-as-code — halts on embedded vs. on-disk mismatch"
+I7 = "no silent mutation — ledger entry written BEFORE non-zero exit"
+
+inverse = "self (idempotent, read-only)"
+
+[failure_modes]
+doctrine_missing        = "halt; operator restores or runs amend-doctrine"
+doctrine_hash_mismatch  = "ledger entry written with status=doctrine-mismatch; exit 1"
+constellation_mismatch  = "ledger entry written with status=constellation-mismatch; exit 1"
+ledger_append_failure   = "exit 3 without writing; operator inspects disk / permissions"
+
+[ledger_entry_schema]
+# Fields beyond the ledger/SPEC.md required set:
+additional_fields = ["status"]
+status_values     = ["ok", "doctrine-mismatch", "constellation-mismatch", "both-mismatch"]

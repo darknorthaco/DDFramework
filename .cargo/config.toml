@@ -1,0 +1,18 @@
+# Shrike cargo configuration.
+#
+# Deterministic-build notes (DOCTRINE §IV — invariant I4):
+# - For reproducible binaries, set SOURCE_DATE_EPOCH to a fixed value
+#   at build time. The Makefile exports this automatically from the
+#   latest git commit timestamp when building.
+# - `incremental = false` in the release profile is already set in
+#   the root Cargo.toml.
+# - No build scripts may fetch from the network (LANGUAGES.md §3.2).
+
+[build]
+# Targets are written into repo-root target/ (cargo default inside a
+# workspace). Pinned explicitly for clarity.
+target-dir = "target"
+
+[net]
+# Doctrine: no network during build (LANGUAGES.md §5).
+offline = true

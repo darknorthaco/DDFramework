@@ -1,0 +1,15 @@
+[package]
+name         = "hyperion-net"
+version      = { workspace = true }
+edition      = { workspace = true }
+rust-version = { workspace = true }
+license      = { workspace = true }
+publish      = { workspace = true }
+description  = "Shrike Hyperion — spatial-collapse network fabric (skeleton)."
+
+[lib]
+name = "hyperion_net"
+path = "src/lib.rs"
+
+# Doctrine: zero dependencies. See LANGUAGES.md §3.2.
+[dependencies]

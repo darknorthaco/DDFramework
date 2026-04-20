@@ -161,14 +161,23 @@ Shrike/
 ├── LICENSE
 ├── LICENSE-NONCOMMERCIAL
 ├── LICENSE-COMMERCIAL
-├── phantom-core/              (Phase 2 — Rust binary)
-├── hyperion-net/              (Phase 2 — Rust + C FFI)
-│   └── c-primitives/
-├── ghost-observer/            (Phase 2 — Python package)
-├── ceremonies/                (Phase 2 — ritual manifests)
-│   ├── 0001-verify.toml
-│   ├── 0002-deploy.toml
-│   └── 0003-lan-scan.toml
+├── Cargo.toml                 (workspace root, pinned 1.95.0)
+├── rust-toolchain.toml        (stable-1.95.0 pin)
+├── Makefile                   (POSIX build entry point)
+├── phantom-core/              (Rust binary — phantom bin target)
+│   ├── build.rs               (embeds doctrine hashes at build time)
+│   └── src/ {main,lib,sha256,canonical,ledger,timestamp}.rs
+├── hyperion-net/              (Rust lib — skeleton)
+│   └── c-primitives/          (ISO C11 stubs, not yet linked)
+├── ghost-observer/            (Python package, stdlib-only)
+│   └── ghost/ {__init__,__main__,reader}.py
+├── tools/                     (stdlib-only Python helpers)
+│   ├── verify_ledger.py       (chain auditor)
+│   └── append_ledger.py       (ceremony-entry appender)
+├── ceremonies/                (ritual manifests)
+│   ├── 0001-verify.toml       (status: implemented)
+│   ├── 0002-deploy.toml       (status: declared)
+│   └── 0003-lan-scan.toml     (status: declared)
 └── ledger/
     ├── SPEC.md                (format spec — NDJSON + hash chain)
     ├── events.jsonl           (append-only, tracked in git)

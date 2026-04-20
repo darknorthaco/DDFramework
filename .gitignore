@@ -5,10 +5,11 @@ ledger/*.jsonl.swp
 ledger/*.jsonl.bak
 ledger/*.jsonl.tmp
 
-# Rust
+# Rust build outputs (Cargo.lock IS tracked for reproducibility)
 target/
 **/*.rs.bk
 Cargo.lock.tmp
+!Cargo.lock
 
 # Python
 __pycache__/
