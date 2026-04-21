@@ -6,12 +6,16 @@
 # and refuses to run if the on-disk hash differs (invariant I6).
 
 [meta]
-project              = "Shrike"
-doctrine_version     = "0.5.0"
-prose_source         = "DOCTRINE.md"
-ratified             = "2026-04-20"
-constitutional_layer = "constellation.toml"
-constitution_version = "0.1.1"
+project                    = "Shrike"                # legacy umbrella label (frozen)
+engine                     = "DDFramework"           # canonical engine identity
+engine_identity_doc        = "DDFRAMEWORK.md"
+era                        = "engine"                # transitions to "application" for P5+ apps
+application_era_begins_at  = "5.0.0"
+doctrine_version           = "0.6.0"
+prose_source               = "DOCTRINE.md"
+ratified                   = "2026-04-20"
+constitutional_layer       = "constellation.toml"
+constitution_version       = "0.1.1"
 
 [palette]
 # Languages permitted inside Shrike. Rationale in LANGUAGES.md.

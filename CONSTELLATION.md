@@ -317,17 +317,19 @@ The canonical form used for hashing and the required extension fields
 
 ---
 
-## 17. Relationship to the Shrike Architectural Doctrine
+## 17. Relationship to the DDFramework Architectural Doctrine
 
 Constellation is the **constitution**. It governs principle.
-Shrike's [`DOCTRINE.md`](./DOCTRINE.md) is the **architecture** — the
-specific instantiation that implements those principles as ritual-first,
-ledger-backed, invariant-enforced code.
+The DDFramework [`DOCTRINE.md`](./DOCTRINE.md) is the **architecture** —
+the specific instantiation that implements those principles as
+ritual-first, ledger-backed, invariant-enforced code.
 
 When they conflict, Constellation §11 priority order applies.
-In practice no Shrike invariant (I1–I8) contradicts any Constellation
-principle; Shrike's invariants are the concrete mechanisms by which
-Constellation's mandates are enforced in this particular fabric.
+In practice no DDFramework invariant (I1–I8, historically labeled
+*"Shrike I1–I8"*) contradicts any Constellation principle; the
+invariants are the concrete mechanisms by which Constellation's
+mandates are enforced in this engine.
 
 Amendments to either document require the same ceremony and the same
-ledger.
+ledger. For the engine's identity and scope definition see
+[`DDFRAMEWORK.md`](./DDFRAMEWORK.md).

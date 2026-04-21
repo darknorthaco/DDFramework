@@ -1,11 +1,14 @@
-# Shrike — Architecture
+# DDFramework — Architecture
 
-This document describes the three-layer design of the Shrike fabric and
-applies the Donella-Meadows systems-thinking lenses required by
-[`DOCTRINE.md`](./DOCTRINE.md) §III. The architecture is an
-**instantiation** of the [Constellation Doctrine](./CONSTELLATION.md);
-when this document and Constellation conflict, Constellation §11
-priority applies.
+This document describes the three-layer design of the DDFramework
+engine (historically the *Shrike* fabric; label frozen per the v0.6.0
+scope redefinition) and applies the Donella-Meadows systems-thinking
+lenses required by [`DOCTRINE.md`](./DOCTRINE.md) §III. The
+architecture is an **instantiation** of the [Constellation
+Doctrine](./CONSTELLATION.md); when this document and Constellation
+conflict, Constellation §11 priority applies.
+
+For engine identity and scope, see [`DDFRAMEWORK.md`](./DDFRAMEWORK.md).
 
 ## 1. Three Layers
 

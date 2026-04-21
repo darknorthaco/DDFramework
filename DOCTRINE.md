@@ -1,17 +1,24 @@
-# Shrike — Architectural Doctrine
+# DDFramework — Architectural Doctrine
 
-**Version:** 0.2.0
+**Version:** 0.6.0
 **Status:** Ratified
+**Engine identity document:** [`DDFRAMEWORK.md`](./DDFRAMEWORK.md)
 **Machine-readable mirror:** [`doctrine.toml`](./doctrine.toml)
 **Constitutional layer:** [`CONSTELLATION.md`](./CONSTELLATION.md) (Constellation Doctrine v0.1.1)
 **Amendment policy:** ceremony-only (see bottom of this file)
 
-> This document is the **architectural** doctrine of Shrike — the
-> concrete invariants and layers that implement the principles of the
-> [Constellation Doctrine](./CONSTELLATION.md). When they conflict,
-> Constellation §11 priority applies; Shrike's invariants I1–I8 are
-> the mechanisms by which Constellation's mandates are enforced in
-> this fabric.
+> This document is the **architectural** doctrine of the DDFramework
+> engine — the concrete invariants and layers that implement the
+> principles of the [Constellation Doctrine](./CONSTELLATION.md).
+> When they conflict, Constellation §11 priority applies. The
+> DDFramework invariants I1–I8 (historically labeled *"Shrike
+> I1–I8"* in code comments and manifests; labels frozen per the v0.6.0
+> scope redefinition) are the mechanisms by which Constellation's
+> mandates are enforced in the engine.
+>
+> "Shrike" is a legacy umbrella label at the workspace level; the
+> *engine* is DDFramework. See [`DDFRAMEWORK.md`](./DDFRAMEWORK.md)
+> for the full scope definition.
 
 ---
 

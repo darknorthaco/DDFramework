@@ -1,14 +1,21 @@
-# Shrike — Rules for Agents
+# DDFramework — Rules for Agents
 
 This file governs the behavior of any agent — human or AI — operating
 inside this repository. It is the operational counterpart to the
-doctrine stack: [`CONSTELLATION.md`](./CONSTELLATION.md) (constitution)
-and [`DOCTRINE.md`](./DOCTRINE.md) (architecture).
+doctrine stack: [`DDFRAMEWORK.md`](./DDFRAMEWORK.md) (engine identity),
+[`CONSTELLATION.md`](./CONSTELLATION.md) (constitution) and
+[`DOCTRINE.md`](./DOCTRINE.md) (architecture).
+
+> **Scope reminder (ratified at v0.6.0):** this repository is the
+> **DDFramework engine**. Applications — including the future Shrike
+> Monitor — are out of scope until Phase 5+. Do not add application
+> logic, application-specific rituals, or new "Shrike" branding to
+> engine code.
 
 If you are an AI coding assistant reading this because you were
-dropped into the Shrike workspace, **read this file first, read
-`CONSTELLATION.md` second, read `DOCTRINE.md` third, and propose a
-plan before any edit.**
+dropped into the DDFramework workspace, **read `DDFRAMEWORK.md` first,
+this file second, `CONSTELLATION.md` third, `DOCTRINE.md` fourth, and
+propose a plan before any edit.**
 
 ## 1. Absolute Rules
 

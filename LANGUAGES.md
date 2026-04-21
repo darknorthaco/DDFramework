@@ -1,9 +1,11 @@
-# Shrike — Language Policy (100-Year Horizon)
+# DDFramework — Language Policy (100-Year Horizon)
 
-Shrike is designed to be buildable and runnable a century from
-ratification. This document records the language palette, the
-rationale, and the discipline required to make the 100-year target
-plausible.
+The DDFramework engine (historically labeled *Shrike*; label frozen
+per the v0.6.0 scope redefinition) is designed to be buildable and
+runnable a century from ratification. This document records the
+language palette, the rationale, and the discipline required to make
+the 100-year target plausible. For engine identity and scope see
+[`DDFRAMEWORK.md`](./DDFRAMEWORK.md).
 
 ## 1. The Palette
 

@@ -22,7 +22,7 @@ from .reader import iter_entries
 from .rules import RULES
 
 
-GHOST_VERSION = "0.5.0"
+GHOST_VERSION = "0.6.0"
 RULESET_IDS = [
     "R001_doctrine_drift",
     "R002_constellation_drift",
