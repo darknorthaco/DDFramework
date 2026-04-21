@@ -54,3 +54,7 @@ credentials.json
 # OS / tool scratch
 *.log
 *.tmp
+
+# Ceremony scratch files (commit-message buffers used by automation)
+.commit-msg-tmp
+.commit-msg-*.tmp
