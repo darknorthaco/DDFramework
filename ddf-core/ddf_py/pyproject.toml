@@ -1,0 +1,29 @@
+[build-system]
+requires      = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name            = "ddf-core"
+version         = "0.1.0"
+description     = "DDFramework kernel Python API (wraps ghost-observer; engine v0.7.0)."
+readme          = "README.md"
+requires-python = ">=3.11"
+license         = "LicenseRef-Shrike-Dual"
+authors         = [{ name = "DDFramework copyright holder" }]
+keywords        = ["ddframework", "ddf", "ghost", "ledger", "kernel"]
+classifiers     = [
+    "Development Status :: 3 - Alpha",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+]
+# Doctrine: zero runtime dependencies. See LANGUAGES.md §3.3.
+# ghost-observer is located at import time via sys.path adjustment.
+dependencies    = []
+
+[project.scripts]
+ddf = "ddf.__main__:main"
+
+[tool.setuptools]
+packages = ["ddf"]
+package-dir = { "" = "." }

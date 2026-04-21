@@ -43,6 +43,6 @@ mod tests {
 
     #[test]
     fn crate_version_is_reported() {
-        assert_eq!(version(), "0.6.0");
+        assert_eq!(version(), "0.7.0");
     }
 }

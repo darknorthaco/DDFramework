@@ -1,0 +1,40 @@
+# Ritual manifest — kernelize
+# Contract: declare that the DDFramework kernel API (ddf-core/) has
+# been established. One-time ceremonial declaration; not a repeatable
+# executor.
+
+id     = "0007"
+name   = "kernelize"
+status = "declared"  # one-time Phase 5 ceremony; recorded via amend-doctrine
+
+purpose = "Formally declare that the DDFramework engine's stable API surface lives in ddf-core/ and that downstream applications (Application Era, v5.0.0+) MUST depend on that boundary rather than on internal layer crates."
+
+[inputs]
+# Kernelization is a ceremonial declaration. It has no runtime inputs;
+# the actual recording is done via `phantom amend-doctrine`.
+
+[outputs]
+ledger_event_kind = "doctrine.amended"  # recorded via amend-doctrine, not a new event kind
+
+[side_effects]
+reads   = ["ledger/events.jsonl", "doctrine.toml"]
+writes  = ["ledger/events.jsonl"]
+network = false
+
+[invariants_upheld]
+I1 = "append-only — kernelization recorded as amendment entry"
+I2 = "content-addressed — new doctrine_hash captured"
+I3 = "reversibility — `git revert` returns the tree to the pre-kernel state"
+I4 = "deterministic build — kernel adds no new dependencies"
+I5 = "no ambient state — kernel API uses explicit paths / arguments"
+I6 = "doctrine-as-code — amend-doctrine embeds the new doctrine hash"
+I7 = "no silent mutation — ledger entry precedes any side effect"
+I8 = "GHOST remains read-only on the main ledger; kernel exposes ghost via explicit dispatch"
+
+inverse = "none (declarative; deprecation would be a future amendment)"
+irreversibility_confirmation = "amend-doctrine --approve is the gate"
+
+[failure_modes]
+kernel_structure_missing   = "test_kernel_structure.py fails; remediate by restoring ddf-core/ tree"
+kernel_api_import_failure  = "test_kernel_api.py fails; remediate by fixing re-exports"
+behavior_parity_broken     = "test_no_behavior_change.py fails; the latest verify.result diverged from current normalized hashes"

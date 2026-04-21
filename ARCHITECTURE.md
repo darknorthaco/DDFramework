@@ -10,6 +10,37 @@ conflict, Constellation §11 priority applies.
 
 For engine identity and scope, see [`DDFRAMEWORK.md`](./DDFRAMEWORK.md).
 
+## 0. Kernel boundary (v0.7.0+)
+
+```
+┌────────────────────────────────────────────────────────────────┐
+│  APPLICATION ERA (v5.0.0+) — Shrike Monitor, Phantom           │
+│  Orchestrator, other DRKNRTH apps                              │
+└───────────────────────────┬────────────────────────────────────┘
+                            │ depends on:
+                            ▼
+┌────────────────────────────────────────────────────────────────┐
+│  ddf-core/  (KERNEL API — stable surface)                      │
+│    ddf/          Rust library + binary                         │
+│    ddf_py/       Python wrapper                                │
+│    simulation/   Phase 6 scaffolding                           │
+│    tests/        structure + API + no-behavior-change          │
+└───────────────────────────┬────────────────────────────────────┘
+                            │ dispatches to:
+                            ▼
+┌────────────────────────────────────────────────────────────────┐
+│  ENGINE INTERNALS (implementation; may be refactored freely)   │
+│    phantom-core/    hyperion-net/    ghost-observer/           │
+│    ledger/          advisories/      doctrine.toml             │
+│    constellation.toml                CONSTELLATION.md          │
+└────────────────────────────────────────────────────────────────┘
+```
+
+The kernel boundary is **conceptual**: it is enforced by what
+`ddf-core/` exposes in `ddf::` (Rust) and `ddf.` (Python), not by
+physical filesystem isolation. The engine internals stay where they
+are for continuity with all prior phases.
+
 ## 1. Three Layers
 
 ```

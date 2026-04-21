@@ -1,0 +1,23 @@
+[package]
+name         = "ddf"
+version      = "0.1.0"
+edition      = { workspace = true }
+rust-version = { workspace = true }
+license      = { workspace = true }
+publish      = { workspace = true }
+description  = "DDFramework stable kernel API (v0.1.0 binding to engine v0.7.0)."
+
+[[bin]]
+name = "ddf"
+path = "src/main.rs"
+# No inline tests in main.rs; structural tests live in tests/ directory.
+test = false
+
+[lib]
+name = "ddf"
+path = "src/lib.rs"
+
+# Doctrine: the kernel API stays on the zero-third-party-dep policy.
+# phantom-core is a path dependency inside the same workspace.
+[dependencies]
+phantom-core = { path = "../../phantom-core" }

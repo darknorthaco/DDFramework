@@ -53,24 +53,31 @@ Read these, in this order:
 
 ## Status
 
-**v0.6.0 — Engine Era complete; identity ratified as DDFramework.**
-Scope redefinition commit: this repository is the DDFramework engine.
-Legacy "Shrike" branding is preserved exactly where it already exists
-(help text, C FFI prefixes, pyproject metadata, doctrine `project`
-field, LICENSE text, invariant labels I1–I8) and will not be expanded.
-No executable behavior changes in this version. Six rituals registered;
-four executors implemented (`verify`, `amend-doctrine`, `file-waiver`,
-`ghost-advise`). GHOST's seven rules (R001–R007) remain silent on the
-clean post-amendment state. Phase 5+ moves into the Application Era.
+**v0.7.0 — Kernelization; embeddable kernel API formalized.** The
+DDFramework engine now exposes a stable API surface under
+[`ddf-core/`](./ddf-core/). Downstream applications depend on that
+boundary, not on the internal layer crates. `ddf` Rust bin +
+`ddf` Python package provide byte-for-byte parity with the underlying
+`phantom` CLI and `ghost` package respectively. No executable
+behavior changed; seven rituals registered (adds `kernelize`); four
+executors implemented (`verify`, `amend-doctrine`, `file-waiver`,
+`ghost-advise`); GHOST remains clean against the post-amendment state.
+Phase 6 will implement the simulation layer; Phase 5+ applications
+are still out of scope in this repository.
 
 ```sh
-make build                                    # release build
+make build                                    # release build (phantom + ddf)
 make verify                                   # phantom verify ritual
 make verify-ledger                            # audit main-ledger chain
 make ghost                                    # ledger summary (read-only)
 make ghost-advise                             # run GHOST advisor (R001-R007)
 make ghost-verify                             # audit advisory-stream chain
 make test                                     # full test gate
+
+# Kernel API (v0.7.0+)
+make ddf ARGS="verify"                        # ddf verify (parity with phantom verify)
+make ddf ARGS="advise"                        # ddf advise (parity with ghost advise)
+make ddf ARGS="ddf-version"                   # print ddf + engine version
 
 # Ceremonies (all require --approve per Constellation §14)
 phantom amend-doctrine --version <v> --rationale "<why>" --approve

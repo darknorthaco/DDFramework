@@ -9,9 +9,10 @@ PYTHON         ?= python
 CARGO          ?= cargo
 LEDGER         ?= ledger/events.jsonl
 
-# ghost is not installed as a wheel in Phase 2; it's run from source.
-# Set PYTHONPATH so `python -m ghost` resolves without `pip install`.
-PYTHONPATH     := ghost-observer
+# ghost and ddf are not installed as wheels in Engine-Era development;
+# they are run from source. PYTHONPATH makes both importable without
+# `pip install`. Separator is ':' on POSIX and works in WSL / Unix.
+PYTHONPATH     := ghost-observer:ddf-core/ddf_py
 export PYTHONPATH
 
 # Deterministic builds: export SOURCE_DATE_EPOCH from the latest
@@ -65,6 +66,10 @@ ghost-verify:
 test:
 	$(CARGO) test --workspace --release --lib --tests
 	$(PYTHON) -m unittest discover -s ghost-observer -v
+	$(PYTHON) -m unittest discover -s ddf-core -v
+
+ddf: build
+	$(CARGO) run --release --quiet --bin ddf -- $(ARGS)
 
 clean:
 	$(CARGO) clean

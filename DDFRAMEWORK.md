@@ -158,6 +158,52 @@ directory (or sibling repo) and depends on DDFramework via:
 
 ---
 
+## 7.1 Kernelization (v0.7.0)
+
+Starting at engine v0.7.0, the kernel API surface is formally
+declared under [`ddf-core/`](./ddf-core/). Downstream applications
+(Application Era, v5.0.0+) depend on that boundary rather than on
+the internal layer crates.
+
+Kernel boundary:
+
+```
+ddf-core/
+├── README.md            stable API contract
+├── ddf/                 Rust crate: `ddf` library + binary
+│   ├── Cargo.toml
+│   └── src/
+│       ├── lib.rs       ddf::verify, amend_doctrine, run_ritual, ledger, ghost
+│       └── main.rs      `ddf <subcommand>` CLI dispatcher
+├── ddf_py/              Python package: `ddf`
+│   ├── pyproject.toml
+│   └── ddf/             import ddf; ddf.verify(), ddf.advise(), ddf.ledger
+├── simulation/          Phase 6 scaffolding: diff, dryrun, replay, drift
+└── tests/               T1 structure, T2 API, T3 no-behavior-change
+```
+
+What does NOT change in v0.7.0:
+
+- No layer crate is moved. `phantom-core/`, `hyperion-net/`, and
+  `ghost-observer/` stay at the repo root as the engine's internal
+  implementation. The kernel boundary is **conceptual**, enforced by
+  the `ddf-core/` API surface and by its tests.
+- No existing invariant is weakened (I1–I8 unchanged).
+- No ritual semantics change. `phantom verify` and every other
+  subcommand behave exactly as they did in v0.6.0. The new `ddf`
+  binary is a thin dispatcher that forwards to them.
+- The legacy `shrike_sock_*` C ABI is documented as part of the
+  kernel contract without renaming.
+
+Stability contract:
+
+- `ddf::API_VERSION = "0.1.0"` and `ddf.__version__ = "0.1.0"` govern
+  the kernel API itself. They may evolve independently of the engine
+  `doctrine_version`.
+- Weakening the API surface (removing a function, renaming a public
+  symbol) is a **major** API bump and requires a Tier 1 amendment.
+- Adding to the surface is a **minor** bump.
+
 ## 8. Amendment policy
 
 This document and the engine's scope definition are governed by the

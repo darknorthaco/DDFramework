@@ -3,10 +3,11 @@ resolver = "2"
 members  = [
     "phantom-core",
     "hyperion-net",
+    "ddf-core/ddf",
 ]
 
 [workspace.package]
-version      = "0.6.0"
+version      = "0.7.0"
 edition      = "2021"
 rust-version = "1.95.0"
 license      = "LicenseRef-Shrike-Dual"

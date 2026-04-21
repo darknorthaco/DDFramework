@@ -3,9 +3,16 @@
 version = 4
 
 [[package]]
+name = "ddf"
+version = "0.1.0"
+dependencies = [
+ "phantom-core",
+]
+
+[[package]]
 name = "hyperion-net"
-version = "0.6.0"
+version = "0.7.0"
 
 [[package]]
 name = "phantom-core"
-version = "0.6.0"
+version = "0.7.0"
