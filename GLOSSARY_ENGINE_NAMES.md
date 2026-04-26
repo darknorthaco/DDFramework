@@ -9,6 +9,8 @@ used when reading or changing code.
 
 For the stable embedder vocabulary, see [`ddf-core/README.md`](./ddf-core/README.md) and [`ddf-core/KERNEL_API_MAP.md`](./ddf-core/KERNEL_API_MAP.md).
 
+**Diagrams:** [`docs/VISUAL_LAYERS.md`](./docs/VISUAL_LAYERS.md) (Mermaid + SVG).
+
 ---
 
 ## Layers and directories

@@ -39,6 +39,8 @@ public, and with the operator's consent.
   (ritual executor, ledger, advisor) in new code and reviews.
 - **Decoder ring (both):** [`GLOSSARY_ENGINE_NAMES.md`](./GLOSSARY_ENGINE_NAMES.md)
   maps mission names to standard software terms.
+- **Diagrams:** [`docs/VISUAL_LAYERS.md`](./docs/VISUAL_LAYERS.md) — stack, kernel,
+  sequence, and Meadows views (Mermaid + printable SVG).
 
 ## Three layers
 
@@ -68,6 +70,7 @@ Read these, in this order:
 14. [`ddf-core/KERNEL_API_MAP.md`](./ddf-core/KERNEL_API_MAP.md) — kernel public API map (Rust + Python)
 15. [`docs/RENAME_IMPACT_ANALYSIS.md`](./docs/RENAME_IMPACT_ANALYSIS.md) — Phase 3 rename inventory (binaries, crates, protocol)
 16. [`docs/RENAME_COMPATIBILITY_STRATEGY.md`](./docs/RENAME_COMPATIBILITY_STRATEGY.md) — Phase 3 waves, deprecation, rollback
+17. [`docs/VISUAL_LAYERS.md`](./docs/VISUAL_LAYERS.md) — layer diagrams (Mermaid + SVG for Visio/import)
 
 ## Status
 
