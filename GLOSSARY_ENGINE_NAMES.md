@@ -68,3 +68,7 @@ Historical label in code: *Shrike I1–I8* (frozen per v0.6.0). The identifiers 
 Renaming crates, binaries, or ledger event type strings is a **separate**
 migration (protocol and embedder impact). This glossary does **not**
 change any on-disk identifiers.
+
+**Phase 3 planning:** inventory and wave strategy live in
+[`docs/RENAME_IMPACT_ANALYSIS.md`](./docs/RENAME_IMPACT_ANALYSIS.md) and
+[`docs/RENAME_COMPATIBILITY_STRATEGY.md`](./docs/RENAME_COMPATIBILITY_STRATEGY.md).

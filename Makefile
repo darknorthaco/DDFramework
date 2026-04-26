@@ -5,7 +5,8 @@
 
 .POSIX:
 
-PYTHON         ?= python
+# Prefer python3 on POSIX dev boxes where `python` is absent (PEP 394).
+PYTHON         ?= python3
 CARGO          ?= cargo
 LEDGER         ?= ledger/events.jsonl
 
@@ -22,7 +23,9 @@ export PYTHONPATH
 SOURCE_DATE_EPOCH := $(shell git log -1 --pretty=%ct 2>/dev/null || echo 1745107200)
 export SOURCE_DATE_EPOCH
 
-.PHONY: help build verify verify-ledger test clean doctrine ghost
+.PHONY: help build verify verify-ledger test clean doctrine ghost \
+	ghost-advise ghost-verify advise ledger-summary advisory-verify \
+	executor-doctrine
 
 help:
 	@echo "Shrike - Makefile targets"
@@ -37,6 +40,13 @@ help:
 	@echo "  make ghost-verify   Verify advisory stream hash chain"
 	@echo "  make clean          Remove target/ and python caches"
 	@echo ""
+	@echo "Mechanical aliases (same recipes; see docs/RENAME_COMPATIBILITY_STRATEGY.md):"
+	@echo "  make ledger-summary -> ghost"
+	@echo "  make advise         -> ghost-advise"
+	@echo "  make advisory-verify -> ghost-verify"
+	@echo "  make executor-doctrine -> doctrine"
+	@echo ""
+	@echo "  PYTHON = $(PYTHON)   (override: make test PYTHON=python)"
 	@echo "  SOURCE_DATE_EPOCH = $(SOURCE_DATE_EPOCH)"
 
 build:
@@ -62,6 +72,12 @@ ghost-advise:
 
 ghost-verify:
 	$(PYTHON) -m ghost verify-advisories
+
+# Wave 1 mechanical aliases (Phase 3) — mission-named targets unchanged.
+ledger-summary: ghost
+advise: ghost-advise
+advisory-verify: ghost-verify
+executor-doctrine: doctrine
 
 test:
 	$(CARGO) test --workspace --release --lib --tests

@@ -66,6 +66,8 @@ Read these, in this order:
 12. [`advisories/SPEC.md`](./advisories/SPEC.md) — GHOST advisory stream specification
 13. [`GLOSSARY_ENGINE_NAMES.md`](./GLOSSARY_ENGINE_NAMES.md) — mission names ↔ mechanisms (decoder ring)
 14. [`ddf-core/KERNEL_API_MAP.md`](./ddf-core/KERNEL_API_MAP.md) — kernel public API map (Rust + Python)
+15. [`docs/RENAME_IMPACT_ANALYSIS.md`](./docs/RENAME_IMPACT_ANALYSIS.md) — Phase 3 rename inventory (binaries, crates, protocol)
+16. [`docs/RENAME_COMPATIBILITY_STRATEGY.md`](./docs/RENAME_COMPATIBILITY_STRATEGY.md) — Phase 3 waves, deprecation, rollback
 
 ## Status
 
@@ -88,6 +90,8 @@ make verify-ledger                            # audit main-ledger chain
 make ghost                                    # ledger summary (read-only)
 make ghost-advise                             # run GHOST advisor (R001-R007)
 make ghost-verify                             # audit advisory-stream chain
+# Mechanical Makefile aliases (same behavior): ledger-summary, advise,
+# advisory-verify, executor-doctrine — see docs/RENAME_COMPATIBILITY_STRATEGY.md
 make test                                     # full test gate
 
 # Kernel API (v0.7.0+)
