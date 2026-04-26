@@ -1,0 +1,4 @@
+# Copy to config/shell.toml and set engine_root to your DDFramework checkout.
+# See engines/README.md for the expected directory layout.
+
+engine_root = "engines/DDFramework"
