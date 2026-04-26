@@ -13,6 +13,26 @@ For the stable embedder vocabulary, see [`ddf-core/README.md`](./ddf-core/README
 
 ---
 
+## Maintaining this glossary (contributors and agents)
+
+When you touch any of the following in the **same change**, update **this
+file** and [`ddf-core/KERNEL_API_MAP.md`](./ddf-core/KERNEL_API_MAP.md) so the
+decoder ring stays accurate:
+
+- A **new or renamed** public `ddf` Rust or Python API symbol.
+- A **new ritual**, ceremony id, ledger `event` kind, or operator-facing
+  advisory rule identifier.
+- A **new or renamed** environment variable for the kernel boundary (`DDF_*`)
+  or a documented CLI entrypoint.
+- A **material change** to what a layer may read or write (must stay aligned
+  with [`DDFRAMEWORK.md`](./DDFRAMEWORK.md) and invariants I1–I8).
+
+This glossary **explains** identifiers; it does **not** change protocol
+strings, ledger history, or doctrine. Those follow `ledger/SPEC.md`,
+ceremonies, and amendment rituals.
+
+---
+
 ## Layers and directories
 
 | Mission name | Mechanism (what it is) | Typical location |

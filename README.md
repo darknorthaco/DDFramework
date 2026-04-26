@@ -86,6 +86,14 @@ executors implemented (`verify`, `amend-doctrine`, `file-waiver`,
 Phase 6 will implement the simulation layer; Phase 5+ applications
 are still out of scope in this repository.
 
+**Mechanical naming POAM:** **Closed** for Phases 1–2 and Phase 3 Wave 1
+(glossary, kernel map, Makefile aliases, rename strategy docs, visuals).
+Formal record: closure block in
+[`docs/RENAME_COMPATIBILITY_STRATEGY.md`](./docs/RENAME_COMPATIBILITY_STRATEGY.md).
+Further binary or crate renames are **event-driven** (packaging, embedders, or a
+planned major release). Prefer new effort on **Phase 6 simulation** or on
+**applications that depend on this engine**, not on cosmetic renames here.
+
 ```sh
 make build                                    # release build (phantom + ddf)
 make verify                                   # phantom verify ritual

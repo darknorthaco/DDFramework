@@ -125,6 +125,9 @@ waiver per [`WAIVERS.md`](./WAIVERS.md).
   *ritual*, *ledger*, *advisor*, *append-only*, *verify*, *transport*.
 - The canonical decoder ring is [`GLOSSARY_ENGINE_NAMES.md`](./GLOSSARY_ENGINE_NAMES.md);
   the kernel symbol table is [`ddf-core/KERNEL_API_MAP.md`](./ddf-core/KERNEL_API_MAP.md).
+- When adding or renaming **kernel API symbols**, **rituals**, **ledger event
+  kinds**, or **`DDF_*` env vars**, update the glossary and kernel map in the
+  same change (see **Maintaining this glossary** in `GLOSSARY_ENGINE_NAMES.md`).
 
 When modifying code:
 
