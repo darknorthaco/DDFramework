@@ -10,6 +10,12 @@ conflict, Constellation §11 priority applies.
 
 For engine identity and scope, see [`DDFRAMEWORK.md`](./DDFRAMEWORK.md).
 
+**Reading this doc:** operator-facing layer names (Phantom, GHOST,
+Hyperion) match mission language. For the same concepts in **standard
+software terms** (ritual executor, advisor, transport, append-only
+log), see [`GLOSSARY_ENGINE_NAMES.md`](./GLOSSARY_ENGINE_NAMES.md) and
+[`ddf-core/KERNEL_API_MAP.md`](./ddf-core/KERNEL_API_MAP.md).
+
 ## 0. Kernel boundary (v0.7.0+)
 
 ```

@@ -115,6 +115,17 @@ waiver per [`WAIVERS.md`](./WAIVERS.md).
 
 ## 4. Editing Guardrails
 
+### 4.0 Naming — mission vs mechanism (kernel and new code)
+
+- **Mission names** (Phantom, GHOST, Hyperion, Constellation) stay in
+  constitution, operator docs, and frozen protocol identifiers unless
+  changed by an explicit governance / kernel migration.
+- **New** Rust/Python public API and **new** modules should prefer
+  **mechanical** vocabulary in identifiers and primary docstrings:
+  *ritual*, *ledger*, *advisor*, *append-only*, *verify*, *transport*.
+- The canonical decoder ring is [`GLOSSARY_ENGINE_NAMES.md`](./GLOSSARY_ENGINE_NAMES.md);
+  the kernel symbol table is [`ddf-core/KERNEL_API_MAP.md`](./ddf-core/KERNEL_API_MAP.md).
+
 When modifying code:
 
 - Use exact, minimal diffs.

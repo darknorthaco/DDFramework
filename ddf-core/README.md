@@ -9,6 +9,22 @@ engine. Consumed by all future Application-Era software.
   source- and behavior-compatible across engine patch and minor
   bumps. Weakening is a major API bump.
 
+## Mechanical overview (kernel vocabulary)
+
+The `ddf` crate and `ddf` Python package are the **stable kernel
+boundary**. In plain software terms:
+
+| You see (mission) | In code / API (mechanism) |
+|-------------------|---------------------------|
+| Phantom (this repo’s engine) | **Ritual executor** + ledger writer (`phantom` binary, `phantom-core` types) |
+| GHOST (this repo’s engine) | **Read-only advisor** + advisory stream writer (`python -m ghost`, `ghost-observer`) |
+| `ddf verify` / `ddf::verify` | Subprocess call to **verify ritual** |
+| `ddf advise` / `ddf::ghost::advise` | Subprocess call to **advisor ritual** |
+| `ddf::ledger` | **Ledger** primitives (append-only hash chain) |
+
+Full symbol table: [`KERNEL_API_MAP.md`](./KERNEL_API_MAP.md).  
+Mission ↔ mechanism glossary (repo root): [`../GLOSSARY_ENGINE_NAMES.md`](../GLOSSARY_ENGINE_NAMES.md).
+
 ## What this directory is
 
 This directory is the **kernel boundary**. Downstream applications

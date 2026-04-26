@@ -41,18 +41,20 @@ pub const API_VERSION: &str = "0.1.0";
 pub const ENGINE_VERSION: &str = "0.7.0";
 
 /// Append-only hash-chained ledger operations.
+#[doc(alias = "append_only_log")]
+#[doc(alias = "event_log")]
 pub mod ledger {
     //! Re-export of the engine ledger primitives.
     //! See `ledger/SPEC.md` for format.
     pub use phantom_core::ledger::*;
 }
 
-/// Dispatch helpers for the GHOST advisory engine.
+/// Dispatch helpers for the **read-only advisor** (GHOST: mission name).
 ///
-/// GHOST lives in the `ghost-observer` Python package. These
-/// functions shell out to `python -m ghost ...`. Downstream Rust
-/// applications can also call the `ddf` CLI directly or spawn their
-/// own Python process.
+/// Mechanism: subprocess to `python -m ghost …` in the `ghost-observer`
+/// package. Downstream Rust code may also invoke the `ddf` CLI.
+#[doc(alias = "advisor")]
+#[doc(alias = "advisory")]
 pub mod ghost {
     use std::env;
     use std::process::{Command, ExitStatus};
@@ -67,24 +69,29 @@ pub mod ghost {
         cmd
     }
 
-    /// Run the GHOST advisor (ritual 0006). Writes to `advisories/stream.jsonl`.
+    /// Run the **advisor ritual** (0006). Appends to `advisories/stream.jsonl` only.
+    #[doc(alias = "run_advisor")]
+    #[doc(alias = "ghost_advise")]
     pub fn advise() -> std::io::Result<ExitStatus> {
         python_cmd().args(["-m", "ghost", "advise"]).status()
     }
 
-    /// Audit the advisory stream hash chain.
+    /// Audit the **advisory stream** hash chain (read-only).
+    #[doc(alias = "audit_advisories")]
     pub fn verify_advisories() -> std::io::Result<ExitStatus> {
         python_cmd().args(["-m", "ghost", "verify-advisories"]).status()
     }
 }
 
-/// Resolve the `phantom` binary path.
+/// Resolve the **ritual executor** binary path (`phantom`; mission name).
 ///
 /// Resolution order:
 /// 1. `DDF_PHANTOM_BIN` environment variable (absolute path).
 /// 2. Sibling of the current executable (useful when `ddf` and
 ///    `phantom` are co-installed).
 /// 3. `phantom` on `PATH`.
+#[doc(alias = "ritual_executor_bin")]
+#[doc(alias = "executor_path")]
 pub fn phantom_bin_path() -> PathBuf {
     if let Ok(p) = env::var("DDF_PHANTOM_BIN") {
         return PathBuf::from(p);
@@ -101,13 +108,16 @@ pub fn phantom_bin_path() -> PathBuf {
     PathBuf::from("phantom")
 }
 
-/// Run the verify ritual (0001). Behavior-identical to `phantom verify`.
+/// Run the **verify ritual** (0001). Behavior-identical to `phantom verify`.
+#[doc(alias = "verify_ledger")]
+#[doc(alias = "ritual_verify")]
 pub fn verify() -> std::io::Result<ExitStatus> {
     Command::new(phantom_bin_path()).arg("verify").status()
 }
 
-/// Record a doctrine amendment (0004). All arguments required.
+/// Record a **doctrine amendment ritual** (0004). All arguments required.
 /// `--approve` is auto-supplied; the API consumer has already decided.
+#[doc(alias = "doctrine_amendment")]
 pub fn amend_doctrine(
     new_version: &str,
     rationale: &str,
@@ -124,7 +134,8 @@ pub fn amend_doctrine(
         .status()
 }
 
-/// File a waiver (0005). `--approve` is auto-supplied.
+/// File a **waiver ritual** (0005). `--approve` is auto-supplied.
+#[doc(alias = "waiver_filing")]
 pub fn file_waiver(id: &str, waiver_path: &str) -> std::io::Result<ExitStatus> {
     Command::new(phantom_bin_path())
         .args([
@@ -136,10 +147,11 @@ pub fn file_waiver(id: &str, waiver_path: &str) -> std::io::Result<ExitStatus> {
         .status()
 }
 
-/// Dispatch a registered ritual by id. Rituals that require arguments
-/// (amend-doctrine, file-waiver) must be invoked through their
-/// dedicated API functions; `run_ritual` is the zero-argument entry
-/// point for rituals like verify and ghost-advise.
+/// **Dispatch** a registered ritual by id (zero-argument entrypoint).
+/// Rituals that require arguments (`amend-doctrine`, `file-waiver`)
+/// must use their dedicated functions; this covers e.g. verify (0001)
+/// and advisor (0006).
+#[doc(alias = "dispatch_ritual")]
 pub fn run_ritual(id: &str) -> std::io::Result<ExitStatus> {
     match id {
         "0001" | "verify" => verify(),

@@ -26,6 +26,20 @@ The core idea: **bounded emergence.** Intelligent, adaptive behavior
 is welcome, but only inside lines that are drawn in advance, in
 public, and with the operator's consent.
 
+## How to read this repository
+
+- **Operators (ceremony, governance, audits):** start with
+  [`DDFRAMEWORK.md`](./DDFRAMEWORK.md), [`RITUALS.md`](./RITUALS.md),
+  and the `make` targets below. Mission names (Phantom, GHOST, …) are
+  intentional there.
+- **Implementors (code, APIs, embedding):** start with
+  [`ddf-core/README.md`](./ddf-core/README.md),
+  [`ddf-core/KERNEL_API_MAP.md`](./ddf-core/KERNEL_API_MAP.md), and
+  [`ledger/SPEC.md`](./ledger/SPEC.md). Prefer **mechanical** terms
+  (ritual executor, ledger, advisor) in new code and reviews.
+- **Decoder ring (both):** [`GLOSSARY_ENGINE_NAMES.md`](./GLOSSARY_ENGINE_NAMES.md)
+  maps mission names to standard software terms.
+
 ## Three layers
 
 - **Phantom** — the sovereign ritual core. Rust, with C primitives.
@@ -50,6 +64,8 @@ Read these, in this order:
 10. [`WAIVERS.md`](./WAIVERS.md) — active waiver registry
 11. [`ledger/SPEC.md`](./ledger/SPEC.md) — ledger format specification
 12. [`advisories/SPEC.md`](./advisories/SPEC.md) — GHOST advisory stream specification
+13. [`GLOSSARY_ENGINE_NAMES.md`](./GLOSSARY_ENGINE_NAMES.md) — mission names ↔ mechanisms (decoder ring)
+14. [`ddf-core/KERNEL_API_MAP.md`](./ddf-core/KERNEL_API_MAP.md) — kernel public API map (Rust + Python)
 
 ## Status
 

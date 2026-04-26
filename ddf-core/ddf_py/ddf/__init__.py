@@ -1,10 +1,17 @@
-"""ddf — DDFramework kernel Python API.
+"""ddf — DDFramework **kernel** Python API (stable embedder surface).
 
-Kernel API version: 0.1.0
-Engine doctrine_version it binds to: 0.7.0
+Kernel API version: 0.1.0 — engine doctrine_version: 0.7.0
 
-Re-exports stable surface from the `ghost-observer` package under the
-kernel namespace. Zero new behavior.
+Mechanical roles (mission names like GHOST live in `ghost-observer`):
+
+- ``verify`` — verify the main **append-only ledger** hash chain.
+- ``advise`` — run the **read-only advisor** (rules → advisories).
+- ``ledger`` / ``reader`` — **ledger reader** module.
+- ``advisor`` — **advisor orchestrator** module.
+- ``advisory_writer`` — append to the **advisory stream** (hash-chained NDJSON).
+
+Re-exports the `ghost-observer` package under the `ddf` namespace. Zero new behavior.
+See `GLOSSARY_ENGINE_NAMES.md` and `ddf-core/KERNEL_API_MAP.md` at the repo root.
 """
 
 from __future__ import annotations
@@ -60,9 +67,10 @@ def _default_paths():
 
 
 def verify(path: _pathlib.Path | None = None):
-    """Verify the main-ledger hash chain. Returns a `ghost.reader.ChainResult`.
+    """Verify the **main ledger** hash chain (read-only).
 
-    Behavior-identical to `python -m ghost <path>` summary mode.
+    Returns a `ghost.reader.ChainResult`. Same behavior as
+    ``python -m ghost <path>`` summary mode.
     """
     defaults = _default_paths()
     target = _pathlib.Path(path) if path is not None else defaults["ledger_path"]
@@ -70,11 +78,10 @@ def verify(path: _pathlib.Path | None = None):
 
 
 def advise(**overrides) -> tuple:
-    """Run the GHOST advisor. Returns `(advisories, run_id, head_advisory_hash)`.
+    """Run the **advisor** (GHOST ruleset). Returns ``(advisories, run_id, head_advisory_hash)``.
 
-    Any of the five path arguments may be overridden via keyword:
-    `ledger_path`, `doctrine_path`, `constellation_path`,
-    `waivers_path`, `advisory_path`.
+    Overrides for paths: ``ledger_path``, ``doctrine_path``,
+    ``constellation_path``, ``waivers_path``, ``advisory_path``.
     """
     defaults = _default_paths()
     defaults.update({k: _pathlib.Path(v) for k, v in overrides.items()})
