@@ -1,0 +1,21 @@
+[package]
+name = "ca-shell"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish.workspace = true
+description = "Constitutional Agent Shell — governed agent runtime on the DDFramework kernel."
+
+[[bin]]
+name = "ca-shell"
+path = "src/main.rs"
+
+[lib]
+name = "ca_shell"
+path = "src/lib.rs"
+
+[dependencies]
+# Kernel boundary (`ddf` crate). Default path is for AO living inside the DDFramework repo tree.
+# Standalone AO clone: replace with `../../engines/DDFramework/ddf-core/ddf` after cloning the engine.
+ddf = { path = "../../../ddf-core/ddf" }

@@ -1,0 +1,8 @@
+# Operator ceremony file for privileged (external-effect) agent.act rituals.
+# Copy to a path you pass as --ceremony to `ca-shell act --effect external`.
+#
+# The shell requires a line exactly:
+OPERATOR_APPROVED=1
+#
+# Optional: human-readable rationale (not parsed by the shell).
+# rationale = Operator reviewed tool invocation and accepts external effects.

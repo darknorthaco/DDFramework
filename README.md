@@ -86,6 +86,10 @@ executors implemented (`verify`, `amend-doctrine`, `file-waiver`,
 Phase 6 will implement the simulation layer; Phase 5+ applications
 are still out of scope in this repository.
 
+**Application 1 (shell):** the **Constitutional Agent Shell** scaffold lives under
+[`AO/`](./AO/) (governed agent runtime on the `ddf` kernel). It does not change
+engine doctrine; it consumes the engine via the paths documented there.
+
 **Mechanical naming POAM:** **Closed** for Phases 1–2 and Phase 3 Wave 1
 (glossary, kernel map, Makefile aliases, rename strategy docs, visuals).
 Formal record: closure block in
