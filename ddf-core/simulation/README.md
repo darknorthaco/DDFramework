@@ -12,7 +12,7 @@ Scar Reality*) can be automated rather than honor-system.
 | `ritual_dryrun.py` | Validate a ritual invocation against its manifest and `[rituals].registered`; report would-be event kind, side effects, declared invariants, and arg validation — without invoking the executor | implemented |
 | `ledger_replay.py` | Walk `events.jsonl` from genesis, recompute the canonical hash chain per `ledger/SPEC.md` §5, and report entry count, event-kind counts, timestamp monotonicity, chain integrity, and head hash | implemented |
 | `advisory_replay.py` | Walk `advisories/stream.jsonl` from genesis, recompute the canonical hash chain per `advisories/SPEC.md` §4, count by `rule_id` / `severity` / `run_id`, and confirm each `ledger_tail_hash` resolves to a real ledger entry | implemented |
-| `drift_simulation.py` | Synthesize "what if doctrine changed but amend-doctrine wasn't run" scenarios and confirm GHOST R001/R002/R003 fire as expected | stub |
+| `drift_simulation.py` | For a given scenario (`doctrine_drift` / `constellation_drift` / `binary_stale` / `all`), decide whether the corresponding GHOST rule (R001 / R002 / R003) would fire **right now** given the on-disk state of `doctrine.toml`, `constellation.toml`, and the main ledger | implemented |
 
 ### `doctrine_diff.run(old_doctrine_str, new_doctrine_str) -> dict`
 
@@ -135,6 +135,52 @@ Returned dict (stable keys):
 | `genesis_prev_hash` | `str \| None` | Should be `sha256:0…64`. |
 | `errors` | `list[str]` | Sorted machine-readable error descriptors. |
 | `ordered_summary` | `list[str]` | Deterministic short descriptors of the audit. |
+
+### `drift_simulation.run(ledger_path, doctrine_path, constellation_path, scenario) -> dict`
+
+Implemented as of Phase 6 wave 1. Decides, statically and without
+running GHOST, whether **R001 / R002 / R003** would fire given the
+provided files. ``scenario`` must be one of:
+
+| `scenario` | Rules evaluated |
+|---|---|
+| `"doctrine_drift"` | R001 only |
+| `"constellation_drift"` | R002 only |
+| `"binary_stale"` | R003 only |
+| `"all"` | R001 + R002 + R003 |
+
+Rule semantics (matching ``ghost-observer/ghost/rules`` R001–R003):
+
+- **R001 doctrine_drift** — `sha256(doctrine.toml, LF-normalized)` differs from the latest amendment entry's `doctrine_hash`.
+- **R002 constellation_drift** — same comparison on `constellation.toml` against the latest amendment's `constellation_hash`.
+- **R003 binary_stale** — the latest `verify.result` entry's `doctrine_hash` differs from the latest amendment's `doctrine_hash` (executing binary embeds a stale doctrine hash).
+
+The amendment lookup matches both legacy `event = "doctrine_amendment"`
+(bootstrap-era) and current `event = "doctrine.amended"`. The file
+hash form is the LF-normalized SHA-256 (read bytes, strip `\r`,
+SHA-256) — byte-compatible with what phantom records and with what
+`ghost.reader.sha256_file_normalized` computes.
+
+Returned dict (stable keys):
+
+| Key | Type | Description |
+|---|---|---|
+| `scenario` | `str` | Echo of the input. |
+| `scenarios_checked` | `list[str]` | Sorted rule ids actually evaluated (empty if `scenario` was unknown). |
+| `would_fire` | `dict[str, bool]` | Per-rule decision. Rules outside `scenarios_checked` are always `false`. |
+| `doctrine_hash_on_disk` | `str \| None` | LF-normalized SHA-256 of `doctrine.toml`. |
+| `latest_amendment_doctrine_hash` | `str \| None` | From the last amendment entry. |
+| `constellation_hash_on_disk` | `str \| None` | LF-normalized SHA-256 of `constellation.toml`. |
+| `latest_amendment_constellation_hash` | `str \| None` | From the last amendment entry. |
+| `latest_verify_doctrine_hash` | `str \| None` | From the last `verify.result` entry. |
+| `latest_amendment_line` / `latest_verify_line` | `int \| None` | 1-indexed lines in the ledger. |
+| `ledger_entry_count` | `int` | Total well-formed JSON lines walked. |
+| `errors` | `list[str]` | Sorted descriptors (`unknown_scenario`, `doctrine_file_missing`, `constellation_file_missing`, `no_doctrine_amendment_in_ledger`, `no_constellation_hash_in_latest_amendment`, `no_verify_result_in_ledger`). |
+| `ordered_summary` | `list[str]` | Deterministic short descriptors of the decision set. |
+
+Composes naturally with `ledger_replay` and `advisory_replay`: those
+functions verify chain integrity end-to-end, while this one focuses
+on the three drift conditions GHOST itself watches for.
 
 ## Contract (Phase 6 target)
 
