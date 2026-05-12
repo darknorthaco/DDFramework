@@ -30,7 +30,7 @@
   </defs>
   <rect width="720" height="880" fill="#fafafa"/>
   <text x="360" y="36" text-anchor="middle" font-family="Segoe UI, Helvetica, sans-serif" font-size="22" font-weight="600" fill="#1a202c">DDFramework  layer stack</text>
-  <text x="360" y="58" text-anchor="middle" font-family="Segoe UI, Helvetica, sans-serif" font-size="12" fill="#718096">Engine identity: DDFRAMEWORK.md ∑ Mechanical glossary: GLOSSARY_ENGINE_NAMES.md</text>
+  <text x="360" y="58" text-anchor="middle" font-family="Segoe UI, Helvetica, sans-serif" font-size="12" fill="#718096">Engine identity: DDFRAMEWORK.md ù Mechanical glossary: GLOSSARY_ENGINE_NAMES.md</text>
 
   <!-- Applications -->
   <rect x="80" y="78" width="560" height="72" rx="6" fill="url(#gApp)" stroke="#718096" stroke-width="1.5"/>
@@ -41,7 +41,7 @@
   <!-- Kernel -->
   <rect x="80" y="168" width="560" height="88" rx="6" fill="url(#gKernel)" stroke="#2f855a" stroke-width="1.5"/>
   <text x="360" y="198" text-anchor="middle" font-family="Segoe UI, Helvetica, sans-serif" font-size="15" font-weight="600" fill="#1a202c">ddf-core  kernel boundary (stable)</text>
-  <text x="360" y="218" text-anchor="middle" font-family="Segoe UI, Helvetica, sans-serif" font-size="11" fill="#2d3748">ddf Rust crate + ddf binary ∑ ddf_py Python ∑ simulation/ (Phase 6)</text>
+  <text x="360" y="218" text-anchor="middle" font-family="Segoe UI, Helvetica, sans-serif" font-size="11" fill="#2d3748">ddf Rust crate + ddf binary ù ddf_py Python ù simulation/ (Phase 6)</text>
   <text x="360" y="238" text-anchor="middle" font-family="Segoe UI, Helvetica, sans-serif" font-size="11" fill="#2d3748">KERNEL_API_MAP.md</text>
   <line x1="360" y1="256" x2="360" y2="274" stroke="#4a5568" stroke-width="2" marker-end="url(#arrowDown)"/>
 
@@ -59,27 +59,21 @@
   <rect x="275" y="312" width="170" height="100" rx="6" fill="url(#gPhantom)" stroke="#c05621" stroke-width="1.5"/>
   <text x="360" y="338" text-anchor="middle" font-family="Segoe UI, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#1a202c">Phantom</text>
   <text x="360" y="356" text-anchor="middle" font-family="Segoe UI, Helvetica, sans-serif" font-size="10" fill="#2d3748">Ritual executor</text>
-  <text x="360" y="372" text-anchor="middle" font-family="Segoe UI, Helvetica, sans-serif" font-size="9" fill="#4a5568">phantom-core ∑ phantom</text>
-  <text x="360" y="388" text-anchor="middle" font-family="Segoe UI, Helvetica, sans-serif" font-size="9" fill="#c05621" font-weight="600">Sole writer í main ledger</text>
+  <text x="360" y="372" text-anchor="middle" font-family="Segoe UI, Helvetica, sans-serif" font-size="9" fill="#4a5568">phantom-core ù phantom</text>
+  <text x="360" y="388" text-anchor="middle" font-family="Segoe UI, Helvetica, sans-serif" font-size="9" fill="#c05621" font-weight="600">Sole writer ù main ledger</text>
 
   <!-- GHOST -->
   <rect x="470" y="312" width="170" height="100" rx="6" fill="url(#gGhost)" stroke="#2b6cb0" stroke-width="1.5"/>
   <text x="555" y="338" text-anchor="middle" font-family="Segoe UI, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#1a202c">GHOST</text>
   <text x="555" y="356" text-anchor="middle" font-family="Segoe UI, Helvetica, sans-serif" font-size="10" fill="#2d3748">Read-only advisor</text>
   <text x="555" y="372" text-anchor="middle" font-family="Segoe UI, Helvetica, sans-serif" font-size="9" fill="#4a5568">ghost-observer</text>
-  <text x="555" y="388" text-anchor="middle" font-family="Segoe UI, Helvetica, sans-serif" font-size="9" fill="#2b6cb0" font-weight="600">Writer í advisory stream</text>
-
-  <!-- Hyperion -->
-  <rect x="200" y="432" width="320" height="72" rx="6" fill="url(#gHyp)" stroke="#4a5568" stroke-width="1.5"/>
-  <text x="360" y="462" text-anchor="middle" font-family="Segoe UI, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#1a202c">Hyperion</text>
-  <text x="360" y="482" text-anchor="middle" font-family="Segoe UI, Helvetica, sans-serif" font-size="11" fill="#2d3748">Transport / fabric (skeleton) ∑ hyperion-net + C primitives</text>
-  <text x="360" y="498" text-anchor="middle" font-family="Segoe UI, Helvetica, sans-serif" font-size="10" fill="#718096">No sovereign ritual side effects alone</text>
+  <text x="555" y="388" text-anchor="middle" font-family="Segoe UI, Helvetica, sans-serif" font-size="9" fill="#2b6cb0" font-weight="600">Writer ù advisory stream</text>
 
   <!-- Ledger -->
   <rect x="120" y="528" width="480" height="100" rx="6" fill="url(#gLed)" stroke="#1a202c" stroke-width="1.5"/>
   <text x="360" y="562" text-anchor="middle" font-family="Segoe UI, Helvetica, sans-serif" font-size="14" font-weight="600" fill="#f7fafc">Ledger  truth substrate</text>
-  <text x="360" y="586" text-anchor="middle" font-family="Segoe UI, Helvetica, sans-serif" font-size="11" fill="#e2e8f0">ledger/events.jsonl (main) ∑ advisories/stream.jsonl</text>
-  <text x="360" y="606" text-anchor="middle" font-family="Segoe UI, Helvetica, sans-serif" font-size="10" fill="#cbd5e0">Append-only ∑ hash-chained ∑ I1 / I7 / I8 write boundaries</text>
+  <text x="360" y="586" text-anchor="middle" font-family="Segoe UI, Helvetica, sans-serif" font-size="11" fill="#e2e8f0">ledger/events.jsonl (main) ù advisories/stream.jsonl</text>
+  <text x="360" y="606" text-anchor="middle" font-family="Segoe UI, Helvetica, sans-serif" font-size="10" fill="#cbd5e0">Append-only ù hash-chained ù I1 / I7 / I8 write boundaries</text>
 
   <!-- Legend -->
   <rect x="80" y="658" width="560" height="180" rx="6" fill="#ffffff" stroke="#cbd5e0" stroke-width="1"/>
@@ -87,9 +81,8 @@
   <text x="100" y="708" font-family="Segoe UI, Helvetica, sans-serif" font-size="11" fill="#2d3748">" Constellation: normative principles above architectural doctrine.</text>
   <text x="100" y="728" font-family="Segoe UI, Helvetica, sans-serif" font-size="11" fill="#2d3748">" Phantom: runs rituals; enforces invariants; embeds doctrine hash (I6).</text>
   <text x="100" y="748" font-family="Segoe UI, Helvetica, sans-serif" font-size="11" fill="#2d3748">" GHOST: reads main ledger; never writes it; emits advisories (I8).</text>
-  <text x="100" y="768" font-family="Segoe UI, Helvetica, sans-serif" font-size="11" fill="#2d3748">" Hyperion: future routing; carries traffic for rituals, not a second writer.</text>
-  <text x="100" y="788" font-family="Segoe UI, Helvetica, sans-serif" font-size="11" fill="#2d3748">" Ledger: two streams; Phantom vs GHOST write split is the core trust model.</text>
+  <text x="100" y="768" font-family="Segoe UI, Helvetica, sans-serif" font-size="11" fill="#2d3748">" Ledger: two streams; Phantom vs GHOST write split is the core trust model.</text>
   <text x="100" y="812" font-family="Segoe UI, Helvetica, sans-serif" font-size="10" fill="#718096">SVG source: docs/images/ddf-layers-stack.svg  edit in Inkscape or Visio after import.</text>
 
-  <text x="360" y="864" text-anchor="middle" font-family="Segoe UI, Helvetica, sans-serif" font-size="10" fill="#a0aec0">DDFramework engine ∑ diagram for planning only ∑ not normative vs DOCTRINE.md</text>
+  <text x="360" y="864" text-anchor="middle" font-family="Segoe UI, Helvetica, sans-serif" font-size="10" fill="#a0aec0">DDFramework engine ù diagram for planning only ù not normative vs DOCTRINE.md</text>
 </svg>
