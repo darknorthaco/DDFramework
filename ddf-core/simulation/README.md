@@ -10,7 +10,7 @@ Scar Reality*) can be automated rather than honor-system.
 |---|---|---|
 | `doctrine_diff.py` | Semantic diff of two doctrine.toml versions: added/removed invariants, added/removed rituals, version delta, impact classification, ordered summary | implemented |
 | `ritual_dryrun.py` | Validate a ritual invocation against its manifest and `[rituals].registered`; report would-be event kind, side effects, declared invariants, and arg validation — without invoking the executor | implemented |
-| `ledger_replay.py` | Replay the main ledger from genesis; verify chain and rerun each ritual's observable effects | stub |
+| `ledger_replay.py` | Walk `events.jsonl` from genesis, recompute the canonical hash chain per `ledger/SPEC.md` §5, and report entry count, event-kind counts, timestamp monotonicity, chain integrity, and head hash | implemented |
 | `advisory_replay.py` | Replay the advisory stream; recompute each advisory against the ledger tail it references | stub |
 | `drift_simulation.py` | Synthesize "what if doctrine changed but amend-doctrine wasn't run" scenarios and confirm GHOST R001/R002/R003 fire as expected | stub |
 
@@ -72,6 +72,33 @@ Returned dict (stable keys; all list values sorted):
 | `ok` | `bool` | All of: registered, manifest found, status implemented, no missing required, no unknown args, no manifest parse errors. |
 | `errors` | `list[str]` | Sorted machine-readable error descriptors. |
 | `ordered_summary` | `list[str]` | Deterministic short descriptors of the dry-run state. |
+
+### `ledger_replay.run(ledger_path) -> dict`
+
+Implemented as of Phase 6 wave 1. Read-only audit walk of
+``ledger/events.jsonl``. The file is opened ``"rb"``; the function
+never writes anywhere. Canonical form matches ``ledger/SPEC.md`` §5
+byte-for-byte (validated against the live engine ledger in
+``tests/test_ledger_replay.py::test_live_engine_ledger_replays_cleanly``).
+
+Returned dict (stable keys):
+
+| Key | Type | Description |
+|---|---|---|
+| `ledger_exists` | `bool` | The file is present on disk. |
+| `entry_count` | `int` | Number of well-formed entries walked before the first break (or to EOF if `chain_ok`). |
+| `chain_ok` | `bool` | Every entry's recomputed hash matched and every `prev_entry_hash` linked back correctly to genesis. |
+| `chain_break_at_line` | `int \| None` | 1-indexed line where the chain first broke, if any. |
+| `chain_error` | `str \| None` | Machine-readable descriptor of the first break (`json_parse_error`, `missing_entry_hash`, `entry_hash_mismatch`, `chain_link_broken`, `blank_line`, `ledger_missing`). |
+| `event_kind_counts` | `dict[str,int]` | Per-event-kind counts in key-sorted order. |
+| `event_kinds` | `list[str]` | Sorted unique event kinds. |
+| `first_entry_ts` / `last_entry_ts` | `str \| None` | RFC 3339 timestamps. |
+| `timestamps_monotonic` | `bool` | RFC 3339 timestamps are non-decreasing line over line. |
+| `timestamp_regression_at_line` | `int \| None` | First regression line, for R006-style audit. |
+| `genesis_prev_hash` | `str \| None` | Should be `sha256:0…64`. |
+| `head_hash` | `str` | `entry_hash` of the last walked entry; `sha256:0…64` if empty/missing. |
+| `errors` | `list[str]` | Sorted machine-readable error descriptors (currently a singleton when chain breaks). |
+| `ordered_summary` | `list[str]` | Deterministic short descriptors of the chain audit. |
 
 ## Contract (Phase 6 target)
 
