@@ -2,7 +2,7 @@
 # Prose source of truth: DOCTRINE.md
 # Amendment policy: ceremony-only. See DOCTRINE.md §VII.
 #
-# Every phantom binary embeds the SHA-256 of this file at compile time
+# Every ddf-exec binary embeds the SHA-256 of this file at compile time
 # and refuses to run if the on-disk hash differs (invariant I6).
 
 [meta]
@@ -11,7 +11,7 @@ engine                     = "DDFramework"           # canonical engine identity
 engine_identity_doc        = "DDFRAMEWORK.md"
 era                        = "engine"                # transitions to "application" for P5+ apps
 application_era_begins_at  = "5.0.0"
-doctrine_version           = "0.7.0"
+doctrine_version           = "1.0.0"
 prose_source               = "DOCTRINE.md"
 ratified                   = "2026-04-20"
 constitutional_layer       = "constellation.toml"
@@ -25,8 +25,7 @@ reserved = ["zig", "ada-spark"]
 excluded = ["carbon"]
 
 [layers]
-phantom  = "sovereign deterministic ritual core"
-hyperion = "spatial-collapse network fabric"
+executor = "engine deterministic ritual executor (ddf-exec; historically Phantom)"
 ghost    = "read-only observer and predictor"
 
 # ---------------------------------------------------------------------------
@@ -60,7 +59,7 @@ severity = "fatal"
 
 [invariants.I6]
 name = "doctrine-as-code"
-description = "phantom refuses to run if the SHA-256 of doctrine.toml does not match the hash it was compiled against."
+description = "ddf-exec refuses to run if the SHA-256 of doctrine.toml does not match the hash it was compiled against."
 severity = "fatal"
 
 [invariants.I7]
@@ -70,7 +69,7 @@ severity = "fatal"
 
 [invariants.I8]
 name = "ghost-is-read-only"
-description = "The GHOST layer may never write to the Phantom ledger or mutate ceremony definitions."
+description = "The GHOST layer may never write to the main ledger or mutate ceremony definitions."
 severity = "fatal"
 
 # ---------------------------------------------------------------------------
@@ -79,7 +78,7 @@ severity = "fatal"
 
 [rituals]
 manifest_dir = "ceremonies"
-registered   = ["verify", "deploy", "lan-scan", "amend-doctrine", "file-waiver", "ghost-advise", "kernelize"]
+registered   = ["verify", "amend-doctrine", "file-waiver", "ghost-advise", "kernelize"]
 
 # ---------------------------------------------------------------------------
 # Ledger — the single highest-leverage artifact in the system
