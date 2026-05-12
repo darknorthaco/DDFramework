@@ -4,11 +4,11 @@ version = 4
 
 [[package]]
 name = "ddf"
-version = "0.1.0"
+version = "1.0.0"
 dependencies = [
  "ddf-exec-core",
 ]
 
 [[package]]
 name = "ddf-exec-core"
-version = "0.7.0"
+version = "1.0.0"

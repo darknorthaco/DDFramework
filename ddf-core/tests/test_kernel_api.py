@@ -28,8 +28,8 @@ import ddf  # noqa: E402
 
 class PythonKernelApiTest(unittest.TestCase):
     def test_version_constants(self):
-        self.assertEqual(ddf.__version__, "0.1.0")
-        self.assertEqual(ddf.ENGINE_VERSION, "0.7.0")
+        self.assertEqual(ddf.__version__, "1.0.0")
+        self.assertEqual(ddf.ENGINE_VERSION, "1.0.0")
 
     def test_ghost_reexports_available(self):
         # Must be attributes, not modules we forgot to re-export.

@@ -1,6 +1,6 @@
 """ddf — DDFramework **kernel** Python API (stable embedder surface).
 
-Kernel API version: 0.1.0 — engine doctrine_version: 0.7.0
+Kernel API version: 1.0.0 — engine doctrine_version: 1.0.0
 
 Mechanical roles (mission names like GHOST live in `ghost-observer`):
 
@@ -28,10 +28,10 @@ if _GHOST_PKG.is_dir() and str(_GHOST_PKG) not in _sys.path:
     _sys.path.insert(0, str(_GHOST_PKG))
 
 # Version constants
-__version__ = "0.1.0"
+__version__ = "1.0.0"
 """Kernel API SemVer; governs the stability contract of the `ddf` package."""
 
-ENGINE_VERSION = "0.7.0"
+ENGINE_VERSION = "1.0.0"
 """Engine doctrine_version this API was released against."""
 
 # Re-exports from the engine's advisor / reader

@@ -1,6 +1,8 @@
-"""DDFramework simulation layer — Phase 6 wave 1.
+"""DDFramework simulation layer — Phase 6 waves 1 + 2.
 
-All five modules in this package are implemented as of engine v0.7.0:
+All five modules in this package were implemented at engine v0.7.0
+(wave 1) and exposed via the ``python -m ddf simulate`` CLI in wave 2;
+ratified together at engine v1.0.0:
 
 - ``doctrine_diff``       semantic diff of two ``doctrine.toml`` strings
 - ``ritual_dryrun``       static validation of a ritual invocation
@@ -19,4 +21,4 @@ and deterministic ``ordered_summary`` lists. See
 ``ddf-core/simulation/README.md`` for the per-module return schema.
 """
 
-__version__ = "0.1.0"
+__version__ = "1.0.0"

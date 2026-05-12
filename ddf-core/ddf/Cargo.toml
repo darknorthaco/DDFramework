@@ -1,11 +1,11 @@
 [package]
 name         = "ddf"
-version      = "0.1.0"
+version      = "1.0.0"
 edition      = { workspace = true }
 rust-version = { workspace = true }
 license      = { workspace = true }
 publish      = { workspace = true }
-description  = "DDFramework stable kernel API (v0.1.0 binding to engine v0.7.0)."
+description  = "DDFramework stable kernel API (v1.0.0 binding to engine v1.0.0)."
 
 [[bin]]
 name = "ddf"

@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name            = "ddf-core"
-version         = "0.1.0"
-description     = "DDFramework kernel Python API (wraps ghost-observer; engine v0.7.0)."
+version         = "1.0.0"
+description     = "DDFramework kernel Python API (wraps ghost-observer; engine v1.0.0)."
 readme          = "README.md"
 requires-python = ">=3.11"
 license         = "LicenseRef-Shrike-Dual"

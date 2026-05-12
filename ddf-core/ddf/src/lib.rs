@@ -1,7 +1,7 @@
 //! ddf — DDFramework stable kernel API.
 //!
-//! Version: 0.1.0 (API surface)
-//! Engine:  v0.7.0 (doctrine_version this API was released against)
+//! Version: 1.0.0 (API surface, ratified at engine v1.0.0)
+//! Engine:  v1.0.0 (doctrine_version this API was released against)
 //!
 //! This crate is the stable API surface for applications that embed
 //! DDFramework. It is deliberately thin: it re-exports engine
@@ -35,10 +35,10 @@ pub use ddf_exec_core::sha256;
 pub use ddf_exec_core::timestamp;
 
 /// Kernel API version (SemVer). Governs the stability contract of this crate.
-pub const API_VERSION: &str = "0.1.0";
+pub const API_VERSION: &str = "1.0.0";
 
 /// Engine doctrine_version this API was released against.
-pub const ENGINE_VERSION: &str = "0.7.0";
+pub const ENGINE_VERSION: &str = "1.0.0";
 
 /// Append-only hash-chained ledger operations.
 #[doc(alias = "append_only_log")]
@@ -173,7 +173,7 @@ mod tests {
 
     #[test]
     fn api_version_is_reported() {
-        assert_eq!(API_VERSION, "0.1.0");
+        assert_eq!(API_VERSION, "1.0.0");
     }
 
     #[test]

@@ -3,8 +3,8 @@
 The stable, app-agnostic, embeddable kernel API for the DDFramework
 engine. Consumed by all future Application-Era software.
 
-- **Engine binds to:** DDFramework v0.7.0 (`doctrine_version`).
-- **Kernel API version:** 0.1.0.
+- **Engine binds to:** DDFramework v1.0.0 (`doctrine_version`).
+- **Kernel API version:** 1.0.0 (ratified at engine v1.0.0).
 - **Stability contract:** the API surface below MUST remain
 source- and behavior-compatible across engine patch and minor
 bumps. Weakening is a major API bump.
@@ -80,16 +80,16 @@ use ddf::timestamp::now_rfc3339;
 
 Constants:
 
-- `ddf::API_VERSION` — the API version ("0.1.0").
-- `ddf::ENGINE_VERSION` — the engine doctrine_version ("0.7.0").
+- `ddf::API_VERSION` — the API version ("1.0.0").
+- `ddf::ENGINE_VERSION` — the engine doctrine_version ("1.0.0").
 
 ## Python library API (`ddf` package)
 
 ```python
 import ddf
 
-print(ddf.__version__)        # "0.1.0" (kernel API)
-print(ddf.ENGINE_VERSION)     # "0.7.0" (engine)
+print(ddf.__version__)        # "1.0.0" (kernel API)
+print(ddf.ENGINE_VERSION)     # "1.0.0" (engine)
 
 # Re-exported from ghost-observer:
 ddf.verify()                           # ChainResult(count, head_hash, ok, error)
@@ -121,8 +121,9 @@ They may be refactored freely.
 ## Invariants
 
 This kernel upholds DDFramework invariants **I1–I8** (historically
-labeled *"Shrike I1–I8"*; labels frozen per v0.6.0). None of them are
-weakened in v0.7.0.
+labeled *"Shrike I1–I8"*; labels frozen per v0.6.0). None of them
+are weakened in v1.0.0; the v1.0.0 amendment removed the Hyperion
+layer and renamed the engine executor without touching any invariant.
 
 The *no behavior change* guarantee for Phase 5 is enforced by
 `ddf-core/tests/test_no_behavior_change.py`, which runs `ddf verify`

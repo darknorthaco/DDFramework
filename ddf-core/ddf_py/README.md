@@ -2,7 +2,7 @@
 
 The Python wrapper for the DDFramework kernel.
 
-Binds to engine v0.7.0. Re-exports from `ghost-observer` and provides
+Binds to engine v1.0.0. Re-exports from `ghost-observer` and provides
 the stable Python API surface that Application-Era applications
 depend on.
 
@@ -18,8 +18,8 @@ via relative path).
 ```python
 import ddf
 
-print(ddf.__version__)          # "0.1.0"  (kernel API version)
-print(ddf.ENGINE_VERSION)       # "0.7.0"  (engine doctrine_version)
+print(ddf.__version__)          # "1.0.0"  (kernel API version)
+print(ddf.ENGINE_VERSION)       # "1.0.0"  (engine doctrine_version)
 
 # Re-exported from ghost:
 result = ddf.verify()                  # summary of the main ledger
