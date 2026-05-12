@@ -16,15 +16,15 @@ changes.
 
 ## 1. Four engine layers (what “is” DDFramework)
 
-Per [`DDFRAMEWORK.md`](../DDFRAMEWORK.md): Phantom, Constellation, GHOST,
-Ledger — together they *are* the engine. The engine is transport-
-agnostic; applications choose their own transport.
+Per [`DDFRAMEWORK.md`](../DDFRAMEWORK.md): ddf-exec (historically *Phantom*),
+Constellation, GHOST, Ledger — together they *are* the engine. The
+engine is transport-agnostic; applications choose their own transport.
 
 ```mermaid
 flowchart TB
   subgraph engine["DDFramework engine"]
     C["Constellation\n(CONSTELLATION.md + constellation.toml)\nconstitutional law"]
-    P["Phantom\n(phantom-core / phantom)\nritual executor — sole writer → main ledger"]
+    P["ddf-exec\n(ddf-exec-core / ddf-exec)\nengine executor — sole writer → main ledger"]
     G["GHOST\n(ghost-observer)\nread-only advisor — writer → advisory stream only"]
     L["Ledger\nledger/events.jsonl + advisories/stream.jsonl\ntruth substrate"]
   end
@@ -36,7 +36,7 @@ flowchart TB
 
 **Write boundaries (critical):**
 
-- **Main ledger** (`ledger/events.jsonl`): **Phantom only**.
+- **Main ledger** (`ledger/events.jsonl`): **`ddf-exec` only**.
 - **Advisory stream** (`advisories/stream.jsonl`): **GHOST only**.
 
 ---
@@ -47,7 +47,7 @@ flowchart TB
 flowchart TB
   subgraph apps["Application Era v5.0.0+"]
     A1[Shrike Monitor]
-    A2[Phantom Orchestrator]
+    A2[`phantom` application]
     A3[Other DRKNRTH apps]
   end
   subgraph kernel["ddf-core — stable kernel API"]
@@ -56,7 +56,7 @@ flowchart TB
     K3["simulation/ Phase 6 stubs"]
   end
   subgraph internal["Engine internals — refactorable"]
-    I1[phantom-core]
+    I1[ddf-exec-core]
     I2[ghost-observer]
     I3["ledger/ + advisories/"]
     I4[doctrine.toml + constellation.toml]
@@ -69,13 +69,13 @@ flowchart TB
 
 ## 3. Operator mental model (read path → write path)
 
-GHOST observes Phantom from the outside; Phantom writes to the main
-ledger; GHOST writes only to the advisory stream.
+GHOST observes `ddf-exec` from the outside; `ddf-exec` writes to the
+main ledger; GHOST writes only to the advisory stream.
 
 ```mermaid
 flowchart TB
   GHOST["GHOST — observer, rules R001–R007\nwrites: advisories only"]
-  PH["Phantom — rituals + invariants\nwrites: main ledger"]
+  PH["ddf-exec — rituals + invariants\nwrites: main ledger"]
   OP["Operator / CLI / CI"]
   GHOST --> PH
   PH -->|"append events"| LEDGER[("Main ledger\nread-only for GHOST")]
@@ -93,7 +93,7 @@ flowchart TB
 sequenceDiagram
   participant O as Operator
   participant D as ddf / phantom CLI
-  participant P as Phantom ritual executor
+  participant P as ddf-exec engine executor
   participant L as Main ledger file
   participant G as GHOST advisor
   participant A as Advisory stream
@@ -127,7 +127,7 @@ sequenceDiagram
          ┌─────────────────────────┼─────────────────────────┐
          │                         │                         │
 ┌────────▼────────┐       ┌─────────▼─────────┐       ┌────────▼────────┐
-│  Constellation  │       │     Phantom      │       │     GHOST       │
+│  Constellation  │       │    ddf-exec      │       │     GHOST       │
 │  constitution   │       │  ritual executor │       │  read-only     │
 │  (prose + TOML) │       │  main ledger ✎  │       │  advisor ✎ adv  │
 └────────┬────────┘       └─────────┬─────────┘       └────────┬────────┘

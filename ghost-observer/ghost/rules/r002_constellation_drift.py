@@ -32,7 +32,7 @@ def check(ctx: AdvisorContext) -> list[Advisory]:
             },
             recommended_action=(
                 "Either revert the constellation edit or run "
-                "`phantom amend-doctrine` with an appropriate rationale "
+                "`ddf-exec amend-doctrine` with an appropriate rationale "
                 "to record the amendment to the constitutional layer."
             ),
         )

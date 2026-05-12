@@ -25,8 +25,9 @@
 ## Preamble
 
 This document is the sovereign doctrine of the Shrike project — the
-combined Phantom / GHOST core. It is the single source of truth for
-the system's values, boundaries, and invariants.
+combined engine executor (`ddf-exec`, historically *Phantom*) and the
+read-only observer (`GHOST`). It is the single source of truth for the
+system's values, boundaries, and invariants.
 
 Every Shrike binary embeds the SHA-256 of `doctrine.toml` at compile
 time and refuses to run if the on-disk hash differs. The prose in this
@@ -57,9 +58,9 @@ engineering fabric.
 
 ## II. Core Doctrine
 
-### 1. Phantom
+### 1. The engine executor (`ddf-exec`, historically *Phantom*)
 
-Phantom is the sovereign, ceremony-first ritual executor.
+`ddf-exec` is the sovereign, ceremony-first ritual executor.
 
 Principles:
 
@@ -81,8 +82,8 @@ GHOST is the meta-layer.
 - Suggests optimizations
 - Never acts without explicit user approval
 - Never mutates doctrine
-- Never overrides Phantom
-- Writes only to its own advisory stream, never to the Phantom ledger
+- Never overrides `ddf-exec`
+- Writes only to its own advisory stream, never to the main ledger
 
 ### 3. Doctrine-bound emergence
 
@@ -139,7 +140,7 @@ in `doctrine.toml`.
   a corresponding ledger entry written *before* the side effect is
   visible to other processes.
 - **I8 — GHOST is read-only.** The GHOST layer may never write to the
-  Phantom ledger or mutate ceremony definitions.
+  main ledger or mutate ceremony definitions.
 
 ---
 

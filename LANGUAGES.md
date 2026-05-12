@@ -12,7 +12,7 @@ the 100-year target plausible. For engine identity and scope see
 | Language | Tier | Role |
 |---|---|---|
 | **C (ISO C11)** | core | FFI boundary, raw syscalls, minimal primitives |
-| **Rust (stable)** | core | `phantom-core` and any future concurrent or networked binary |
+| **Rust (stable)** | core | `ddf-exec-core` and any future concurrent or networked binary |
 | **Python 3 (stdlib-heavy)** | meta | `ghost-observer`, tooling, scripts |
 | **Zig** | reserved | future C++-successor slot when Zig reaches 1.0 |
 | **Ada / SPARK** | reserved | future safety-critical components only |
@@ -54,7 +54,7 @@ Discipline:
 
 ### 3.2 Rust (stable)
 
-Rust is the principal language of `phantom-core`. Memory safety and
+Rust is the principal language of `ddf-exec-core`. Memory safety and
 the type system make it the best available choice for a deterministic
 ritual executor.
 
@@ -78,7 +78,7 @@ Approved dependencies:
 - *(none — v0.3.0 ships with zero third-party Rust crates.
   SHA-256, canonical JSON, RFC 3339 timestamps, and the ledger
   reader/writer are all hand-rolled under ~500 LOC in
-  `phantom-core/src/`.)*
+  `ddf-exec-core/src/`.)*
 
 ### 3.3 Python 3 (stdlib-heavy)
 
@@ -93,7 +93,7 @@ Discipline:
 - Prefer `stdlib` over third-party packages. Each third-party
   dependency requires a justification entry here.
 - No ambient config. Read the doctrine-declared paths only.
-- GHOST must never import anything from `phantom-core`; it
+- GHOST must never import anything from `ddf-exec-core`; it
   communicates only via the ledger file (I8).
 
 Approved third-party dependencies:

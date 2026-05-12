@@ -1,6 +1,6 @@
 # ghost-observer
 
-Read-only observer for the Shrike Phantom ledger.
+Read-only observer for the DDFramework engine ledger.
 
 Part of the Shrike fabric. See project-level
 [`CONSTELLATION.md`](../CONSTELLATION.md) and
@@ -11,7 +11,7 @@ Part of the Shrike fabric. See project-level
 GHOST is **read-only by construction** (Shrike I8, Constellation §3):
 
 - No module in this package opens a file with write mode.
-- No module imports anything from `phantom-core` or its build outputs.
+- No module imports anything from `ddf-exec-core` (formerly `phantom-core`) or its build outputs.
 - GHOST consumes the ledger file and emits human-readable advisories
   to stdout. Any advisories destined for disk go to a SEPARATE
   advisory stream, never to `ledger/events.jsonl`.

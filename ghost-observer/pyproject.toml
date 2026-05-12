@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name            = "ghost-observer"
 version         = "0.7.0"
-description     = "Shrike GHOST — read-only observer for the Phantom ledger."
+description     = "Shrike GHOST — read-only observer for the DDFramework engine ledger."
 readme          = "README.md"
 requires-python = ">=3.11"
 license         = "LicenseRef-Shrike-Dual"

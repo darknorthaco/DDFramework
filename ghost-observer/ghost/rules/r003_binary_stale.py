@@ -31,7 +31,7 @@ def check(ctx: AdvisorContext) -> list[Advisory]:
         Advisory(
             rule_id="R003_binary_stale",
             severity="warn",
-            subject="most recent phantom verify ran against an older doctrine",
+            subject="most recent ddf-exec verify ran against an older doctrine",
             evidence={
                 "verify_doctrine_hash": verify_hash,
                 "amended_doctrine_hash": amended_hash,
@@ -39,7 +39,7 @@ def check(ctx: AdvisorContext) -> list[Advisory]:
                 "amended_timestamp": last_amended.get("timestamp"),
             },
             recommended_action=(
-                "Rebuild phantom (`make build`) and run `phantom verify` "
+                "Rebuild ddf-exec (`make build`) and run `ddf-exec verify` "
                 "to record a fresh verify.result against the current doctrine."
             ),
         )

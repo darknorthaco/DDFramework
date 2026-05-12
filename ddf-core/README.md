@@ -17,7 +17,7 @@ boundary**. In plain software terms:
 
 | You see (mission)                   | In code / API (mechanism)                                                            |
 | ----------------------------------- | ------------------------------------------------------------------------------------ |
-| Phantom (this repo’s engine)        | **Ritual executor** + ledger writer (`phantom` binary, `phantom-core` types)         |
+| ddf-exec (this repo's engine; historically *Phantom*) | **Ritual executor** + ledger writer (`ddf-exec` binary, `ddf-exec-core` types) |
 | GHOST (this repo’s engine)          | **Read-only advisor** + advisory stream writer (`python -m ghost`, `ghost-observer`) |
 | `ddf verify` / `ddf::verify`        | Subprocess call to **verify ritual**                                                 |
 | `ddf advise` / `ddf::ghost::advise` | Subprocess call to **advisor ritual**                                                |
@@ -31,7 +31,7 @@ Mission ↔ mechanism glossary (repo root): `[../GLOSSARY_ENGINE_NAMES.md](../GL
 
 This directory is the **kernel boundary**. Downstream applications
 depend on what is exposed here. The layer directories at the repository
-root (`phantom-core/`, `ghost-observer/`, `ledger/`, `advisories/`,
+root (`ddf-exec-core/`, `ghost-observer/`, `ledger/`, `advisories/`,
 `constellation.toml`, `CONSTELLATION.md`) are the engine's *internal
 implementation* and may be reorganized without affecting embedders.
 
@@ -43,10 +43,10 @@ behavior-identical to the underlying engine command it delegates to.
 
 | Command                  | Delegates to                        | Effect                                                    |
 | ------------------------ | ----------------------------------- | --------------------------------------------------------- |
-| `ddf verify`             | `phantom verify`                    | Run the verify ritual; appends one `verify.result` entry. |
+| `ddf verify`             | `ddf-exec verify`                   | Run the verify ritual; appends one `verify.result` entry. |
 | `ddf doctrine`           | `phantom doctrine`                  | Print embedded doctrine hashes + versions.                |
-| `ddf amend-doctrine ...` | `phantom amend-doctrine ...`        | Record a doctrine amendment (`--approve` required).       |
-| `ddf file-waiver ...`    | `phantom file-waiver ...`           | Record a waiver filing (`--approve` required).            |
+| `ddf amend-doctrine ...` | `ddf-exec amend-doctrine ...`       | Record a doctrine amendment (`--approve` required).       |
+| `ddf file-waiver ...`    | `ddf-exec file-waiver ...`          | Record a waiver filing (`--approve` required).            |
 | `ddf run-ritual <id>`    | (dispatch)                          | Dispatch a zero-argument ritual by id (`0001`, `0006`).   |
 | `ddf ledger [path]`      | `python -m ghost [path]`            | Read the main ledger summary (read-only).                 |
 | `ddf advise`             | `python -m ghost advise`            | Run the GHOST advisor (ritual 0006).                      |
@@ -71,7 +71,7 @@ ddf::run_ritual("0001")?;
 let _ = ddf::ghost::advise()?;
 let _ = ddf::ghost::verify_advisories()?;
 
-// Core primitives re-exported from phantom-core:
+// Core primitives re-exported from ddf-exec-core:
 use ddf::ledger;
 use ddf::canonical::Entry;
 use ddf::sha256::sha256_hex;
@@ -112,8 +112,8 @@ Phase 5.
 ## What is NOT part of the kernel API
 
 - Application logic of any kind.
-- The internal structure of `phantom-core` and `ghost-observer`. They
-may be refactored freely.
+- The internal structure of `ddf-exec-core` and `ghost-observer`.
+They may be refactored freely.
 - Legacy `phantom` CLI banner text.
 - Ceremony manifests' prose.
 - The ledger file-format version (goverened by `ledger/SPEC.md`, not this crate).
@@ -126,4 +126,4 @@ weakened in v0.7.0.
 
 The *no behavior change* guarantee for Phase 5 is enforced by
 `ddf-core/tests/test_no_behavior_change.py`, which runs `ddf verify`
-and `phantom verify` and compares their output structurally.
+and `ddf-exec verify` and compares their output structurally.

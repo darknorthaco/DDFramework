@@ -2,7 +2,7 @@
 
 A sovereign, ceremony-first, app-agnostic engine for long-horizon,
 regenerative, coherent systems.
-Phantom · Constellation · GHOST · Ledger.
+ddf-exec · Constellation · GHOST · Ledger.
 
 Designed to last 100 years.
 
@@ -30,8 +30,9 @@ public, and with the operator's consent.
 
 - **Operators (ceremony, governance, audits):** start with
   [`DDFRAMEWORK.md`](./DDFRAMEWORK.md), [`RITUALS.md`](./RITUALS.md),
-  and the `make` targets below. Mission names (Phantom, GHOST, …) are
-  intentional there.
+  and the `make` targets below. Mission name *GHOST* is intentional;
+  the former mission name *Phantom* was renamed to **ddf-exec** at
+  v1.0.0.
 - **Implementors (code, APIs, embedding):** start with
   [`ddf-core/README.md`](./ddf-core/README.md),
   [`ddf-core/KERNEL_API_MAP.md`](./ddf-core/KERNEL_API_MAP.md), and
@@ -44,7 +45,7 @@ public, and with the operator's consent.
 
 ## Two layers
 
-- **Phantom** — the sovereign ritual core. Rust, with C primitives.
+- **ddf-exec** — the sovereign engine executor (formerly Phantom). Rust.
 - **GHOST** — the read-only observer. Python, stdlib-heavy.
 
 The engine is transport-agnostic: applications bring their own
@@ -97,7 +98,7 @@ and ceremony manifests in this repository. Constellation §7
 stdlib-only, pure-function audit surface. Invariants I1–I8 are
 unchanged. Recording the wave as a `doctrine.amended` entry
 (``doctrine_version`` 0.7.0 → 0.7.1, additive) is an open ceremony
-the operator may schedule via `phantom amend-doctrine --approve`.
+the operator may schedule via `ddf-exec amend-doctrine --approve`.
 
 **Application 1 (shell):** the **Constitutional Agent Shell** scaffold lives under
 [`AO/`](./AO/) (governed agent runtime on the `ddf` kernel). It does not change
@@ -112,8 +113,8 @@ planned major release). Prefer new effort on **Phase 6 simulation** or on
 **applications that depend on this engine**, not on cosmetic renames here.
 
 ```sh
-make build                                    # release build (phantom + ddf)
-make verify                                   # phantom verify ritual
+make build                                    # release build (ddf-exec + ddf)
+make verify                                   # ddf-exec verify ritual
 make verify-ledger                            # audit main-ledger chain
 make ghost                                    # ledger summary (read-only)
 make ghost-advise                             # run GHOST advisor (R001-R007)
@@ -123,13 +124,13 @@ make ghost-verify                             # audit advisory-stream chain
 make test                                     # full test gate
 
 # Kernel API (v0.7.0+)
-make ddf ARGS="verify"                        # ddf verify (parity with phantom verify)
+make ddf ARGS="verify"                        # ddf verify (parity with ddf-exec verify)
 make ddf ARGS="advise"                        # ddf advise (parity with ghost advise)
 make ddf ARGS="ddf-version"                   # print ddf + engine version
 
 # Ceremonies (all require --approve per Constellation §14)
-phantom amend-doctrine --version <v> --rationale "<why>" --approve
-phantom file-waiver    --id <W-id>  --waiver <path>        --approve
+ddf-exec amend-doctrine --version <v> --rationale "<why>" --approve
+ddf-exec file-waiver    --id <W-id>  --waiver <path>        --approve
 ```
 
 ## License

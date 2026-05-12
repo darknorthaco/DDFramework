@@ -106,7 +106,7 @@ waiver per [`WAIVERS.md`](./WAIVERS.md).
   <body: invariants touched>
   <body: reversibility note>
   ```
-- Components: `doctrine`, `architecture`, `phantom-core`,
+- Components: `doctrine`, `architecture`, `ddf-exec-core`,
   `ghost-observer`, `ceremonies`, `ledger`, `tooling`,
   `foundation`.
 - Never force-push a shared branch.
@@ -117,9 +117,11 @@ waiver per [`WAIVERS.md`](./WAIVERS.md).
 
 ### 4.0 Naming — mission vs mechanism (kernel and new code)
 
-- **Mission names** (Phantom, GHOST, Constellation) stay in
-  constitution, operator docs, and frozen protocol identifiers unless
-  changed by an explicit governance / kernel migration.
+- **Mission names** (GHOST, Constellation) stay in constitution,
+  operator docs, and frozen protocol identifiers unless changed by an
+  explicit governance / kernel migration. The former mission name
+  *Phantom* was renamed to the mechanical name **ddf-exec** at v1.0.0;
+  historical mentions in committed ledger lines are frozen per I1.
 - **New** Rust/Python public API and **new** modules should prefer
   **mechanical** vocabulary in identifiers and primary docstrings:
   *ritual*, *ledger*, *advisor*, *append-only*, *verify*.

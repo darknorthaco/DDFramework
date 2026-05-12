@@ -11,7 +11,7 @@ A ritual is registered (and therefore executable by `phantom`) when
 1. A manifest file `NNNN-<name>.toml` exists here.
 2. The name is listed in [`../doctrine.toml`](../doctrine.toml)
    `[rituals].registered`.
-3. `phantom-core` has an implementation for the subcommand.
+3. `ddf-exec-core` has an implementation for the subcommand.
 
 A manifest without implementation is a *declaration* — the contract
 exists; the executor does not yet.

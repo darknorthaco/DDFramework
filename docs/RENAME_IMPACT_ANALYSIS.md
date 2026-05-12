@@ -28,7 +28,7 @@ of repo-shipping symlinks unless packaging owns it.
 
 | Current | Role | Blast radius |
 |---------|------|--------------|
-| Package `phantom-core`, lib `phantom_core` | Ledger + canonical + executor library | Workspace `Cargo.toml`, `ddf` path dep, all `use phantom_core`, tests |
+| Package `ddf-exec-core` (formerly `phantom-core`), lib `ddf_exec_core` | Ledger + canonical + executor library | Renamed at v1.0.0. Historical references to `phantom-core` exist only in committed ledger lines (frozen). |
 | Package `ddf`, lib `ddf` | Kernel API | Downstream `ddf = …` in future apps |
 
 **Recommendation:** crate renames are **Wave 3** only; require **major** kernel

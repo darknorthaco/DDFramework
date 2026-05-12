@@ -35,7 +35,7 @@ def check(ctx: AdvisorContext) -> list[Advisory]:
             },
             recommended_action=(
                 "Either revert the edit, or run "
-                "`phantom amend-doctrine --version <v> --rationale \"...\" "
+                "`ddf-exec amend-doctrine --version <v> --rationale \"...\" "
                 "--domain <cynefin> --approve` to record the ceremony."
             ),
         )

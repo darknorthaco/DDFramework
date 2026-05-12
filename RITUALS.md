@@ -128,6 +128,6 @@ To add a ritual:
 3. Add the name to `[rituals].registered` in `doctrine.toml`.
 4. Bump `doctrine_version` (minor).
 5. Amend via the `amend-doctrine` ritual.
-6. Implement the ritual in `phantom-core`.
+6. Implement the ritual in `ddf-exec-core`.
 7. Add tests.
 8. Add GHOST observer heuristics if the ritual has new anomaly shapes.

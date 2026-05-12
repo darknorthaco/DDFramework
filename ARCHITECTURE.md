@@ -10,18 +10,20 @@ conflict, Constellation §11 priority applies.
 
 For engine identity and scope, see [`DDFRAMEWORK.md`](./DDFRAMEWORK.md).
 
-**Reading this doc:** operator-facing layer names (Phantom, GHOST)
-match mission language. For the same concepts in **standard software
-terms** (ritual executor, advisor, append-only log), see
-[`GLOSSARY_ENGINE_NAMES.md`](./GLOSSARY_ENGINE_NAMES.md) and
+**Reading this doc:** the engine executor is `ddf-exec` (historically
+named *Phantom*; renamed at v1.0.0 to remove the engine/application
+name collision with the planned `phantom` application). The observer
+remains *GHOST* (`ghost-observer`). For the same concepts in
+**standard software terms** (ritual executor, advisor, append-only
+log), see [`GLOSSARY_ENGINE_NAMES.md`](./GLOSSARY_ENGINE_NAMES.md) and
 [`ddf-core/KERNEL_API_MAP.md`](./ddf-core/KERNEL_API_MAP.md).
 
 ## 0. Kernel boundary (v0.7.0+)
 
 ```
 ┌────────────────────────────────────────────────────────────────┐
-│  APPLICATION ERA (v5.0.0+) — Shrike Monitor, Phantom           │
-│  Orchestrator, other DRKNRTH apps                              │
+│  APPLICATION ERA (v5.0.0+) — Shrike Monitor, `phantom`         │
+│  application, other DRKNRTH apps                               │
 └───────────────────────────┬────────────────────────────────────┘
                             │ depends on:
                             ▼
@@ -36,7 +38,7 @@ terms** (ritual executor, advisor, append-only log), see
                             ▼
 ┌────────────────────────────────────────────────────────────────┐
 │  ENGINE INTERNALS (implementation; may be refactored freely)   │
-│    phantom-core/    ghost-observer/                            │
+│    ddf-exec-core/   ghost-observer/                            │
 │    ledger/          advisories/      doctrine.toml             │
 │    constellation.toml                CONSTELLATION.md          │
 └────────────────────────────────────────────────────────────────┘
@@ -69,7 +71,7 @@ are for continuity with all prior phases.
 The engine is deliberately transport-agnostic: how applications move
 data between nodes is an application choice, not an engine layer.
 
-### 1.1 Phantom Core
+### 1.1 ddf-exec-core (engine executor crate)
 
 - **Language:** Rust (stable, edition-pinned).
 - **Responsibilities:** executing registered rituals, writing ledger
@@ -81,10 +83,11 @@ data between nodes is an application choice, not an engine layer.
 
 - **Language:** Python 3 (stdlib-heavy; any third-party dependency must
   be justified in `LANGUAGES.md`).
-- **Responsibilities:** tails the Phantom ledger, emits advisories,
+- **Responsibilities:** tails the main ledger, emits advisories,
   detects drift, scores system health.
-- **Contract:** read-only on Phantom state. Advisories are written to a
-  separate advisory stream that Phantom never reads automatically.
+- **Contract:** read-only on `ddf-exec` state. Advisories are written
+  to a separate advisory stream that `ddf-exec` never reads
+  automatically.
 
 ## 2. Meadows Analysis
 
@@ -169,7 +172,7 @@ operator intent
 |---|---|---|
 | Doctrine drift (prose vs TOML) | unstable attractor | hash check (I6), amendment ritual |
 | Ledger corruption | stock loss | append-only (I1), content-addressed (I2) |
-| GHOST feedback pollutes Phantom | boundary violation | separate advisory stream (I8) |
+| GHOST feedback pollutes ddf-exec | boundary violation | separate advisory stream (I8) |
 | Toolchain rot (10+ yr) | flow collapse | pinned toolchain, vendored deps, reproducible-build CI |
 | Dependency abandonment | stock loss | vendored deps, minimal surface, `LANGUAGES.md` policy |
 | Operator fatigue (too many confirmations) | balancing loop too strong | irreversibility levels in ritual manifests |
@@ -191,7 +194,7 @@ Shrike/
 ├── Cargo.toml                 (workspace root, pinned 1.95.0)
 ├── rust-toolchain.toml        (stable-1.95.0 pin)
 ├── Makefile                   (POSIX build entry point)
-├── phantom-core/              (Rust binary — phantom bin target)
+├── ddf-exec-core/             (Rust binary — ddf-exec bin target)
 │   ├── build.rs               (embeds doctrine hashes at build time)
 │   └── src/ {main,lib,sha256,canonical,ledger,timestamp}.rs
 ├── ghost-observer/            (Python package, stdlib-only)

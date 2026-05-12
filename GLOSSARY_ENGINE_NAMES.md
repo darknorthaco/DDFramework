@@ -1,8 +1,9 @@
 # Engine names — mission language vs mechanism
 
-This glossary decodes **mission names** (Phantom, GHOST, …) used in
-constitution and operator docs into **standard software terms** used
-when reading or changing code.
+This glossary decodes **mission names** (historically *Phantom*; now
+the mechanical name `ddf-exec` for the executor, *GHOST* for the
+observer) used in constitution and operator docs into **standard
+software terms** used when reading or changing code.
 
 - **Mission names** answer *why* and *who we are*.
 - **Mechanisms** answer *what runs*, *what stores state*, and *who may write*.
@@ -37,7 +38,7 @@ ceremonies, and amendment rituals.
 
 | Mission name | Mechanism (what it is) | Typical location |
 |--------------|------------------------|------------------|
-| **Phantom** (engine) | **Ritual executor**: runs registered ceremonies, enforces invariants, **only writer** to the main append-only ledger. | `phantom-core/`, `phantom` binary |
+| **ddf-exec** (engine; historically *Phantom*) | **Ritual executor**: runs registered ceremonies, enforces invariants, **only writer** to the main append-only ledger. | `ddf-exec-core/`, `ddf-exec` binary |
 | **GHOST** (engine) | **Read-only advisor**: rule runner over ledger tails; writes **only** the separate advisory stream. | `ghost-observer/`, `python -m ghost` |
 | **Constellation** | **Constitution**: normative principles and mandates above architectural doctrine. | `CONSTELLATION.md`, `constellation.toml` |
 | **Ledger** (main) | **Append-only event log** (hash-chained NDJSON): authoritative record of committed rituals. | `ledger/events.jsonl`, `ledger/SPEC.md` |

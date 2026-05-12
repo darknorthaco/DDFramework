@@ -77,7 +77,7 @@ def _classify(days_left: int) -> tuple[str | None, str]:
     if days_left <= 0:
         return (
             "critical",
-            "Renew the waiver via `phantom file-waiver --id <id> --waiver <path> --approve` "
+            "Renew the waiver via `ddf-exec file-waiver --id <id> --waiver <path> --approve` "
             "or remove it from WAIVERS.md.",
         )
     if days_left <= 7:

@@ -1,4 +1,4 @@
-"""Shrike GHOST — read-only observer for the Phantom ledger.
+"""Shrike GHOST — read-only observer for the DDFramework engine ledger.
 
 Stdlib-only runtime dependencies. See LANGUAGES.md §3.3.
 """

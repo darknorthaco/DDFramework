@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 880" width="720" height="880">
   <title>DDFramework layer stack</title>
-  <desc>Five engine layers, kernel boundary, applications. Import into Visio or Inkscape for editing.</desc>
+  <desc>DDFramework engine layers (ddf-exec, Constellation, GHOST, Ledger), kernel boundary, applications. Import into Visio or Inkscape for editing.</desc>
   <defs>
     <linearGradient id="gApp" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="#e8eef5"/><stop offset="100%" stop-color="#d0dae8"/>
@@ -35,7 +35,7 @@
   <!-- Applications -->
   <rect x="80" y="78" width="560" height="72" rx="6" fill="url(#gApp)" stroke="#718096" stroke-width="1.5"/>
   <text x="360" y="108" text-anchor="middle" font-family="Segoe UI, Helvetica, sans-serif" font-size="15" font-weight="600" fill="#1a202c">Application Era (v5.0.0+)</text>
-  <text x="360" y="128" text-anchor="middle" font-family="Segoe UI, Helvetica, sans-serif" font-size="12" fill="#2d3748">Apps depend on kernel API only  not on phantom-core / ghost-observer directly</text>
+  <text x="360" y="128" text-anchor="middle" font-family="Segoe UI, Helvetica, sans-serif" font-size="12" fill="#2d3748">Apps depend on kernel API only  not on ddf-exec-core / ghost-observer directly</text>
   <line x1="360" y1="150" x2="360" y2="168" stroke="#4a5568" stroke-width="2" marker-end="url(#arrowDown)"/>
 
   <!-- Kernel -->
@@ -55,11 +55,11 @@
   <text x="165" y="378" text-anchor="middle" font-family="Segoe UI, Helvetica, sans-serif" font-size="9" fill="#4a5568">CONSTELLATION.md</text>
   <text x="165" y="392" text-anchor="middle" font-family="Segoe UI, Helvetica, sans-serif" font-size="9" fill="#4a5568">constellation.toml</text>
 
-  <!-- Phantom -->
+  <!-- ddf-exec (engine executor; historically Phantom) -->
   <rect x="275" y="312" width="170" height="100" rx="6" fill="url(#gPhantom)" stroke="#c05621" stroke-width="1.5"/>
-  <text x="360" y="338" text-anchor="middle" font-family="Segoe UI, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#1a202c">Phantom</text>
+  <text x="360" y="338" text-anchor="middle" font-family="Segoe UI, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#1a202c">ddf-exec</text>
   <text x="360" y="356" text-anchor="middle" font-family="Segoe UI, Helvetica, sans-serif" font-size="10" fill="#2d3748">Ritual executor</text>
-  <text x="360" y="372" text-anchor="middle" font-family="Segoe UI, Helvetica, sans-serif" font-size="9" fill="#4a5568">phantom-core ù phantom</text>
+  <text x="360" y="372" text-anchor="middle" font-family="Segoe UI, Helvetica, sans-serif" font-size="9" fill="#4a5568">ddf-exec-core - ddf-exec</text>
   <text x="360" y="388" text-anchor="middle" font-family="Segoe UI, Helvetica, sans-serif" font-size="9" fill="#c05621" font-weight="600">Sole writer ù main ledger</text>
 
   <!-- GHOST -->
@@ -79,9 +79,9 @@
   <rect x="80" y="658" width="560" height="180" rx="6" fill="#ffffff" stroke="#cbd5e0" stroke-width="1"/>
   <text x="100" y="686" font-family="Segoe UI, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#1a202c">Legend</text>
   <text x="100" y="708" font-family="Segoe UI, Helvetica, sans-serif" font-size="11" fill="#2d3748">" Constellation: normative principles above architectural doctrine.</text>
-  <text x="100" y="728" font-family="Segoe UI, Helvetica, sans-serif" font-size="11" fill="#2d3748">" Phantom: runs rituals; enforces invariants; embeds doctrine hash (I6).</text>
+  <text x="100" y="728" font-family="Segoe UI, Helvetica, sans-serif" font-size="11" fill="#2d3748">" ddf-exec: runs rituals; enforces invariants; embeds doctrine hash (I6).</text>
   <text x="100" y="748" font-family="Segoe UI, Helvetica, sans-serif" font-size="11" fill="#2d3748">" GHOST: reads main ledger; never writes it; emits advisories (I8).</text>
-  <text x="100" y="768" font-family="Segoe UI, Helvetica, sans-serif" font-size="11" fill="#2d3748">" Ledger: two streams; Phantom vs GHOST write split is the core trust model.</text>
+  <text x="100" y="768" font-family="Segoe UI, Helvetica, sans-serif" font-size="11" fill="#2d3748">" Ledger: two streams; ddf-exec vs GHOST write split is the core trust model.</text>
   <text x="100" y="812" font-family="Segoe UI, Helvetica, sans-serif" font-size="10" fill="#718096">SVG source: docs/images/ddf-layers-stack.svg  edit in Inkscape or Visio after import.</text>
 
   <text x="360" y="864" text-anchor="middle" font-family="Segoe UI, Helvetica, sans-serif" font-size="10" fill="#a0aec0">DDFramework engine ù diagram for planning only ù not normative vs DOCTRINE.md</text>

@@ -55,7 +55,7 @@ def check(ctx: AdvisorContext) -> list[Advisory]:
                 "days_stale": days_stale,
             },
             recommended_action=(
-                "Run `phantom verify` to record a heartbeat, or investigate "
+                "Run `ddf-exec verify` to record a heartbeat, or investigate "
                 "why the fabric has been idle."
             ),
         )

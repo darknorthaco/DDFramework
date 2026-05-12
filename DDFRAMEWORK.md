@@ -20,7 +20,7 @@ DDFramework:
 
 | Layer | Role | Crate / package |
 |---|---|---|
-| **Phantom** | Execution + rituals; deterministic ritual core | `phantom-core/` |
+| **ddf-exec** (historically *Phantom*) | Execution + rituals; deterministic ritual core | `ddf-exec-core/` |
 | **Constellation** | Doctrine; constitutional layer | `CONSTELLATION.md` + `constellation.toml` |
 | **GHOST** | Advisory engine; read-only observer and rule runner | `ghost-observer/` |
 | **Ledger** | Truth substrate; append-only hash-chained record | `ledger/` + `advisories/` |
@@ -63,14 +63,14 @@ DDFramework as an external substrate.
 
 ## 4. The four layers, in more detail
 
-### 4.1 Phantom
+### 4.1 ddf-exec (engine executor, historically *Phantom*)
 
-The sovereign ritual executor. Rust binary (`phantom`) with zero
+The sovereign ritual executor. Rust binary (`ddf-exec`) with zero
 third-party dependencies. Embeds the SHA-256 of `doctrine.toml` and
 `constellation.toml` at build time and refuses to run on mismatch
 (invariant I6).
 
-**Phantom is the only component authorized to write to the main
+**`ddf-exec` is the only component authorized to write to the main
 ledger.**
 
 ### 4.2 Constellation
@@ -85,14 +85,14 @@ When architectural and constitutional rules conflict, Constellation
 The read-only advisory engine. Python, stdlib-only. Seven rules
 (R001–R007) plus an R000 bootstrap. Writes advisories to its own
 hash-chained stream (`advisories/stream.jsonl`). Structurally
-forbidden from writing to the main ledger or importing `phantom_core`
+forbidden from writing to the main ledger or importing `ddf_exec_core`
 (invariant I8, enforced by `tests/test_readonly_on_main_ledger.py`).
 
 ### 4.4 Ledger
 
 The truth substrate. Two hash-chained NDJSON streams:
 
-- `ledger/events.jsonl` — the main ledger. Written by Phantom only.
+- `ledger/events.jsonl` — the main ledger. Written by `ddf-exec` only.
   Ceremonial ground truth.
 - `advisories/stream.jsonl` — GHOST's advisory stream. Written by GHOST
   only. Observational ground truth.
@@ -138,7 +138,7 @@ to the remaining legacy strings.)
 
 ## 7. Applications are out of scope (until Phase 5+)
 
-- No application logic in `phantom-core/`, `ghost-observer/`, or `tools/`.
+- No application logic in `ddf-exec-core/`, `ghost-observer/`, or `tools/`.
 - No application-specific ritual kinds added to `ceremonies/`.
 - No application-specific event kinds added to the main ledger registry.
 - No GHOST rules tailored to a specific application's anomaly shape.
@@ -146,7 +146,7 @@ to the remaining legacy strings.)
 When an application is created (Phase 5+), it lives in a sibling
 directory (or sibling repo) and depends on DDFramework via:
 
-- Running `phantom` as a subprocess for rituals.
+- Running `ddf-exec` as a subprocess for rituals.
 - Importing `ghost-observer` as a Python package for observation.
 - Reading ledger / advisory streams as authoritative history.
 
@@ -181,14 +181,15 @@ ddf-core/
 
 What does NOT change in v0.7.0:
 
-- No layer crate is moved. `phantom-core/` and `ghost-observer/`
-  stay at the repo root as the engine's internal implementation. The
-  kernel boundary is **conceptual**, enforced by the `ddf-core/` API
-  surface and by its tests.
+- No layer crate is moved. `ddf-exec-core/` (formerly `phantom-core/`)
+  and `ghost-observer/` stay at the repo root as the engine's internal
+  implementation. The kernel boundary is **conceptual**, enforced by
+  the `ddf-core/` API surface and by its tests.
 - No existing invariant is weakened (I1–I8 unchanged).
-- No ritual semantics change. `phantom verify` and every other
-  subcommand behave exactly as they did in v0.6.0. The new `ddf`
-  binary is a thin dispatcher that forwards to them.
+- No ritual semantics change. `ddf-exec verify` (formerly
+  `phantom verify`) and every other subcommand behave exactly as they
+  did in v0.6.0. The `ddf` binary is a thin dispatcher that forwards
+  to them.
 
 Stability contract:
 
@@ -206,6 +207,6 @@ same ceremony as the rest of doctrine ([`DOCTRINE.md`](./DOCTRINE.md)
 §VII + [`CONSTELLATION.md`](./CONSTELLATION.md) §14):
 
 - Proposal → rationale → review → ledger entry → version bump.
-- Amendments require `phantom amend-doctrine --approve`.
+- Amendments require `ddf-exec amend-doctrine --approve`.
 - Weakening "app-agnostic" or "portable" is a **major** bump.
 - Adding clarifications is a **patch** bump.

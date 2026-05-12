@@ -57,41 +57,35 @@ unless packaging or embedders force Wave 2 or Wave 3.
 
 ---
 
-## Wave 2 (optional — install / distribution)
+## Wave 2 — binary rename (EXECUTED at v1.0.0)
 
-If product needs a friendlier **binary name** on disk:
-
-- Ship **`phantom`** unchanged; add **`ritual-executor`** (or agreed name) as
-  **copy or hard link** in packaging scripts **outside** this repo, **or**
-- Document a shell alias in operator runbooks — zero engine code change.
-
-**Deprecation:** if a true rename happens, keep `phantom` as a **stub** that
-prints deprecation + `exec`s the new binary for **at least one major engine
-version**.
+**Outcome:** the `phantom` binary was renamed to **`ddf-exec`** in a single
+major release (no deprecation stub). The single in-repo consumer (AO) was
+updated in the same commit chain. The cost of a deprecation window outweighed
+the benefit given the known consumer set.
 
 ---
 
-## Wave 3 (crate / Python module rename)
+## Wave 3 — crate / lib rename (EXECUTED at v1.0.0)
 
-**Preconditions:**
+**Outcome:** the `phantom-core` crate was renamed to **`ddf-exec-core`** with
+lib name `ddf_exec_core`. Kernel API bumped to 1.0.0 in the same amendment
+ceremony. Downstream `use phantom_core` paths were rewritten across the
+workspace; the same commit updated AO's references.
 
-- Written migration guide for downstream `Cargo.toml` / imports.
-- **Kernel API major bump** if `ddf` public paths change.
-- Full test gate + advisory/ledger replay smoke on sample archives.
-
-**Rollback:** maintain a branch or tag of last pre-rename release; do not rewrite
-git history of `ledger/events.jsonl`.
+**Rollback path retained:** the pre-rename state lives at the commit immediately
+before the v1.0.0 amendment; `ledger/events.jsonl` history is frozen per I1 so
+the old names remain readable in committed entries.
 
 ---
 
-## Environment variable policy
+## Environment variable policy (EXECUTED at v1.0.0)
 
-| Today | Future (if renamed) |
+| Old | New |
 |-------|---------------------|
-| `DDF_PHANTOM_BIN` | Accept `DDF_RITUAL_EXECUTOR_BIN` as alias **before** removing old name |
+| `DDF_PHANTOM_BIN` | **`DDF_EXEC_BIN`** (no alias; hard cut at v1.0.0) |
 
-Implement alias support only when Wave 2+ is approved; do not add dead env vars
-prematurely.
+The `DDF_PYTHON` and `PYTHONPATH` env vars are unchanged.
 
 ---
 
