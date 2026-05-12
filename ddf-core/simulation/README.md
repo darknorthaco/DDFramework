@@ -1,4 +1,4 @@
-# DDFramework Simulation Layer (Phase 6 wave 1)
+# DDFramework Simulation Layer (Phase 6 waves 1 + 2)
 
 Phase 5 established the kernel boundary; Phase 6 wave 1 lands the
 simulation capabilities so Constellation §7 (*Simulate Before You
@@ -6,7 +6,8 @@ Scar Reality*) can be automated rather than honor-system. **All
 five modules below are implemented** and exercised by the
 ``ddf-core/tests`` suite, including live-engine sanity tests against
 the real ``ledger/events.jsonl``, ``advisories/stream.jsonl``, and
-ceremony manifests in this repository.
+ceremony manifests in this repository. Wave 2 added the
+``python -m ddf simulate`` CLI dispatcher (see [CLI](#cli) below).
 
 ## Modules
 
@@ -17,6 +18,47 @@ ceremony manifests in this repository.
 | `ledger_replay.py` | Walk `events.jsonl` from genesis, recompute the canonical hash chain per `ledger/SPEC.md` §5, and report entry count, event-kind counts, timestamp monotonicity, chain integrity, and head hash | implemented |
 | `advisory_replay.py` | Walk `advisories/stream.jsonl` from genesis, recompute the canonical hash chain per `advisories/SPEC.md` §4, count by `rule_id` / `severity` / `run_id`, and confirm each `ledger_tail_hash` resolves to a real ledger entry | implemented |
 | `drift_simulation.py` | For a given scenario (`doctrine_drift` / `constellation_drift` / `binary_stale` / `all`), decide whether the corresponding GHOST rule (R001 / R002 / R003) would fire **right now** given the on-disk state of `doctrine.toml`, `constellation.toml`, and the main ledger | implemented |
+
+## CLI
+
+Phase 6 wave 2 added a thin argparse dispatcher at
+``ddf-core/ddf_py/ddf/_sim_cli.py`` exposed as a subcommand of
+``python -m ddf``:
+
+```text
+python -m ddf simulate doctrine-diff    --old PATH --new PATH
+python -m ddf simulate ritual-dryrun    --ritual ID [--args JSON]
+                                        [--ceremony-dir PATH] [--doctrine PATH]
+python -m ddf simulate ledger-replay    [--ledger PATH]
+python -m ddf simulate advisory-replay  [--advisory PATH] [--ledger PATH]
+python -m ddf simulate drift-simulation --scenario NAME
+                                        [--ledger PATH] [--doctrine PATH]
+                                        [--constellation PATH]
+```
+
+Defaults for every path argument point at the live engine layout
+relative to the kernel package (``ledger/events.jsonl``,
+``doctrine.toml``, ``constellation.toml``, ``advisories/stream.jsonl``,
+``ceremonies/``), so most invocations are one-liners from any cwd.
+Output is JSON to stdout with ``sort_keys=True`` and ``indent=2`` —
+byte-deterministic across runs, safe to diff, pipe-friendly. CLI
+errors (missing file, malformed ``--args``) go to stderr with exit
+code ``1``; argparse rejects (unknown subcommand, invalid choice)
+exit ``2``. The CLI never writes to the ledger or to disk; same
+invariants as the underlying modules (I5, I7, I8).
+
+Examples:
+
+```text
+# Audit the live ledger.
+python -m ddf simulate ledger-replay | python -m json.tool --no-ensure-ascii
+
+# Decide if any drift rule would fire right now.
+python -m ddf simulate drift-simulation --scenario all
+
+# Dry-run the `verify` ritual against the registered manifests.
+python -m ddf simulate ritual-dryrun --ritual verify
+```
 
 ### `doctrine_diff.run(old_doctrine_str, new_doctrine_str) -> dict`
 
@@ -201,5 +243,9 @@ Each module exposes a pure `run(...)` function that:
 This layer was scaffolded as stubs during Phase 5 (engine kernelization,
 v0.7.0) to reserve the namespace under the kernel boundary, signal intent
 to downstream embedders, and let Phase 6 land as additive changes without
-structural churn. Phase 6 wave 1 (the work documented above) lifted every
-stub to a real implementation without weakening invariants I1–I8.
+structural churn. Phase 6 wave 1 lifted every stub to a real
+implementation without weakening invariants I1–I8. Phase 6 wave 2 added
+the ``python -m ddf simulate`` CLI dispatcher so the same modules are
+invokable from a shell (or by GHOST advisories down the road) without
+import boilerplate; the CLI is a thin wrapper and adds no new behaviour
+beyond what the modules already expose.
