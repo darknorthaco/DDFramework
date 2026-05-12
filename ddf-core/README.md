@@ -6,24 +6,26 @@ engine. Consumed by all future Application-Era software.
 - **Engine binds to:** DDFramework v0.7.0 (`doctrine_version`).
 - **Kernel API version:** 0.1.0.
 - **Stability contract:** the API surface below MUST remain
-  source- and behavior-compatible across engine patch and minor
-  bumps. Weakening is a major API bump.
+source- and behavior-compatible across engine patch and minor
+bumps. Weakening is a major API bump.
 
 ## Mechanical overview (kernel vocabulary)
 
 The `ddf` crate and `ddf` Python package are the **stable kernel
 boundary**. In plain software terms:
 
-| You see (mission) | In code / API (mechanism) |
-|-------------------|---------------------------|
-| Phantom (this repo’s engine) | **Ritual executor** + ledger writer (`phantom` binary, `phantom-core` types) |
-| GHOST (this repo’s engine) | **Read-only advisor** + advisory stream writer (`python -m ghost`, `ghost-observer`) |
-| `ddf verify` / `ddf::verify` | Subprocess call to **verify ritual** |
-| `ddf advise` / `ddf::ghost::advise` | Subprocess call to **advisor ritual** |
-| `ddf::ledger` | **Ledger** primitives (append-only hash chain) |
 
-Full symbol table: [`KERNEL_API_MAP.md`](./KERNEL_API_MAP.md).  
-Mission ↔ mechanism glossary (repo root): [`../GLOSSARY_ENGINE_NAMES.md`](../GLOSSARY_ENGINE_NAMES.md).
+| You see (mission)                   | In code / API (mechanism)                                                            |
+| ----------------------------------- | ------------------------------------------------------------------------------------ |
+| Phantom (this repo’s engine)        | **Ritual executor** + ledger writer (`phantom` binary, `phantom-core` types)         |
+| GHOST (this repo’s engine)          | **Read-only advisor** + advisory stream writer (`python -m ghost`, `ghost-observer`) |
+| `ddf verify` / `ddf::verify`        | Subprocess call to **verify ritual**                                                 |
+| `ddf advise` / `ddf::ghost::advise` | Subprocess call to **advisor ritual**                                                |
+| `ddf::ledger`                       | **Ledger** primitives (append-only hash chain)                                       |
+
+
+Full symbol table: `[KERNEL_API_MAP.md](./KERNEL_API_MAP.md)`.  
+Mission ↔ mechanism glossary (repo root): `[../GLOSSARY_ENGINE_NAMES.md](../GLOSSARY_ENGINE_NAMES.md)`.
 
 ## What this directory is
 
@@ -39,16 +41,18 @@ affecting embedders.
 The `ddf` binary is a thin dispatcher. Every subcommand is
 behavior-identical to the underlying engine command it delegates to.
 
-| Command | Delegates to | Effect |
-|---|---|---|
-| `ddf verify` | `phantom verify` | Run the verify ritual; appends one `verify.result` entry. |
-| `ddf doctrine` | `phantom doctrine` | Print embedded doctrine hashes + versions. |
-| `ddf amend-doctrine ...` | `phantom amend-doctrine ...` | Record a doctrine amendment (`--approve` required). |
-| `ddf file-waiver ...` | `phantom file-waiver ...` | Record a waiver filing (`--approve` required). |
-| `ddf run-ritual <id>` | (dispatch) | Dispatch a zero-argument ritual by id (`0001`, `0006`). |
-| `ddf ledger [path]` | `python -m ghost [path]` | Read the main ledger summary (read-only). |
-| `ddf advise` | `python -m ghost advise` | Run the GHOST advisor (ritual 0006). |
-| `ddf verify-advisories` | `python -m ghost verify-advisories` | Audit the advisory-stream chain. |
+
+| Command                  | Delegates to                        | Effect                                                    |
+| ------------------------ | ----------------------------------- | --------------------------------------------------------- |
+| `ddf verify`             | `phantom verify`                    | Run the verify ritual; appends one `verify.result` entry. |
+| `ddf doctrine`           | `phantom doctrine`                  | Print embedded doctrine hashes + versions.                |
+| `ddf amend-doctrine ...` | `phantom amend-doctrine ...`        | Record a doctrine amendment (`--approve` required).       |
+| `ddf file-waiver ...`    | `phantom file-waiver ...`           | Record a waiver filing (`--approve` required).            |
+| `ddf run-ritual <id>`    | (dispatch)                          | Dispatch a zero-argument ritual by id (`0001`, `0006`).   |
+| `ddf ledger [path]`      | `python -m ghost [path]`            | Read the main ledger summary (read-only).                 |
+| `ddf advise`             | `python -m ghost advise`            | Run the GHOST advisor (ritual 0006).                      |
+| `ddf verify-advisories`  | `python -m ghost verify-advisories` | Audit the advisory-stream chain.                          |
+
 
 **Environment:**
 
@@ -120,7 +124,7 @@ Phase 5.
 
 - Application logic of any kind.
 - The internal structure of `phantom-core`, `hyperion-net`,
-  `ghost-observer`. They may be refactored freely.
+`ghost-observer`. They may be refactored freely.
 - Legacy `phantom` CLI banner text.
 - Ceremony manifests' prose.
 - The ledger file-format version (goverened by `ledger/SPEC.md`, not this crate).
