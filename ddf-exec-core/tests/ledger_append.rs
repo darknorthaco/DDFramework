@@ -3,8 +3,8 @@
 // Writes several entries into a temp file, then verifies the chain
 // validates end to end.
 
-use phantom_core::canonical::Entry;
-use phantom_core::ledger::{self, ZERO_HASH};
+use ddf_exec_core::canonical::Entry;
+use ddf_exec_core::ledger::{self, ZERO_HASH};
 use std::path::PathBuf;
 
 fn temp_ledger(name: &str) -> PathBuf {

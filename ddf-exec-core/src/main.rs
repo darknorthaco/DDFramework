@@ -13,11 +13,11 @@
 //   I7 — no silent mutation (ledger entry is written BEFORE the
 //        process exits non-zero on mismatch)
 
-use phantom_core::canonical::Entry;
-use phantom_core::ledger::{self, ZERO_HASH};
-use phantom_core::sha256::sha256_hex_file_normalized;
-use phantom_core::timestamp::now_rfc3339;
-use phantom_core::{
+use ddf_exec_core::canonical::Entry;
+use ddf_exec_core::ledger::{self, ZERO_HASH};
+use ddf_exec_core::sha256::sha256_hex_file_normalized;
+use ddf_exec_core::timestamp::now_rfc3339;
+use ddf_exec_core::{
     CONSTELLATION_HASH_EMBEDDED, CONSTELLATION_VERSION, DOCTRINE_HASH_EMBEDDED, DOCTRINE_VERSION,
 };
 
@@ -378,7 +378,7 @@ fn run_file_waiver(root: &Path, args: &[String]) -> Result<ExitCode, String> {
         .map_err(|e| format!("cannot read waiver file {}: {}", waiver_path.display(), e))?;
     let waiver_hash = format!(
         "sha256:{}",
-        phantom_core::sha256::sha256_hex(&phantom_core::sha256::strip_cr(&waiver_bytes))
+        ddf_exec_core::sha256::sha256_hex(&ddf_exec_core::sha256::strip_cr(&waiver_bytes))
     );
 
     let doctrine_path = root.join(DOCTRINE_RELATIVE);

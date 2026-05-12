@@ -18,6 +18,6 @@ name = "ddf"
 path = "src/lib.rs"
 
 # Doctrine: the kernel API stays on the zero-third-party-dep policy.
-# phantom-core is a path dependency inside the same workspace.
+# ddf-exec-core is a path dependency inside the same workspace.
 [dependencies]
-phantom-core = { path = "../../phantom-core" }
+ddf-exec-core = { path = "../../ddf-exec-core" }

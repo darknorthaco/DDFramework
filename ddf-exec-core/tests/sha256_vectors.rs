@@ -1,7 +1,7 @@
 // NIST FIPS 180-4 SHA-256 test vectors.
 // https://csrc.nist.gov/projects/cryptographic-standards-and-guidelines/example-values
 
-use phantom_core::sha256::sha256_hex;
+use ddf_exec_core::sha256::sha256_hex;
 
 #[test]
 fn empty_string() {

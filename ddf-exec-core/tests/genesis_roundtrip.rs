@@ -6,7 +6,7 @@
 // (the Python-written source of truth). This is the interop test
 // that proves Rust and Python agree on canonical form.
 
-use phantom_core::canonical::Entry;
+use ddf_exec_core::canonical::Entry;
 
 const ZERO: &str = "sha256:0000000000000000000000000000000000000000000000000000000000000000";
 const EXPECTED_ENTRY_HASH: &str =

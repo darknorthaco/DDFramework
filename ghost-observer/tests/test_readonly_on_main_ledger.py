@@ -1,9 +1,9 @@
 """Shrike I8 structural test.
 
 GHOST must never open `ledger/events.jsonl` in a write mode, and must
-never import from `phantom_core` (the engine executor crate). These
-guarantees are enforced by walking the `ghost/` source tree with
-ast + regex.
+never import from `ddf_exec_core` (the engine executor crate, formerly
+`phantom_core`). These guarantees are enforced by walking the `ghost/`
+source tree with ast + regex.
 
 If this test fails, the invariant is broken at the source level
 regardless of runtime behavior.
@@ -23,7 +23,7 @@ if str(PKG_ROOT) not in sys.path:
 
 GHOST_SRC = PKG_ROOT / "ghost"
 
-FORBIDDEN_IMPORT_PREFIXES = ("phantom_core",)
+FORBIDDEN_IMPORT_PREFIXES = ("ddf_exec_core",)
 
 # Any `open("events.jsonl", "w..." / "a..." / "r+..." / "x..."`-style
 # call anywhere under ghost/. We match conservatively: any literal that
@@ -54,7 +54,7 @@ class ReadonlyInvariantTest(unittest.TestCase):
             f"Shrike I8 VIOLATION: ghost/ opens events.jsonl in a write mode in: {offenders}",
         )
 
-    def test_no_phantom_core_imports(self):
+    def test_no_ddf_exec_core_imports(self):
         offenders = []
         for path in _py_files(GHOST_SRC):
             try:
@@ -73,7 +73,7 @@ class ReadonlyInvariantTest(unittest.TestCase):
         self.assertEqual(
             offenders,
             [],
-            f"Shrike I8 VIOLATION: ghost/ imports forbidden modules: {offenders}",
+            f"Shrike I8 VIOLATION: ghost/ imports forbidden engine-internal modules: {offenders}",
         )
 
 

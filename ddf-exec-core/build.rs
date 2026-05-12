@@ -1,4 +1,4 @@
-// Shrike phantom-core build script.
+// ddf-exec-core build script (formerly phantom-core/build.rs).
 //
 // At build time, reads ../doctrine.toml and ../constellation.toml,
 // computes their SHA-256, and emits the hex digests as compile-time
@@ -17,7 +17,7 @@ include!("src/sha256.rs");
 
 fn read_and_hash(path: &Path) -> String {
     let bytes = fs::read(path)
-        .unwrap_or_else(|e| panic!("phantom-core build: cannot read {}: {}", path.display(), e));
+        .unwrap_or_else(|e| panic!("ddf-exec-core build: cannot read {}: {}", path.display(), e));
     // Normalize line endings before hashing so the embedded hash is
     // platform-independent (CRLF on Windows and LF on Unix produce
     // the same digest).

@@ -4,7 +4,7 @@
 // CRLF and LF versions of the same logical content. This is what
 // makes `doctrine_hash` values platform-independent.
 
-use phantom_core::sha256::{sha256_hex, strip_cr};
+use ddf_exec_core::sha256::{sha256_hex, strip_cr};
 
 #[test]
 fn strip_cr_removes_all_carriage_returns() {

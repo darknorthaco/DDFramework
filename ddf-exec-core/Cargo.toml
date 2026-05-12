@@ -1,11 +1,11 @@
 [package]
-name         = "phantom-core"
+name         = "ddf-exec-core"
 version      = { workspace = true }
 edition      = { workspace = true }
 rust-version = { workspace = true }
 license      = { workspace = true }
 publish      = { workspace = true }
-description  = "Shrike Phantom — sovereign, ceremony-first ritual core."
+description  = "DDFramework engine executor (ddf-exec) — sovereign, ceremony-first ritual core."
 
 [[bin]]
 name = "phantom"
@@ -17,7 +17,7 @@ path = "src/main.rs"
 test = false
 
 [lib]
-name = "phantom_core"
+name = "ddf_exec_core"
 path = "src/lib.rs"
 
 # Doctrine: zero dependencies. See LANGUAGES.md §3.2.

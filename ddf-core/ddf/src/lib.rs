@@ -5,7 +5,7 @@
 //!
 //! This crate is the stable API surface for applications that embed
 //! DDFramework. It is deliberately thin: it re-exports engine
-//! primitives from [`phantom_core`] and provides shim functions that
+//! primitives from [`ddf_exec_core`] and provides shim functions that
 //! delegate to the `phantom` binary for CLI rituals. There is no new
 //! behavior here; `ddf verify` is byte-exact with `phantom verify` by
 //! construction (it invokes the same binary).
@@ -30,9 +30,9 @@ use std::env;
 use std::path::PathBuf;
 use std::process::{Command, ExitStatus};
 
-pub use phantom_core::canonical;
-pub use phantom_core::sha256;
-pub use phantom_core::timestamp;
+pub use ddf_exec_core::canonical;
+pub use ddf_exec_core::sha256;
+pub use ddf_exec_core::timestamp;
 
 /// Kernel API version (SemVer). Governs the stability contract of this crate.
 pub const API_VERSION: &str = "0.1.0";
@@ -46,7 +46,7 @@ pub const ENGINE_VERSION: &str = "0.7.0";
 pub mod ledger {
     //! Re-export of the engine ledger primitives.
     //! See `ledger/SPEC.md` for format.
-    pub use phantom_core::ledger::*;
+    pub use ddf_exec_core::ledger::*;
 }
 
 /// Dispatch helpers for the **read-only advisor** (GHOST: mission name).
@@ -176,8 +176,8 @@ mod tests {
     }
 
     #[test]
-    fn engine_version_matches_phantom_core() {
-        assert_eq!(ENGINE_VERSION, phantom_core::DOCTRINE_VERSION);
+    fn engine_version_matches_ddf_exec_core() {
+        assert_eq!(ENGINE_VERSION, ddf_exec_core::DOCTRINE_VERSION);
     }
 
     #[test]

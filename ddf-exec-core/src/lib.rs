@@ -1,4 +1,4 @@
-//! phantom-core — Shrike Phantom Core library.
+//! ddf-exec-core — DDFramework engine executor library (formerly phantom-core).
 //!
 //! Zero dependencies. Pure Rust. Tested against NIST test vectors
 //! and the committed genesis ledger entry.

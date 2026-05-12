@@ -6,8 +6,8 @@
 // 3. Strings and bools serialize correctly.
 // 4. Round-trip against hand-computed expected bytes.
 
-use phantom_core::canonical::Entry;
-use phantom_core::sha256::sha256_hex;
+use ddf_exec_core::canonical::Entry;
+use ddf_exec_core::sha256::sha256_hex;
 
 #[test]
 fn empty_entry() {

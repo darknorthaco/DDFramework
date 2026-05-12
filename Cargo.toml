@@ -1,7 +1,7 @@
 [workspace]
 resolver = "2"
 members  = [
-    "phantom-core",
+    "ddf-exec-core",
     "ddf-core/ddf",
 ]
 

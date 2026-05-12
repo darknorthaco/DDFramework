@@ -6,9 +6,9 @@ version = 4
 name = "ddf"
 version = "0.1.0"
 dependencies = [
- "phantom-core",
+ "ddf-exec-core",
 ]
 
 [[package]]
-name = "phantom-core"
+name = "ddf-exec-core"
 version = "0.7.0"
