@@ -2,7 +2,6 @@
 resolver = "2"
 members  = [
     "phantom-core",
-    "hyperion-net",
     "ddf-core/ddf",
 ]
 
