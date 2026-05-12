@@ -11,7 +11,7 @@ Scar Reality*) can be automated rather than honor-system.
 | `doctrine_diff.py` | Semantic diff of two doctrine.toml versions: added/removed invariants, added/removed rituals, version delta, impact classification, ordered summary | implemented |
 | `ritual_dryrun.py` | Validate a ritual invocation against its manifest and `[rituals].registered`; report would-be event kind, side effects, declared invariants, and arg validation — without invoking the executor | implemented |
 | `ledger_replay.py` | Walk `events.jsonl` from genesis, recompute the canonical hash chain per `ledger/SPEC.md` §5, and report entry count, event-kind counts, timestamp monotonicity, chain integrity, and head hash | implemented |
-| `advisory_replay.py` | Replay the advisory stream; recompute each advisory against the ledger tail it references | stub |
+| `advisory_replay.py` | Walk `advisories/stream.jsonl` from genesis, recompute the canonical hash chain per `advisories/SPEC.md` §4, count by `rule_id` / `severity` / `run_id`, and confirm each `ledger_tail_hash` resolves to a real ledger entry | implemented |
 | `drift_simulation.py` | Synthesize "what if doctrine changed but amend-doctrine wasn't run" scenarios and confirm GHOST R001/R002/R003 fire as expected | stub |
 
 ### `doctrine_diff.run(old_doctrine_str, new_doctrine_str) -> dict`
@@ -99,6 +99,42 @@ Returned dict (stable keys):
 | `head_hash` | `str` | `entry_hash` of the last walked entry; `sha256:0…64` if empty/missing. |
 | `errors` | `list[str]` | Sorted machine-readable error descriptors (currently a singleton when chain breaks). |
 | `ordered_summary` | `list[str]` | Deterministic short descriptors of the chain audit. |
+
+### `advisory_replay.run(advisory_path, ledger_path) -> dict`
+
+Implemented as of Phase 6 wave 1. Read-only audit walk of
+``advisories/stream.jsonl``, with the ``ledger_path`` consulted
+only to confirm each advisory's ``ledger_tail_hash`` resolves to a
+known ledger ``entry_hash``. Both files are opened ``"rb"``; the
+module writes nothing. Canonical form matches
+``advisories/SPEC.md`` §4 (same rules as ``ledger/SPEC.md`` §5
+with ``advisory_hash`` replacing ``entry_hash``); validated against
+the live engine advisory stream in
+``tests/test_advisory_replay.py::test_live_engine_advisory_stream_replays_cleanly``.
+
+The ledger's own chain is **not** re-verified by this function — to
+audit both, compose with ``ledger_replay`` separately.
+
+Returned dict (stable keys):
+
+| Key | Type | Description |
+|---|---|---|
+| `advisory_path_exists` / `ledger_path_exists` | `bool` | Files present on disk. |
+| `advisory_count` | `int` | Advisories walked before the first break (or to EOF if `chain_ok`). |
+| `chain_ok` | `bool` | Every advisory's recomputed hash matched and every `prev_advisory_hash` linked back to genesis. |
+| `chain_break_at_line` | `int \| None` | 1-indexed line where the chain first broke. |
+| `chain_error` | `str \| None` | First break descriptor (`json_parse_error`, `missing_advisory_hash`, `advisory_hash_mismatch`, `chain_link_broken`, `blank_line`, `advisory_stream_missing`). |
+| `rule_id_counts` | `dict[str,int]` | Per-rule counts (key-sorted). |
+| `severity_counts` | `dict[str,int]` | Per-severity counts (key-sorted). |
+| `run_ids` | `list[str]` | Sorted unique `run_id`s. |
+| `run_count` | `int` | `len(run_ids)`. |
+| `tail_hashes_present_in_ledger` | `int` | Advisory `ledger_tail_hash`s that resolved against the ledger entry-hash set. |
+| `tail_hashes_missing` | `int` | Count whose tail did not resolve. |
+| `tail_hash_missing_lines` | `list[int]` | Sorted 1-indexed lines that referenced an unknown tail. |
+| `head_hash` | `str` | Last walked `advisory_hash`; zero hash if empty/missing. |
+| `genesis_prev_hash` | `str \| None` | Should be `sha256:0…64`. |
+| `errors` | `list[str]` | Sorted machine-readable error descriptors. |
+| `ordered_summary` | `list[str]` | Deterministic short descriptors of the audit. |
 
 ## Contract (Phase 6 target)
 
