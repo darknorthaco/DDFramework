@@ -1,18 +1,19 @@
 //! ddf CLI — DDFramework Kernel command-line interface.
 //!
-//! Thin dispatcher. Subcommands delegate to the underlying `phantom`
-//! binary (for ledger-writing rituals) or to the `ghost-observer`
-//! Python package (for the advisor and verify-advisories).
+//! Thin dispatcher. Subcommands delegate to the underlying `ddf-exec`
+//! binary (the engine executor; for ledger-writing rituals) or to the
+//! `ghost-observer` Python package (for the advisor and
+//! verify-advisories).
 //!
 //! Behavior contract: `ddf verify` MUST produce results identical to
-//! `phantom verify`. Tests enforce this.
+//! `ddf-exec verify`. Tests enforce this.
 
 use std::env;
 use std::process::{Command, ExitCode};
 
-use ddf::{phantom_bin_path, API_VERSION, ENGINE_VERSION};
+use ddf::{exec_bin_path, API_VERSION, ENGINE_VERSION};
 
-const PHANTOM_FORWARDABLE: &[&str] = &[
+const EXEC_FORWARDABLE: &[&str] = &[
     "verify",
     "doctrine",
     "amend-doctrine",
@@ -35,7 +36,7 @@ fn main() -> ExitCode {
             println!("ddf {} (DDFramework engine v{})", API_VERSION, ENGINE_VERSION);
             ExitCode::SUCCESS
         }
-        sub if PHANTOM_FORWARDABLE.contains(&sub) => forward_to_phantom(sub, &rest),
+        sub if EXEC_FORWARDABLE.contains(&sub) => forward_to_exec(sub, &rest),
         "advise" => forward_to_python(&["-m", "ghost", "advise"]),
         "verify-advisories" => forward_to_python(&["-m", "ghost", "verify-advisories"]),
         "ledger" => {
@@ -52,12 +53,12 @@ fn main() -> ExitCode {
     }
 }
 
-fn forward_to_phantom(sub: &str, rest: &[&str]) -> ExitCode {
-    let status = Command::new(phantom_bin_path())
+fn forward_to_exec(sub: &str, rest: &[&str]) -> ExitCode {
+    let status = Command::new(exec_bin_path())
         .arg(sub)
         .args(rest)
         .status();
-    exit_code_from(status, "phantom")
+    exit_code_from(status, "ddf-exec")
 }
 
 fn forward_to_python(args: &[&str]) -> ExitCode {
@@ -80,7 +81,7 @@ fn run_ritual_cmd(rest: &[&str]) -> ExitCode {
         }
     };
     match id {
-        "0001" | "verify" => forward_to_phantom("verify", &[]),
+        "0001" | "verify" => forward_to_exec("verify", &[]),
         "0006" | "ghost-advise" => forward_to_python(&["-m", "ghost", "advise"]),
         other => {
             eprintln!(
@@ -113,8 +114,8 @@ fn print_help() {
         API_VERSION, ENGINE_VERSION
     );
     println!("Usage: ddf <subcommand> [args...]\n");
-    println!("Rituals (delegate to phantom):");
-    println!("  verify                 Run the verify ritual (same as `phantom verify`)");
+    println!("Rituals (delegate to ddf-exec):");
+    println!("  verify                 Run the verify ritual (same as `ddf-exec verify`)");
     println!("  doctrine               Print embedded doctrine hashes + versions");
     println!("  amend-doctrine ...     Record a doctrine amendment");
     println!("  file-waiver ...        Record a waiver filing");
@@ -130,7 +131,7 @@ fn print_help() {
     println!("  help, --help           Show this help");
     println!();
     println!("Environment:");
-    println!("  DDF_PHANTOM_BIN        Override phantom binary path");
+    println!("  DDF_EXEC_BIN           Override ddf-exec (engine executor) binary path");
     println!("  DDF_PYTHON             Override python interpreter");
     println!("  PYTHONPATH             Required to include ghost-observer (set automatically if unset)");
 }

@@ -1,22 +1,23 @@
 """T3 — No-behavior-change test.
 
-Asserts that `ddf verify` is structurally equivalent to `phantom verify`
-as far as the ledger is concerned.
+Asserts that `ddf verify` is structurally equivalent to `ddf-exec verify`
+as far as the ledger is concerned. (`ddf-exec` was renamed from
+`phantom` at v1.0.0; historical ledger entries written by the older
+`phantom` binary remain frozen per I1.)
 
 Strategy (designed to not pollute the live ledger twice in CI):
   - Read the most recent `verify.result` entry from the main ledger
-    (whichever invocation produced it, phantom or ddf).
+    (whichever invocation produced it, ddf-exec / ddf / older phantom).
   - Assert it has `status=ok`.
   - Assert its `doctrine_hash` and `constellation_hash` match the
-    current on-disk (normalized) hashes — which both `phantom verify`
+    current on-disk (normalized) hashes — which both `ddf-exec verify`
     and `ddf verify` must compute identically.
-  - Additionally, confirm that the `ddf` binary exists in the cargo
-    target dir (or is on PATH) so `ddf verify` is callable.
+  - Additionally, confirm that the `ddf-exec` binary exists in the
+    cargo target dir (or is on PATH) so `ddf verify` is callable.
 
-The stronger pairwise-invocation test is deferred to the Phase 5
-ceremony section in the commit message, where both commands are run
-back-to-back and the resulting ledger entries are inspected by the
-operator.
+The stronger pairwise-invocation test is deferred to the post-1.0.0
+ceremony, where both commands are run back-to-back and the resulting
+ledger entries are inspected by the operator.
 """
 
 from __future__ import annotations
@@ -62,19 +63,19 @@ def _last_verify_result(path: pathlib.Path) -> dict | None:
     return last
 
 
-def _find_phantom() -> pathlib.Path | None:
-    """Locate the phantom binary via PATH or cargo-target heuristics."""
-    env_override = os.environ.get("DDF_PHANTOM_BIN")
+def _find_engine_executor() -> pathlib.Path | None:
+    """Locate the engine executor binary (ddf-exec) via env / PATH / cargo-target heuristics."""
+    env_override = os.environ.get("DDF_EXEC_BIN")
     if env_override:
         p = pathlib.Path(env_override)
         return p if p.exists() else None
-    on_path = shutil.which("phantom")
+    on_path = shutil.which("ddf-exec")
     if on_path:
         return pathlib.Path(on_path)
     # Common cargo target locations
     for candidate in (
-        REPO_ROOT / "target" / "release" / "phantom.exe",
-        REPO_ROOT / "target" / "release" / "phantom",
+        REPO_ROOT / "target" / "release" / "ddf-exec.exe",
+        REPO_ROOT / "target" / "release" / "ddf-exec",
     ):
         if candidate.exists():
             return candidate
@@ -82,7 +83,7 @@ def _find_phantom() -> pathlib.Path | None:
     for env_key in ("CARGO_TARGET_DIR",):
         override = os.environ.get(env_key)
         if override:
-            for name in ("phantom", "phantom.exe"):
+            for name in ("ddf-exec", "ddf-exec.exe"):
                 c = pathlib.Path(override) / "release" / name
                 if c.exists():
                     return c
@@ -98,14 +99,14 @@ class NoBehaviorChangeTest(unittest.TestCase):
     def test_latest_verify_result_records_current_hashes(self):
         last = _last_verify_result(LEDGER)
         self.assertIsNotNone(last)
-        # Current normalized hashes on disk (what both phantom and ddf should produce):
+        # Current normalized hashes on disk (what both ddf-exec and ddf should produce):
         expected_doctrine = f"sha256:{sha256_file_normalized(DOCTRINE)}"
         expected_constellation = f"sha256:{sha256_file_normalized(CONSTELLATION)}"
         self.assertEqual(
             last.get("doctrine_hash"),
             expected_doctrine,
             "latest verify.result doctrine_hash does not match current on-disk doctrine; "
-            "rebuild phantom and re-run `phantom verify` or `ddf verify`",
+            "rebuild ddf-exec and re-run `ddf-exec verify` or `ddf verify`",
         )
         self.assertEqual(last.get("constellation_hash"), expected_constellation)
 

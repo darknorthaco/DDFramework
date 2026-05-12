@@ -31,10 +31,10 @@ help:
 	@echo "Shrike - Makefile targets"
 	@echo ""
 	@echo "  make build          Build phantom-core (release)"
-	@echo "  make verify         Run phantom verify (requires build first)"
+	@echo "  make verify         Run ddf-exec verify (requires build first)"
 	@echo "  make verify-ledger  Audit ledger/events.jsonl hash chain (pure Python)"
 	@echo "  make test           Run all tests (cargo + python)"
-	@echo "  make doctrine       Print embedded doctrine hashes from phantom"
+	@echo "  make doctrine       Print embedded doctrine hashes from ddf-exec"
 	@echo "  make ghost          Run ghost-observer ledger summary (read-only)"
 	@echo "  make ghost-advise   Run GHOST advisor (read-only on ledger; writes advisories)"
 	@echo "  make ghost-verify   Verify advisory stream hash chain"
@@ -56,10 +56,10 @@ build:
 # directory path. This keeps the Makefile portable across environments
 # that redirect CARGO_TARGET_DIR (CI caches, sandboxes, etc.).
 verify: build
-	$(CARGO) run --release --quiet --bin phantom -- verify
+	$(CARGO) run --release --quiet --bin ddf-exec -- verify
 
 doctrine: build
-	$(CARGO) run --release --quiet --bin phantom -- doctrine
+	$(CARGO) run --release --quiet --bin ddf-exec -- doctrine
 
 verify-ledger:
 	$(PYTHON) tools/verify_ledger.py $(LEDGER)

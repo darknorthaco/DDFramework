@@ -1,9 +1,9 @@
-// phantom — Shrike Phantom Core CLI.
+// ddf-exec — DDFramework engine executor CLI (formerly phantom).
 //
 // Subcommands (Phase 2):
-//   phantom --version     Print version and embedded doctrine hashes
-//   phantom doctrine      Print both doctrine versions + hashes + ledger path
-//   phantom verify        Verify doctrine hashes match on-disk files,
+//   ddf-exec --version     Print version and embedded doctrine hashes
+//   ddf-exec doctrine      Print both doctrine versions + hashes + ledger path
+//   ddf-exec verify        Verify doctrine hashes match on-disk files,
 //                         append a verify.result entry to the ledger.
 //
 // Invariants enforced here:
@@ -48,21 +48,21 @@ fn main() -> ExitCode {
         "verify" => match run_verify(&root) {
             Ok(code) => code,
             Err(e) => {
-                eprintln!("phantom verify: fatal: {}", e);
+                eprintln!("ddf-exec verify: fatal: {}", e);
                 ExitCode::from(3)
             }
         },
         "amend-doctrine" => match run_amend_doctrine(&root, &args) {
             Ok(code) => code,
             Err(e) => {
-                eprintln!("phantom amend-doctrine: fatal: {}", e);
+                eprintln!("ddf-exec amend-doctrine: fatal: {}", e);
                 ExitCode::from(3)
             }
         },
         "file-waiver" => match run_file_waiver(&root, &args) {
             Ok(code) => code,
             Err(e) => {
-                eprintln!("phantom file-waiver: fatal: {}", e);
+                eprintln!("ddf-exec file-waiver: fatal: {}", e);
                 ExitCode::from(3)
             }
         },
@@ -71,7 +71,7 @@ fn main() -> ExitCode {
             ExitCode::SUCCESS
         }
         other => {
-            eprintln!("phantom: unknown subcommand: {}", other);
+            eprintln!("ddf-exec: unknown subcommand: {}", other);
             print_help();
             ExitCode::from(2)
         }
@@ -92,8 +92,8 @@ fn parse_root(args: &[String]) -> Option<PathBuf> {
 
 fn print_help() {
     println!(
-        "phantom — Shrike Phantom Core v{}\n\n\
-        Usage: phantom <subcommand> [--root <path>] [ritual flags...]\n\n\
+        "ddf-exec — DDFramework engine executor v{}\n\n\
+        Usage: ddf-exec <subcommand> [--root <path>] [ritual flags...]\n\n\
         Subcommands:\n  \
             verify           Verify doctrine hashes and append ledger entry\n  \
             amend-doctrine   Record a doctrine amendment (requires --approve)\n  \
@@ -115,7 +115,7 @@ fn print_help() {
 }
 
 fn print_version() {
-    println!("phantom {}", DOCTRINE_VERSION);
+    println!("ddf-exec {}", DOCTRINE_VERSION);
     println!("  doctrine_version       = {}", DOCTRINE_VERSION);
     println!("  constitution_version   = {}", CONSTELLATION_VERSION);
     println!("  embedded doctrine      = {}", DOCTRINE_HASH_EMBEDDED);
@@ -123,7 +123,7 @@ fn print_version() {
 }
 
 fn print_doctrine(root: &Path) {
-    println!("phantom doctrine");
+    println!("ddf-exec doctrine");
     println!("  root                   = {}", root.display());
     println!("  doctrine_version       = {}", DOCTRINE_VERSION);
     println!("  constitution_version   = {}", CONSTELLATION_VERSION);
@@ -162,7 +162,7 @@ fn run_verify(root: &Path) -> Result<ExitCode, String> {
 
     let prev = ledger::read_head(&ledger_path).map_err(|e| format!("ledger head: {}", e))?;
     if prev == ZERO_HASH {
-        eprintln!("phantom verify: ledger empty; this will be the genesis entry.");
+        eprintln!("ddf-exec verify: ledger empty; this will be the genesis entry.");
     }
 
     let mut entry = Entry::new();
@@ -173,7 +173,7 @@ fn run_verify(root: &Path) -> Result<ExitCode, String> {
         .str(
             "change",
             format!(
-                "phantom verify — status={} (doctrine match={}, constellation match={})",
+                "ddf-exec verify — status={} (doctrine match={}, constellation match={})",
                 status, doctrine_match, constellation_match
             ),
         )
@@ -192,7 +192,7 @@ fn run_verify(root: &Path) -> Result<ExitCode, String> {
     let entry_hash = ledger::append(&ledger_path, &entry)
         .map_err(|e| format!("ledger append: {}", e))?;
 
-    println!("phantom verify");
+    println!("ddf-exec verify");
     println!("  status                 = {}", status);
     println!("  doctrine     match     = {}", doctrine_match);
     println!("  constellation match    = {}", constellation_match);
@@ -205,7 +205,7 @@ fn run_verify(root: &Path) -> Result<ExitCode, String> {
     if status == "ok" {
         Ok(ExitCode::SUCCESS)
     } else {
-        eprintln!("phantom verify: FAIL — {}", status);
+        eprintln!("ddf-exec verify: FAIL — {}", status);
         Ok(ExitCode::from(1))
     }
 }
@@ -344,7 +344,7 @@ fn run_amend_doctrine(root: &Path, args: &[String]) -> Result<ExitCode, String> 
     let entry_hash =
         ledger::append(&ledger_path, &entry).map_err(|e| format!("ledger append: {}", e))?;
 
-    println!("phantom amend-doctrine");
+    println!("ddf-exec amend-doctrine");
     println!("  new version            = {}", new_version);
     println!("  domain                 = {}", domain);
     println!("  new doctrine_hash      = {}", new_doctrine_hash);
@@ -426,7 +426,7 @@ fn run_file_waiver(root: &Path, args: &[String]) -> Result<ExitCode, String> {
     let entry_hash =
         ledger::append(&ledger_path, &entry).map_err(|e| format!("ledger append: {}", e))?;
 
-    println!("phantom file-waiver");
+    println!("ddf-exec file-waiver");
     println!("  waiver_id              = {}", waiver_id);
     println!("  waiver_path            = {}", waiver_path.display());
     println!("  waiver_hash            = {}", waiver_hash);

@@ -10,7 +10,7 @@ This file is the **application** counterpart to the engine’s [`AGENTS.md`](../
 ## 2. Kernel boundary
 
 - Use **`ddf`** / [`KERNEL_API_MAP.md`](../ddf-core/KERNEL_API_MAP.md) for Rust and `ddf` Python from `ddf-core/ddf_py` when you need ledger read / advise.
-- Do not import `phantom_core` from application code except through the `ddf` re-exports already used in `ca-shell`.
+- Do not import `ddf_exec_core` (the engine executor crate, formerly `phantom_core`) from application code except through the `ddf` re-exports already used in `ca-shell`.
 
 ## 3. Rituals
 

@@ -5,7 +5,7 @@ use std::process::Command;
 
 /// Run engine `verify` ritual from `engine_root` (sets cwd so `phantom` finds doctrine).
 pub fn engine_verify(engine_root: &Path) -> std::io::Result<std::process::ExitStatus> {
-    let bin = ddf::phantom_bin_path();
+    let bin = ddf::exec_bin_path();
     Command::new(bin)
         .current_dir(engine_root)
         .arg("verify")

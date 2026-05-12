@@ -8,7 +8,7 @@ publish      = { workspace = true }
 description  = "DDFramework engine executor (ddf-exec) — sovereign, ceremony-first ritual core."
 
 [[bin]]
-name = "phantom"
+name = "ddf-exec"
 path = "src/main.rs"
 # Disable cargo's synthetic test runner for this bin. main.rs contains
 # no `#[test]` functions; the integration suite lives in tests/*.rs.

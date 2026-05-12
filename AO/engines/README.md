@@ -33,4 +33,4 @@ ddf = { path = "../../engines/DDFramework/ddf-core/ddf" }
 
 ## Binaries
 
-Build the engine per DDFramework `README.md` so `phantom` is on `PATH` or set `DDF_PHANTOM_BIN`. For advisories, ensure `python` can import `ghost-observer` from the engine tree (the shell’s `engine-advise` command sets `PYTHONPATH` to `engine_root/ghost-observer`).
+Build the engine per DDFramework `README.md` so `ddf-exec` is on `PATH` or set `DDF_EXEC_BIN`. For advisories, ensure `python` can import `ghost-observer` from the engine tree (the shell’s `engine-advise` command sets `PYTHONPATH` to `engine_root/ghost-observer`).

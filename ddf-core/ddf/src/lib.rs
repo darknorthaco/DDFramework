@@ -83,36 +83,37 @@ pub mod ghost {
     }
 }
 
-/// Resolve the **ritual executor** binary path (`phantom`; mission name).
+/// Resolve the **engine executor** binary path (`ddf-exec`).
 ///
 /// Resolution order:
-/// 1. `DDF_PHANTOM_BIN` environment variable (absolute path).
+/// 1. `DDF_EXEC_BIN` environment variable (absolute path).
 /// 2. Sibling of the current executable (useful when `ddf` and
-///    `phantom` are co-installed).
-/// 3. `phantom` on `PATH`.
+///    `ddf-exec` are co-installed).
+/// 3. `ddf-exec` on `PATH`.
 #[doc(alias = "ritual_executor_bin")]
 #[doc(alias = "executor_path")]
-pub fn phantom_bin_path() -> PathBuf {
-    if let Ok(p) = env::var("DDF_PHANTOM_BIN") {
+#[doc(alias = "phantom_bin_path")]
+pub fn exec_bin_path() -> PathBuf {
+    if let Ok(p) = env::var("DDF_EXEC_BIN") {
         return PathBuf::from(p);
     }
     if let Ok(cur) = env::current_exe() {
         if let Some(parent) = cur.parent() {
-            let name = if cfg!(windows) { "phantom.exe" } else { "phantom" };
+            let name = if cfg!(windows) { "ddf-exec.exe" } else { "ddf-exec" };
             let candidate = parent.join(name);
             if candidate.exists() {
                 return candidate;
             }
         }
     }
-    PathBuf::from("phantom")
+    PathBuf::from("ddf-exec")
 }
 
 /// Run the **verify ritual** (0001). Behavior-identical to `phantom verify`.
 #[doc(alias = "verify_ledger")]
 #[doc(alias = "ritual_verify")]
 pub fn verify() -> std::io::Result<ExitStatus> {
-    Command::new(phantom_bin_path()).arg("verify").status()
+    Command::new(exec_bin_path()).arg("verify").status()
 }
 
 /// Record a **doctrine amendment ritual** (0004). All arguments required.
@@ -123,7 +124,7 @@ pub fn amend_doctrine(
     rationale: &str,
     domain: &str,
 ) -> std::io::Result<ExitStatus> {
-    Command::new(phantom_bin_path())
+    Command::new(exec_bin_path())
         .args([
             "amend-doctrine",
             "--version", new_version,
@@ -137,7 +138,7 @@ pub fn amend_doctrine(
 /// File a **waiver ritual** (0005). `--approve` is auto-supplied.
 #[doc(alias = "waiver_filing")]
 pub fn file_waiver(id: &str, waiver_path: &str) -> std::io::Result<ExitStatus> {
-    Command::new(phantom_bin_path())
+    Command::new(exec_bin_path())
         .args([
             "file-waiver",
             "--id", id,
