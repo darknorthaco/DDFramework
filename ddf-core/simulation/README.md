@@ -1,10 +1,14 @@
-# DDFramework Simulation Layer (Phase 6 scaffolding)
+# DDFramework Simulation Layer (Phase 6 wave 1)
 
-Stubs only. Phase 5 establishes the kernel boundary; Phase 6 implements
-the simulation capabilities so Constellation §7 (*Simulate Before You
-Scar Reality*) can be automated rather than honor-system.
+Phase 5 established the kernel boundary; Phase 6 wave 1 lands the
+simulation capabilities so Constellation §7 (*Simulate Before You
+Scar Reality*) can be automated rather than honor-system. **All
+five modules below are implemented** and exercised by the
+``ddf-core/tests`` suite, including live-engine sanity tests against
+the real ``ledger/events.jsonl``, ``advisories/stream.jsonl``, and
+ceremony manifests in this repository.
 
-## Planned modules
+## Modules
 
 | Module | Purpose | Status |
 |---|---|---|
@@ -182,19 +186,20 @@ Composes naturally with `ledger_replay` and `advisory_replay`: those
 functions verify chain integrity end-to-end, while this one focuses
 on the three drift conditions GHOST itself watches for.
 
-## Contract (Phase 6 target)
+## Contract (upheld by every module)
 
 Each module exposes a pure `run(...)` function that:
-- Takes explicit paths as arguments (Shrike I5: no ambient state).
-- Returns a structured result without side effects.
-- Is read-only on all ledger / advisory streams.
+- Takes explicit paths or strings as arguments (Shrike I5: no ambient state).
+- Returns a structured result with stable keys and sorted lists.
+- Is read-only on all ledger / advisory streams (and on every other input).
 - Is stdlib-only.
+- Produces a deterministic `ordered_summary` suitable for inclusion in
+  audit reports or future simulation ledger entries.
 
-## Why scaffolded in Phase 5
+## History
 
-Creating the placeholders now:
-1. Reserves the module namespace under the kernel boundary.
-2. Signals intent to downstream embedders (*the engine will grow a
-   simulation contract*).
-3. Allows Phase 6 to land as additive changes without further
-   structural churn.
+This layer was scaffolded as stubs during Phase 5 (engine kernelization,
+v0.7.0) to reserve the namespace under the kernel boundary, signal intent
+to downstream embedders, and let Phase 6 land as additive changes without
+structural churn. Phase 6 wave 1 (the work documented above) lifted every
+stub to a real implementation without weakening invariants I1–I8.
