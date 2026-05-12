@@ -1,6 +1,6 @@
 # DDFramework — Architecture
 
-This document describes the three-layer design of the DDFramework
+This document describes the two-layer design of the DDFramework
 engine (historically the *Shrike* fabric; label frozen per the v0.6.0
 scope redefinition) and applies the Donella-Meadows systems-thinking
 lenses required by [`DOCTRINE.md`](./DOCTRINE.md) §III. The
@@ -10,10 +10,10 @@ conflict, Constellation §11 priority applies.
 
 For engine identity and scope, see [`DDFRAMEWORK.md`](./DDFRAMEWORK.md).
 
-**Reading this doc:** operator-facing layer names (Phantom, GHOST,
-Hyperion) match mission language. For the same concepts in **standard
-software terms** (ritual executor, advisor, transport, append-only
-log), see [`GLOSSARY_ENGINE_NAMES.md`](./GLOSSARY_ENGINE_NAMES.md) and
+**Reading this doc:** operator-facing layer names (Phantom, GHOST)
+match mission language. For the same concepts in **standard software
+terms** (ritual executor, advisor, append-only log), see
+[`GLOSSARY_ENGINE_NAMES.md`](./GLOSSARY_ENGINE_NAMES.md) and
 [`ddf-core/KERNEL_API_MAP.md`](./ddf-core/KERNEL_API_MAP.md).
 
 ## 0. Kernel boundary (v0.7.0+)
@@ -36,7 +36,7 @@ log), see [`GLOSSARY_ENGINE_NAMES.md`](./GLOSSARY_ENGINE_NAMES.md) and
                             ▼
 ┌────────────────────────────────────────────────────────────────┐
 │  ENGINE INTERNALS (implementation; may be refactored freely)   │
-│    phantom-core/    hyperion-net/    ghost-observer/           │
+│    phantom-core/    ghost-observer/                            │
 │    ledger/          advisories/      doctrine.toml             │
 │    constellation.toml                CONSTELLATION.md          │
 └────────────────────────────────────────────────────────────────┘
@@ -47,21 +47,17 @@ The kernel boundary is **conceptual**: it is enforced by what
 physical filesystem isolation. The engine internals stay where they
 are for continuity with all prior phases.
 
-## 1. Three Layers
+## 1. Two Layers
 
 ```
 ┌──────────────────────────────────────────────────────────┐
 │  GHOST  (Python 3, stdlib-heavy, read-only)              │
 │  observes, predicts, warns — writes only advisories      │
 │  ┌────────────────────────────────────────────────────┐  │
-│  │  HYPERION FABRIC  (Rust + C FFI)                   │  │
-│  │  routing, continuity, spatial collapse             │  │
-│  │  ┌──────────────────────────────────────────────┐  │  │
-│  │  │  PHANTOM CORE  (Rust, with C primitives)     │  │  │
-│  │  │   - ritual executor                          │  │  │
-│  │  │   - append-only NDJSON ledger                │  │  │
-│  │  │   - invariant checker (doctrine-as-code)     │  │  │
-│  │  └──────────────────────────────────────────────┘  │  │
+│  │  PHANTOM CORE  (Rust)                              │  │
+│  │   - ritual executor                                │  │
+│  │   - append-only NDJSON ledger                      │  │
+│  │   - invariant checker (doctrine-as-code)           │  │
 │  └────────────────────────────────────────────────────┘  │
 └──────────────────────────────────────────────────────────┘
                             │
@@ -70,27 +66,18 @@ are for continuity with all prior phases.
                        operator
 ```
 
+The engine is deliberately transport-agnostic: how applications move
+data between nodes is an application choice, not an engine layer.
+
 ### 1.1 Phantom Core
 
-- **Language:** Rust (stable, edition-pinned), C (ISO C11) for the
-  lowest primitives only.
+- **Language:** Rust (stable, edition-pinned).
 - **Responsibilities:** executing registered rituals, writing ledger
   entries, enforcing invariants I1–I8.
 - **Contract:** exits non-zero on any invariant violation; refuses to
   run on doctrine-hash mismatch.
 
-### 1.2 Hyperion Fabric
-
-- **Language:** Rust (stable), with a thin `c-primitives/` layer for
-  raw sockets / syscalls where the Rust standard library is
-  insufficient or a 100-year-stable C ABI is preferred.
-- **Responsibilities:** node-to-node routing, continuity across
-  disconnection, predictive prewarming.
-- **Contract:** never performs ritual side effects of its own; every
-  fabric action is either a transport for a Phantom ritual or a
-  cache-warming hint requested by Phantom.
-
-### 1.3 GHOST Observer
+### 1.2 GHOST Observer
 
 - **Language:** Python 3 (stdlib-heavy; any third-party dependency must
   be justified in `LANGUAGES.md`).
@@ -207,8 +194,6 @@ Shrike/
 ├── phantom-core/              (Rust binary — phantom bin target)
 │   ├── build.rs               (embeds doctrine hashes at build time)
 │   └── src/ {main,lib,sha256,canonical,ledger,timestamp}.rs
-├── hyperion-net/              (Rust lib — skeleton)
-│   └── c-primitives/          (ISO C11 stubs, not yet linked)
 ├── ghost-observer/            (Python package, stdlib-only)
 │   └── ghost/ {__init__,__main__,reader}.py
 ├── tools/                     (stdlib-only Python helpers)

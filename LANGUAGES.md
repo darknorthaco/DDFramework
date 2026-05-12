@@ -12,7 +12,7 @@ the 100-year target plausible. For engine identity and scope see
 | Language | Tier | Role |
 |---|---|---|
 | **C (ISO C11)** | core | FFI boundary, raw syscalls, minimal primitives |
-| **Rust (stable)** | core | `phantom-core`, `hyperion-net`, any concurrent or networked binary |
+| **Rust (stable)** | core | `phantom-core` and any future concurrent or networked binary |
 | **Python 3 (stdlib-heavy)** | meta | `ghost-observer`, tooling, scripts |
 | **Zig** | reserved | future C++-successor slot when Zig reaches 1.0 |
 | **Ada / SPARK** | reserved | future safety-critical components only |
@@ -54,9 +54,9 @@ Discipline:
 
 ### 3.2 Rust (stable)
 
-Rust is the principal language of `phantom-core` and
-`hyperion-net`. Memory safety and the type system make it the best
-available choice for a deterministic ritual executor.
+Rust is the principal language of `phantom-core`. Memory safety and
+the type system make it the best available choice for a deterministic
+ritual executor.
 
 Risk: Rust is younger than C and not ISO-standardized. Mitigations:
 
@@ -93,8 +93,8 @@ Discipline:
 - Prefer `stdlib` over third-party packages. Each third-party
   dependency requires a justification entry here.
 - No ambient config. Read the doctrine-declared paths only.
-- GHOST must never import anything from `phantom-core` or
-  `hyperion-net`; it communicates only via the ledger file (I8).
+- GHOST must never import anything from `phantom-core`; it
+  communicates only via the ledger file (I8).
 
 Approved third-party dependencies:
 

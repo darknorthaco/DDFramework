@@ -30,7 +30,7 @@ export SOURCE_DATE_EPOCH
 help:
 	@echo "Shrike - Makefile targets"
 	@echo ""
-	@echo "  make build          Build phantom-core and hyperion-net (release)"
+	@echo "  make build          Build phantom-core (release)"
 	@echo "  make verify         Run phantom verify (requires build first)"
 	@echo "  make verify-ledger  Audit ledger/events.jsonl hash chain (pure Python)"
 	@echo "  make test           Run all tests (cargo + python)"

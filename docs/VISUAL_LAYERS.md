@@ -14,10 +14,11 @@ changes.
 
 ---
 
-## 1. Five engine layers (what “is” DDFramework)
+## 1. Four engine layers (what “is” DDFramework)
 
 Per [`DDFRAMEWORK.md`](../DDFRAMEWORK.md): Phantom, Constellation, GHOST,
-Hyperion, Ledger — together they *are* the engine.
+Ledger — together they *are* the engine. The engine is transport-
+agnostic; applications choose their own transport.
 
 ```mermaid
 flowchart TB
@@ -25,21 +26,18 @@ flowchart TB
     C["Constellation\n(CONSTELLATION.md + constellation.toml)\nconstitutional law"]
     P["Phantom\n(phantom-core / phantom)\nritual executor — sole writer → main ledger"]
     G["GHOST\n(ghost-observer)\nread-only advisor — writer → advisory stream only"]
-    H["Hyperion\n(hyperion-net)\ntransport skeleton"]
     L["Ledger\nledger/events.jsonl + advisories/stream.jsonl\ntruth substrate"]
   end
   C -.->|binds| P
   C -.->|binds| G
   P -->|append| L
   G -->|append advisories| L
-  H -.->|carries ritual traffic only| P
 ```
 
 **Write boundaries (critical):**
 
 - **Main ledger** (`ledger/events.jsonl`): **Phantom only**.
 - **Advisory stream** (`advisories/stream.jsonl`): **GHOST only**.
-- **Hyperion:** transport only; no sovereign ritual side effects alone.
 
 ---
 
@@ -60,9 +58,8 @@ flowchart TB
   subgraph internal["Engine internals — refactorable"]
     I1[phantom-core]
     I2[ghost-observer]
-    I3[hyperion-net]
-    I4["ledger/ + advisories/"]
-    I5[doctrine.toml + constellation.toml]
+    I3["ledger/ + advisories/"]
+    I4[doctrine.toml + constellation.toml]
   end
   apps -->|depends on| kernel
   kernel -->|dispatches / re-exports| internal
@@ -70,19 +67,17 @@ flowchart TB
 
 ---
 
-## 3. Nested stack (operator mental model from ARCHITECTURE)
+## 3. Operator mental model (read path → write path)
 
-GHOST “wraps” the fabric; fabric wraps Phantom — **read path** from
-outside in; **writes** still follow Phantom/GHOST rules above.
+GHOST observes Phantom from the outside; Phantom writes to the main
+ledger; GHOST writes only to the advisory stream.
 
 ```mermaid
 flowchart TB
   GHOST["GHOST — observer, rules R001–R007\nwrites: advisories only"]
-  HYP["Hyperion — routing / continuity\nno sovereign writes"]
   PH["Phantom — rituals + invariants\nwrites: main ledger"]
   OP["Operator / CLI / CI"]
-  GHOST --> HYP
-  HYP --> PH
+  GHOST --> PH
   PH -->|"append events"| LEDGER[("Main ledger\nread-only for GHOST")]
   GHOST -->|"read tail"| LEDGER
   GHOST -->|"append"| ADV[("Advisory stream")]
@@ -116,7 +111,7 @@ sequenceDiagram
 
 ---
 
-## 5. ASCII — five layers + kernel (print / email friendly)
+## 5. ASCII — four layers + kernel (print / email friendly)
 
 ```
                     ┌─────────────────────────────┐
@@ -136,11 +131,6 @@ sequenceDiagram
 │  constitution   │       │  ritual executor │       │  read-only     │
 │  (prose + TOML) │       │  main ledger ✎  │       │  advisor ✎ adv  │
 └────────┬────────┘       └─────────┬─────────┘       └────────┬────────┘
-         │                          │                          │
-         │                 ┌────────▼────────┐                 │
-         │                 │    Hyperion     │                 │
-         │                 │  transport C/R  │                 │
-         │                 └────────┬────────┘                 │
          │                          │                          │
          └──────────────────────────┼──────────────────────────┘
                                     │

@@ -4,9 +4,9 @@ A ritual is the only way a Shrike binary performs an observable
 action. Every ritual has a manifest in `ceremonies/NNNN-name.toml` and
 an entry in [`doctrine.toml`](./doctrine.toml) §`[rituals].registered`.
 
-This document is the contract specification for the three bootstrap
-rituals: **Verify**, **Deploy**, **LAN Scan**. Later rituals follow the
-same template.
+This document is the contract specification for the implemented
+engine rituals (Verify, amend-doctrine, file-waiver, ghost-advise,
+and kernelize). Later rituals follow the same template.
 
 ---
 
@@ -98,148 +98,12 @@ Read-only on all files. Writes one ledger entry. No network.
 
 ---
 
-## 2. Deploy
-
-**`id`:** 0002 · **`name`:** `deploy` · **`inverse`:** `rollback`
-
-### Purpose
-
-Install a Phantom-built artifact onto a Hyperion node. The canonical
-mutating ritual. Every deployment is an explicit, logged, reversible
-ceremony.
-
-### Inputs
-
-- `--artifact <sha256>` — content-address of the artifact to deploy.
-  The artifact must already be present in the local blob store.
-- `--target <node-id>` — Hyperion node identifier.
-- `--manifest <path>` — deployment manifest (declares env vars,
-  mount points, service name). All env must be declared here per I5.
-
-### Outputs
-
-- Artifact installed at the target node
-- Ledger entry `kind = "deploy.applied"` with the pre-image hash of
-  whatever was previously installed (for rollback)
-
-### Side Effects
-
-Writes to the target node's filesystem. May (re)start a service
-declared in the manifest. All side effects must be preceded by the
-ledger entry (I7).
-
-### Invariants Upheld
-
-- **I1** — prior state captured in the ledger entry before mutation
-- **I2** — artifact referenced by SHA-256
-- **I3** — declares `rollback` as inverse
-- **I5** — manifest declares all environment
-- **I7** — ledger write precedes the filesystem mutation
-
-### Inverse
-
-`rollback` — restores the pre-image captured in the `deploy.applied`
-entry. Must be run against the same target within a configurable
-window (default: 24h); beyond that window rollback becomes a
-confirmation ceremony.
-
-### Ledger Entry Schema
-
-```json
-{
-  "ts": "…",
-  "kind": "deploy.applied",
-  "schema": 1,
-  "ritual_id": "0002",
-  "artifact":      "sha256:…",
-  "target":        "node-abc",
-  "manifest_hash": "sha256:…",
-  "pre_image":     "sha256:…",
-  "status": "applied | failed | partial",
-  "prev_entry_hash": "sha256:…",
-  "entry_hash":    "sha256:…"
-}
-```
-
-### Failure Modes
-
-| Failure | Detection | Recovery |
-|---|---|---|
-| artifact not in blob store | hash lookup | halt before any mutation |
-| manifest references undeclared env | manifest parse | halt with listing |
-| target unreachable | transport error | no mutation occurred; log `status=failed` |
-| partial write | post-check hash differs | log `status=partial`; `rollback` required |
-
----
-
-## 3. LAN Scan
-
-**`id`:** 0003 · **`name`:** `lan-scan` · **`inverse`:** self (read-only)
-
-### Purpose
-
-Enumerate reachable Hyperion nodes on the local network segment. A
-read-only discovery ritual. Must be explicit and consented — no
-ambient scanning.
-
-### Inputs
-
-- `--cidr <cidr-block>` — explicit CIDR to scan. No default. The
-  operator must state the scope.
-- `--port <u16>` — Hyperion listening port to probe.
-- `--timeout-ms <u32>` — per-host timeout.
-
-### Outputs
-
-- `stdout` — table of responding nodes with their reported
-  doctrine-hash and version
-- Ledger entry `kind = "lan.scan.result"` with the full response set
-
-### Side Effects
-
-Sends TCP SYN (or UDP probe, depending on transport) to each address
-in the CIDR. No writes to remote hosts.
-
-### Invariants Upheld
-
-- **I5** — CIDR is explicit; no auto-discovery of "my subnet"
-- **I7** — scan summary written to ledger
-
-### Inverse
-
-Read-only; no inverse needed beyond re-running the scan.
-
-### Ledger Entry Schema
-
-```json
-{
-  "ts": "…",
-  "kind": "lan.scan.result",
-  "schema": 1,
-  "ritual_id": "0003",
-  "cidr": "192.168.1.0/24",
-  "port": 7777,
-  "responders": [
-    {
-      "addr": "192.168.1.42",
-      "node_id": "…",
-      "doctrine_hash": "sha256:…",
-      "version": "0.1.0",
-      "rtt_ms": 3
-    }
-  ],
-  "prev_entry_hash": "sha256:…",
-  "entry_hash": "sha256:…"
-}
-```
-
-### Failure Modes
-
-| Failure | Detection | Recovery |
-|---|---|---|
-| invalid CIDR | parse error | halt immediately |
-| raw socket permission denied | syscall error | report; suggest capability-setting procedure |
-| doctrine-hash mismatch on responder | hash compare | include in result with `warning: "doctrine-drift"` flag; GHOST will advise |
+> **Historical note:** the `deploy` (0002) and `lan-scan` (0003)
+> rituals were declared in earlier phases as part of the engine's
+> Hyperion transport story. Both were removed at v1.0.0 along with
+> the Hyperion layer; the engine no longer presumes a transport.
+> Applications are free to define their own deploy / discovery
+> rituals against their own transports.
 
 ---
 

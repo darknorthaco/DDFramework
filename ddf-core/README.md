@@ -31,10 +31,9 @@ Mission ↔ mechanism glossary (repo root): `[../GLOSSARY_ENGINE_NAMES.md](../GL
 
 This directory is the **kernel boundary**. Downstream applications
 depend on what is exposed here. The layer directories at the repository
-root (`phantom-core/`, `hyperion-net/`, `ghost-observer/`, `ledger/`,
-`advisories/`, `constellation.toml`, `CONSTELLATION.md`) are the
-engine's *internal implementation* and may be reorganized without
-affecting embedders.
+root (`phantom-core/`, `ghost-observer/`, `ledger/`, `advisories/`,
+`constellation.toml`, `CONSTELLATION.md`) are the engine's *internal
+implementation* and may be reorganized without affecting embedders.
 
 ## CLI
 
@@ -103,16 +102,6 @@ ddf.advisor     # the orchestrator
 ddf.advisory_writer  # hash-chain append writer
 ```
 
-## C ABI
-
-The Hyperion C primitives are exposed as the legacy-named ABI
-`shrike_sock_*` / `SHRIKE_SOCK_*` (see
-`hyperion-net/c-primitives/sockets.h`). Per the v0.6.0 scope
-redefinition, the names are frozen; they are part of the kernel
-contract as-is. New consumers should treat `shrike_sock_*` as the
-stable DDFramework C ABI for Hyperion primitives despite the legacy
-prefix.
-
 ## JSON-over-stdin protocol (Phase 6)
 
 A JSON-over-stdin interface is reserved for Phase 6. Outline:
@@ -123,8 +112,8 @@ Phase 5.
 ## What is NOT part of the kernel API
 
 - Application logic of any kind.
-- The internal structure of `phantom-core`, `hyperion-net`,
-`ghost-observer`. They may be refactored freely.
+- The internal structure of `phantom-core` and `ghost-observer`. They
+may be refactored freely.
 - Legacy `phantom` CLI banner text.
 - Ceremony manifests' prose.
 - The ledger file-format version (goverened by `ledger/SPEC.md`, not this crate).

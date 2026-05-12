@@ -107,7 +107,7 @@ waiver per [`WAIVERS.md`](./WAIVERS.md).
   <body: reversibility note>
   ```
 - Components: `doctrine`, `architecture`, `phantom-core`,
-  `hyperion-net`, `ghost-observer`, `ceremonies`, `ledger`, `tooling`,
+  `ghost-observer`, `ceremonies`, `ledger`, `tooling`,
   `foundation`.
 - Never force-push a shared branch.
 - Never amend a pushed commit.
@@ -117,12 +117,12 @@ waiver per [`WAIVERS.md`](./WAIVERS.md).
 
 ### 4.0 Naming — mission vs mechanism (kernel and new code)
 
-- **Mission names** (Phantom, GHOST, Hyperion, Constellation) stay in
+- **Mission names** (Phantom, GHOST, Constellation) stay in
   constitution, operator docs, and frozen protocol identifiers unless
   changed by an explicit governance / kernel migration.
 - **New** Rust/Python public API and **new** modules should prefer
   **mechanical** vocabulary in identifiers and primary docstrings:
-  *ritual*, *ledger*, *advisor*, *append-only*, *verify*, *transport*.
+  *ritual*, *ledger*, *advisor*, *append-only*, *verify*.
 - The canonical decoder ring is [`GLOSSARY_ENGINE_NAMES.md`](./GLOSSARY_ENGINE_NAMES.md);
   the kernel symbol table is [`ddf-core/KERNEL_API_MAP.md`](./ddf-core/KERNEL_API_MAP.md).
 - When adding or renaming **kernel API symbols**, **rituals**, **ledger event

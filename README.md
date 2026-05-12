@@ -2,7 +2,7 @@
 
 A sovereign, ceremony-first, app-agnostic engine for long-horizon,
 regenerative, coherent systems.
-Phantom · Constellation · GHOST · Hyperion · Ledger.
+Phantom · Constellation · GHOST · Ledger.
 
 Designed to last 100 years.
 
@@ -42,13 +42,14 @@ public, and with the operator's consent.
 - **Diagrams:** [`docs/VISUAL_LAYERS.md`](./docs/VISUAL_LAYERS.md) — stack, kernel,
   sequence, and Meadows views (Mermaid + printable SVG).
 
-## Three layers
+## Two layers
 
 - **Phantom** — the sovereign ritual core. Rust, with C primitives.
-- **Hyperion** — the network fabric. Rust + C FFI.
 - **GHOST** — the read-only observer. Python, stdlib-heavy.
 
-See [`ARCHITECTURE.md`](./ARCHITECTURE.md) for the full picture.
+The engine is transport-agnostic: applications bring their own
+transport story. See [`ARCHITECTURE.md`](./ARCHITECTURE.md) for the
+full picture.
 
 ## Start here
 
@@ -60,7 +61,7 @@ Read these, in this order:
 4. [`DOCTRINE.md`](./DOCTRINE.md) — DDFramework architectural doctrine, v0.6.0
 5. [`doctrine.toml`](./doctrine.toml) — machine-readable architectural invariants
 6. [`ARCHITECTURE.md`](./ARCHITECTURE.md) — three layers + Meadows analysis
-7. [`RITUALS.md`](./RITUALS.md) — ritual contracts (Verify, Deploy, LAN Scan, amend, waiver, advise)
+7. [`RITUALS.md`](./RITUALS.md) — ritual contracts (verify, amend-doctrine, file-waiver, ghost-advise, kernelize)
 8. [`LANGUAGES.md`](./LANGUAGES.md) — 100-year language policy
 9. [`AGENTS.md`](./AGENTS.md) — rules for agents (human or AI)
 10. [`WAIVERS.md`](./WAIVERS.md) — active waiver registry

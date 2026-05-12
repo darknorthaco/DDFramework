@@ -30,7 +30,6 @@ of repo-shipping symlinks unless packaging owns it.
 |---------|------|--------------|
 | Package `phantom-core`, lib `phantom_core` | Ledger + canonical + executor library | Workspace `Cargo.toml`, `ddf` path dep, all `use phantom_core`, tests |
 | Package `ddf`, lib `ddf` | Kernel API | Downstream `ddf = …` in future apps |
-| Package `hyperion-net` | Transport skeleton | Workspace, FFI consumers |
 
 **Recommendation:** crate renames are **Wave 3** only; require **major** kernel
 API bump if `ddf` re-exports paths change. Prefer **leaving crate names** and

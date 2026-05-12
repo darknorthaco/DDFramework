@@ -22,9 +22,9 @@
 //! ## Embeddability
 //!
 //! Downstream applications (Application Era, v5.0.0+) depend on this
-//! crate, not on `phantom-core`, `hyperion-net`, or `ghost-observer`
-//! directly. Those are internal implementation and may be reorganized
-//! without affecting embedders.
+//! crate, not on `phantom-core` or `ghost-observer` directly. Those
+//! are internal implementation and may be reorganized without
+//! affecting embedders.
 
 use std::env;
 use std::path::PathBuf;

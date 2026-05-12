@@ -1,8 +1,8 @@
 # Engine names — mission language vs mechanism
 
-This glossary decodes **mission names** (Phantom, GHOST, Hyperion, …)
-used in constitution and operator docs into **standard software terms**
-used when reading or changing code.
+This glossary decodes **mission names** (Phantom, GHOST, …) used in
+constitution and operator docs into **standard software terms** used
+when reading or changing code.
 
 - **Mission names** answer *why* and *who we are*.
 - **Mechanisms** answer *what runs*, *what stores state*, and *who may write*.
@@ -39,7 +39,6 @@ ceremonies, and amendment rituals.
 |--------------|------------------------|------------------|
 | **Phantom** (engine) | **Ritual executor**: runs registered ceremonies, enforces invariants, **only writer** to the main append-only ledger. | `phantom-core/`, `phantom` binary |
 | **GHOST** (engine) | **Read-only advisor**: rule runner over ledger tails; writes **only** the separate advisory stream. | `ghost-observer/`, `python -m ghost` |
-| **Hyperion** | **Transport / fabric** (skeleton): primitives for moving data between nodes; must not perform sovereign ritual side effects on its own. | `hyperion-net/` |
 | **Constellation** | **Constitution**: normative principles and mandates above architectural doctrine. | `CONSTELLATION.md`, `constellation.toml` |
 | **Ledger** (main) | **Append-only event log** (hash-chained NDJSON): authoritative record of committed rituals. | `ledger/events.jsonl`, `ledger/SPEC.md` |
 | **Advisories** | **Separate append-only advisory log**: observational output; not read automatically by the ritual executor for decisions. | `advisories/stream.jsonl`, `advisories/SPEC.md` |

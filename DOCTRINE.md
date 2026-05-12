@@ -25,8 +25,8 @@
 ## Preamble
 
 This document is the sovereign doctrine of the Shrike project — the
-combined Phantom / GHOST / Hyperion Fabric. It is the single source of
-truth for the system's values, boundaries, and invariants.
+combined Phantom / GHOST core. It is the single source of truth for
+the system's values, boundaries, and invariants.
 
 Every Shrike binary embeds the SHA-256 of `doctrine.toml` at compile
 time and refuses to run if the on-disk hash differs. The prose in this
@@ -59,12 +59,12 @@ engineering fabric.
 
 ### 1. Phantom
 
-Phantom is the sovereign, ceremony-first distributed compute core.
+Phantom is the sovereign, ceremony-first ritual executor.
 
 Principles:
 
 - Deterministic behavior
-- Explicit rituals (Deploy, Verify, LAN Scan, and any future registered ceremony)
+- Explicit rituals (verify, amend-doctrine, file-waiver, ghost-advise, kernelize, and any future registered ceremony)
 - No hidden intelligence
 - No silent mutations
 - Everything must be inspectable
@@ -84,19 +84,12 @@ GHOST is the meta-layer.
 - Never overrides Phantom
 - Writes only to its own advisory stream, never to the Phantom ledger
 
-### 3. Hyperion Fabric
+### 3. Doctrine-bound emergence
 
-The combined system behaves like a farcaster-style continuity layer:
-time-aware, spatially-collapsed, systems-thinking, transparent.
-
-Key traits:
-
-- **Temporal awareness** — predictive caching, prewarming, routing
-- **Spatial collapse** — distributed workers feel co-located
-- **Doctrine-bound emergence** — intelligence only within declared boundaries
-
-Hyperion is the explicit anti-TechnoCore: every emergent behavior traces
-back to a doctrine line that permits it.
+The combined system is the explicit anti-TechnoCore: every emergent
+behavior traces back to a doctrine line that permits it. Intelligence
+is welcome only within declared boundaries; everything outside those
+boundaries is either explicitly authorized by a ritual or refused.
 
 ---
 

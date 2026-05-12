@@ -15,7 +15,7 @@ This repository contains the **DDFramework engine**: a sovereign,
 ceremony-first, app-agnostic substrate for building long-horizon,
 regenerative, coherent systems.
 
-The engine is composed of five layers. Together, these five layers *are*
+The engine is composed of four layers. Together, these four layers *are*
 DDFramework:
 
 | Layer | Role | Crate / package |
@@ -23,12 +23,12 @@ DDFramework:
 | **Phantom** | Execution + rituals; deterministic ritual core | `phantom-core/` |
 | **Constellation** | Doctrine; constitutional layer | `CONSTELLATION.md` + `constellation.toml` |
 | **GHOST** | Advisory engine; read-only observer and rule runner | `ghost-observer/` |
-| **Hyperion** | Transport primitives; spatial-collapse fabric (skeleton) | `hyperion-net/` |
 | **Ledger** | Truth substrate; append-only hash-chained record | `ledger/` + `advisories/` |
 
 The engine is the thing that gets reused. It must remain:
 
 - **App-agnostic** — no application logic lives in the engine.
+- **Transport-agnostic** — the engine takes no position on how applications move data between nodes; transport is an application concern.
 - **Reusable** — every future DRKNRTH application consumes the engine via stable interfaces.
 - **Portable** — deterministic builds, ISO-standard languages, no proprietary runtime dependencies.
 
@@ -51,9 +51,9 @@ The engine is the thing that gets reused. It must remain:
 
 **The Engine Era is complete at v0.6.0** as far as identity and
 scoping are concerned. Further engine evolution continues (Phase 5+
-engine concerns such as deploy executors, LAN-scan, hyperion
-transports, `--strict` mode, waiver expiry) but that work is framed
-as *DDFramework engine work*, not Shrike work.
+engine concerns such as `--strict` mode, waiver expiry, and
+additional simulation capabilities) but that work is framed as
+*DDFramework engine work*, not Shrike work.
 
 Applications live in separate repositories (or separate top-level
 directories in this one, when that decision is made) and depend on
@@ -61,13 +61,12 @@ DDFramework as an external substrate.
 
 ---
 
-## 4. The five layers, in more detail
+## 4. The four layers, in more detail
 
 ### 4.1 Phantom
 
-The sovereign ritual executor. Rust binary (`phantom`) with a small
-C-primitive reserve in `hyperion-net/c-primitives/`. Zero third-party
-dependencies. Embeds the SHA-256 of `doctrine.toml` and
+The sovereign ritual executor. Rust binary (`phantom`) with zero
+third-party dependencies. Embeds the SHA-256 of `doctrine.toml` and
 `constellation.toml` at build time and refuses to run on mismatch
 (invariant I6).
 
@@ -87,15 +86,9 @@ The read-only advisory engine. Python, stdlib-only. Seven rules
 (R001–R007) plus an R000 bootstrap. Writes advisories to its own
 hash-chained stream (`advisories/stream.jsonl`). Structurally
 forbidden from writing to the main ledger or importing `phantom_core`
-/ `hyperion_net` (invariant I8, enforced by `tests/test_readonly_on_main_ledger.py`).
+(invariant I8, enforced by `tests/test_readonly_on_main_ledger.py`).
 
-### 4.4 Hyperion
-
-The network fabric. Rust lib crate + ISO C11 FFI primitives under
-`c-primitives/`. Skeleton only in v0.6.0; activation is a future
-Tier 1 change.
-
-### 4.5 Ledger
+### 4.4 Ledger
 
 The truth substrate. Two hash-chained NDJSON streams:
 
@@ -126,10 +119,9 @@ The invariants themselves are unchanged by this amendment. See
 ## 6. Legacy "Shrike" references
 
 Where the word "Shrike" currently appears in the engine — help text,
-C FFI prefixes (`shrike_sock_*`), doctrine.toml `[meta].project`,
-pyproject.toml metadata, LICENSE copyright holder text, ritual manifest
-invariant labels, test path prefixes — it is **legacy branding**.
-Policy:
+`doctrine.toml [meta].project`, pyproject.toml metadata, LICENSE
+copyright holder text, ritual manifest invariant labels, test path
+prefixes — it is **legacy branding**. Policy:
 
 - **Do not expand it.** No new runtime references, no new strings, no new symbols using "Shrike".
 - **Do not deepen it.** Do not make existing Shrike strings more load-bearing.
@@ -137,13 +129,16 @@ Policy:
 - **Do not thrash to remove it.** Churn is a bigger cost than stale branding.
 
 Legacy references are frozen exactly where they are. New engine work
-is framed as DDFramework work.
+is framed as DDFramework work. (The `shrike_sock_*` C FFI prefixes
+mentioned in earlier amendments were tied to the removed Hyperion
+transport skeleton and went out with it; the policy above refers only
+to the remaining legacy strings.)
 
 ---
 
 ## 7. Applications are out of scope (until Phase 5+)
 
-- No application logic in `phantom-core/`, `hyperion-net/`, `ghost-observer/`, or `tools/`.
+- No application logic in `phantom-core/`, `ghost-observer/`, or `tools/`.
 - No application-specific ritual kinds added to `ceremonies/`.
 - No application-specific event kinds added to the main ledger registry.
 - No GHOST rules tailored to a specific application's anomaly shape.
@@ -154,7 +149,9 @@ directory (or sibling repo) and depends on DDFramework via:
 - Running `phantom` as a subprocess for rituals.
 - Importing `ghost-observer` as a Python package for observation.
 - Reading ledger / advisory streams as authoritative history.
-- Linking `hyperion-net` once transport goes live.
+
+Transport — how the application moves data between nodes — is the
+application's choice. The engine takes no position.
 
 ---
 
@@ -184,16 +181,14 @@ ddf-core/
 
 What does NOT change in v0.7.0:
 
-- No layer crate is moved. `phantom-core/`, `hyperion-net/`, and
-  `ghost-observer/` stay at the repo root as the engine's internal
-  implementation. The kernel boundary is **conceptual**, enforced by
-  the `ddf-core/` API surface and by its tests.
+- No layer crate is moved. `phantom-core/` and `ghost-observer/`
+  stay at the repo root as the engine's internal implementation. The
+  kernel boundary is **conceptual**, enforced by the `ddf-core/` API
+  surface and by its tests.
 - No existing invariant is weakened (I1–I8 unchanged).
 - No ritual semantics change. `phantom verify` and every other
   subcommand behave exactly as they did in v0.6.0. The new `ddf`
   binary is a thin dispatcher that forwards to them.
-- The legacy `shrike_sock_*` C ABI is documented as part of the
-  kernel contract without renaming.
 
 Stability contract:
 
