@@ -83,8 +83,20 @@ boundary, not on the internal layer crates. `ddf` Rust bin +
 behavior changed; seven rituals registered (adds `kernelize`); four
 executors implemented (`verify`, `amend-doctrine`, `file-waiver`,
 `ghost-advise`); GHOST remains clean against the post-amendment state.
-Phase 6 will implement the simulation layer; Phase 5+ applications
-are still out of scope in this repository.
+Phase 5+ applications are still out of scope in this repository.
+
+**Phase 6 wave 1 — Simulation layer landed.** All five simulation
+modules under [`ddf-core/simulation/`](./ddf-core/simulation/) are
+implemented (`doctrine_diff`, `ritual_dryrun`, `ledger_replay`,
+`advisory_replay`, `drift_simulation`) and exercised by tests in
+[`ddf-core/tests/`](./ddf-core/tests/), including live-engine sanity
+runs against the real `ledger/events.jsonl`, `advisories/stream.jsonl`,
+and ceremony manifests in this repository. Constellation §7
+(*Simulate Before You Scar Reality*) moves from honor-system to a
+stdlib-only, pure-function audit surface. Invariants I1–I8 are
+unchanged. Recording the wave as a `doctrine.amended` entry
+(``doctrine_version`` 0.7.0 → 0.7.1, additive) is an open ceremony
+the operator may schedule via `phantom amend-doctrine --approve`.
 
 **Application 1 (shell):** the **Constitutional Agent Shell** scaffold lives under
 [`AO/`](./AO/) (governed agent runtime on the `ddf` kernel). It does not change
