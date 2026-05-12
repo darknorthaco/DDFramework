@@ -1,0 +1,12 @@
+# Constitutional Agent Shell — Application 1 on DDFramework.
+# Standalone workspace; engine is a path dependency (vendored/submodule layout).
+[workspace]
+resolver = "2"
+members = ["crates/ca-shell"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.95.0"
+license = "LicenseRef-Shrike-Dual"
+publish = false
